@@ -15,3 +15,5 @@
 **/__* 
 **/testes-serverless
 
+# Sensitive resources
+**/.aws
