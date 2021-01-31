@@ -1,0 +1,70 @@
+# docker-compose file setting up local testing environment for AWS services alongside serverless-offline plugins
+
+version: '3.8'
+services:
+    serverless-container:                                             # Setting up Serverless environment        
+        image: esteveslima/serverless-template-image:latest           
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+           - ./:/serverless-container                                 # Using the entire project folder as volume for development
+           - ./resources/.aws:/root/.aws                                 # Setting up AWS credentials inside the container
+        working_dir: /serverless-container      
+        #environment:
+        restart: "no"
+        depends_on:
+            - mysql-container
+            - mongo-container
+            - redis-container
+            - queue-container
+        expose:
+            - "4000-4010"
+        ports:
+            - "4000-4010:4000-4010"
+    mysql-container:                                                  # Setting up RDS local testing environment with mysql
+        image: mysql
+        volumes:
+           - ./.mysql-storage:/var/lib/mysql                                 
+        environment:
+           - MYSQL_USER=root
+           - MYSQL_PASSWORD=password
+           - MYSQL_ROOT_PASSWORD=password
+           - MYSQL_DATABASE=mysql-db                            
+        restart: always
+        expose:
+           - '3306'             
+        # ports:
+        #   - '3306:3306'                 
+    mongo-container:                                                  # Setting up DynamoDB local testing environment with mongo              
+       image: mongo
+       volumes:
+           - ./.mongodb-storage:/data/db                                 
+       environment:
+           - MONGO_INITDB_DATABASE=mongo-db                      
+           #- MONGO_INITDB_ROOT_USERNAME=user                                 
+           #- MONGO_INITDB_ROOT_PASSWORD=password
+       restart: always
+       expose:
+           - '27017'                         
+        # ports:
+        #     - '27017:27017'
+    redis-container:                                                  # Setting up ElastiCache local testing environment with redis
+        image: redis
+        command: ["redis-server", "--appendonly", "yes"]
+        volumes:
+           - ./.redis-storage:/data
+        #environment:
+        restart: always
+        expose:
+           - '6379'
+        # ports:
+        #    - '6379:6379'
+    queue-container:                                                  # Setting up SQS local testing environment with elasticMQ
+        image: softwaremill/elasticmq
+        restart: always
+        expose:
+           - '9324'
+        # ports:
+        #    - '9324:9324'
+            
