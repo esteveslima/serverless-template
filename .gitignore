@@ -1,0 +1,17 @@
+# package directories
+**/node_modules
+**/jspm_packages
+
+# Serverless directories
+**/.serverless
+**/.build
+**/.webpack
+#**/.*
+
+# Distribution folders
+**/dist
+
+# Draft projects folders
+**/__* 
+**/testes-serverless
+

@@ -1,0 +1,55 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+
+    "title": "Validation Schema",
+    "type": "object",        
+    "properties": {
+      "stringExample": {
+        "type": "string",
+        "minLength": 10,
+        "maxLength": 500
+      },
+      "regexExample": {
+        "type": "string",
+        "pattern": "[a-zA-Z]+[0-9]*"
+      },      
+      "enumExample": {
+        "type": "string",
+        "enum": ["value1", "value2"]
+      },
+      "numberExample": {
+        "type": "number"        
+      },
+      "arrayExample": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 2,
+        "uniqueItems": true,
+        "items": { "$ref": "#/definitions/definitionExampleUsage" }
+      },
+      "objectExample": {
+        "type": "object", 
+        "properties": {
+            "prop": {
+                "type": "string"
+            }
+        },
+        "required": [ "prop" ]
+      }
+    },
+
+    "required": [
+        "stringExample", 
+        "regexExample",        
+        "enumExample",
+        "numberExample",
+        "arrayExample",
+        "objectExample"        
+    ],
+
+    "definitions": {
+        "definitionExampleUsage": {
+            "type": "string"
+        }
+    }
+  }
