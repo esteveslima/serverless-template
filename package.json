@@ -12,7 +12,6 @@
     "nodemailer": "^6.4.16",
     "saml2-js": "^2.0.6",
     "uuid": "^8.3.1",
-    "webpack-node-externals": "^2.5.2",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
@@ -30,6 +29,7 @@
     "jest": "^26.6.1",
     "serverless-apigw-binary": "^0.4.4",
     "serverless-iam-roles-per-function": "^3.0.0-d84bffd",
+    "serverless-localstack": "^0.4.28",
     "serverless-offline": "^6.8.0",
     "serverless-offline-sns": "^0.68.0",
     "serverless-offline-sqs": "^4.1.1",

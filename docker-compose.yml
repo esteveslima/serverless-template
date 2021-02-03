@@ -1,5 +1,5 @@
 # docker-compose file setting up local testing environment for AWS services alongside serverless-offline plugins
-
+# aws --endpoint-url http://localhost:4566 apigateway get-rest-apis --region us-east-1
 version: '3.8'
 services:
     serverless-container:                                             # Setting up Serverless environment        
@@ -9,11 +9,13 @@ services:
             dockerfile: Dockerfile
         volumes:
            - ./:/serverless-container                                 # Using the entire project folder as volume for development
-           - ./resources/.aws:/root/.aws                                 # Setting up AWS credentials inside the container
+           - ./resources/.aws:/root/.aws                              # Setting up AWS credentials inside the container
         working_dir: /serverless-container      
-        #environment:
+        environment:
+            - NODE_TLS_REJECT_UNAUTHORIZED=0                              #fixing certificate error
         restart: "no"
         depends_on:
+            - localstack-container
             - mysql-container
             - mongo-container
             - redis-container
@@ -22,6 +24,31 @@ services:
             - "4000-4010"
         ports:
             - "4000-4010:4000-4010"
+    localstack-container:                                                        
+        image: localstack/localstack
+        #network_mode: bridge
+        expose:
+            - "4566"
+        ports:
+            - "4566:4566"
+            #  - "4571:4571"
+            #  - "${PORT_WEB_UI-8080}:${PORT_WEB_UI-8080}"
+        environment:
+            - SERVICES=${SERVICES- }
+            - AWS_DEFAULT_REGION=us-east-1
+            - EDGE_PORT=4566
+            - DEBUG=1 #${DEBUG- }
+            - DATA_DIR=${DATA_DIR- }
+            #  - PORT_WEB_UI=${PORT_WEB_UI- }
+            - LAMBDA_EXECUTOR=docker #${LAMBDA_EXECUTOR- }
+            - LAMBDA_REMOTE_DOCKER=false
+            #- LAMBDA_DOCKER_NETWORK=bridge
+            - DOCKER_CMD=docker
+            #  - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
+            - DOCKER_HOST=unix:///var/run/docker.sock      
+        volumes:
+            - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+            - "/var/run/docker.sock:/var/run/docker.sock"
     mysql-container:                                                  # Setting up RDS local testing environment with mysql
         image: mysql
         volumes:

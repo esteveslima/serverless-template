@@ -1,19 +1,18 @@
-# package directories
+# Package directories
 **/node_modules
 **/jspm_packages
 
-# Serverless directories
-**/.serverless
-**/.build
-**/.webpack
-#**/.*
-
-# Distribution folders
+# Distribution directories
 **/dist
+
+# Temp(hidden) directories
+**/.*
+
+# Sensitive resources
+**/.aws
 
 # Draft projects folders
 **/__* 
 **/testes-serverless
 
-# Sensitive resources
-**/.aws
+
