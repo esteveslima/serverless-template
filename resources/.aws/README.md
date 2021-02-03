@@ -1,6 +1,6 @@
 # AWS Deployment credentials
 
- - Create the file 'credentials' with the below format to set aws credentials inside container(disconsider .md syntax)
+ - Create the file 'credentials' with the below format to set aws credentials inside container(disconsider .md syntax).
 
 ```
 [default]
