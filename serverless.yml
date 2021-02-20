@@ -10,7 +10,7 @@ frameworkVersion: '2'
 provider:                                         # default configurations which some can be overrided
   name: aws  
   runtime: nodejs12.x
-  stage: ${opt:stage, 'dev'}
+  stage: ${opt:stage, 'local'}
   region: ${opt:region, 'us-east-1'}
   apiName: serverless-template
   memorySize: 128
@@ -41,16 +41,27 @@ plugins:                                          # plugins that provides extra 
   - serverless-offline-sns                        # plugin to test sns locally alongside serverless offline
   #- serverless-offline-sqs                        # plugin to test sqs locally alongside serverless offline(must be between webpack and serverless-offline)
   - serverless-offline                            # plugin to locally debug with api gateway  
-  # - serverless-domain-manager
-  # - serverless-localstack  
+  # - serverless-domain-manager                   # TODO
+  # - serverless-localstack                       # TODO
+  # - serverless-plugin-conditional-functions     # TODO?
+  # - serverless-plugin-ifelse                    # TODO
+  # - serverless-pseudo-parameters                # TODO
+  # - serverless-plugin-aws-alerts                # TODO
+  # - serverless-prune-plugin                     # TODO
+  # - serverless-plugin-lambda-dead-letter        # TODO
+  # - serverless-offline-scheduler                # TODO
+  # - serverless-plugin-scripts                   # TODO
+  # - serverless-offline-scheduler                # TODO
   - serverless-iam-roles-per-function #REQUIRES DOWNGRADE TO serverless@2.4.0, UPGRADE TO @NEXT and disable configValidationMode
-  #- serverless-apigw-binary                       # plugin to allow returning binary data throught API Gateway(it will throw an error if there is a non http triggered function in the service deploy)
+  - serverless-apigw-binary                       # plugin to allow returning binary data throught API Gateway(it will throw an error if there is a non http triggered function in the service deploy)
 
 custom:  
   webpack:                                        # config webpack plugin
     webpackConfig: './webpack.config.js'        
+    includeModules: true
   serverless-offline:                             # config serverless offline plugin(https://localhost:4000)
     httpsProtocol: "./resources/local-ssl-tls"
+    host: 0.0.0.0                                 # binding to special address to make "offline" server reachable from outside docker network
     httpPort: 4000
   serverless-offline-sns:                         # config serverless offline sns plugin(http://localhost:4001 accessed only from functions)
     port: 4004 #4001

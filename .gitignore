@@ -2,11 +2,8 @@
 **/node_modules
 **/jspm_packages
 
-# Serverless directories
-**/.serverless
-**/.build
-**/.webpack
-#**/.*
+# Sensitive or local resources
+**/.*
 
 # Distribution folders
 **/dist
@@ -15,5 +12,3 @@
 **/__* 
 **/testes-serverless
 
-# Sensitive resources
-**/.aws

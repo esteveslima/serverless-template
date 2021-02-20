@@ -10,11 +10,20 @@ SERVERLESS_SERVICE_NAME=serverless-container
 # all:
 # 	@echo $(RUN_ARGS)
 
+
 up:
 	docker-compose --file $(COMPOSE_PATH) up --detach
+clean-up:
+	docker-compose --file $(COMPOSE_PATH) up --detach --build --force-recreate --always-recreate-deps
 
-down:
-	docker-compose --file $(COMPOSE_PATH) down	
+down: cleanup
+	docker-compose --file $(COMPOSE_PATH) down
+clean-down:	cleanup
+	docker-compose --file $(COMPOSE_PATH) down --rmi all --volumes --remove-orphans
+cleanup:
+	sudo rm -rf .serverless/ .webpack/
 
+sh:
+	docker-compose --file $(COMPOSE_PATH) exec --privileged $(SERVERLESS_SERVICE_NAME) bash
 bash:
 	docker-compose --file $(COMPOSE_PATH) exec --privileged $(SERVERLESS_SERVICE_NAME) bash

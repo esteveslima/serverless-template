@@ -1,6 +1,7 @@
+/* eslint-disable max-len */
 const slsw = require('serverless-webpack');
 const path = require('path');
-// const nodeExternals = require('webpack-node-externals');
+const nodeExternals = require('webpack-node-externals');
 // const npmPackage = require('./package.json');
 
 module.exports = {
@@ -9,7 +10,11 @@ module.exports = {
   devtool: 'source-map', // map bundle code for better debugging
   mode: 'production', // 'none'
   externals: [
-    { 'aws-sdk': 'commonjs aws-sdk' }, // remove aws-sdk from output bundle
+    // selectively remove modules from bundle marking them as external...
+    // { 'aws-sdk': 'commonjs aws-sdk' }, // remove aws-sdk from output bundle
+    //
+    // ... or make all modules external(fixing all conflicts, but making deployment possibly larger)
+    nodeExternals(),
   ],
 
   module: {
