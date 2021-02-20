@@ -19,7 +19,7 @@ services:
             - redis-container
             - queue-container
         expose:
-            - "4000"
+            - "4000-4010"
         ports:
             - "4000-4010:4000-4010"
     mysql-container:                                                  # Setting up RDS local testing environment with mysql
