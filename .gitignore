@@ -3,13 +3,13 @@
 **/jspm_packages
 
 # Sensitive or local resources
-**/.*
+**/.*/
 
 # Distribution folders
 **/dist
 
 # Draft projects folders
-**/__* 
+**/--*
 **/testes-serverless
 
 # Sensitive resources
