@@ -13,6 +13,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'max-len': 'off',
     'import/prefer-default-export': 'off',
     'no-unused-vars': 'off',
     'import/no-extraneous-dependencies': 'off',

@@ -1,0 +1,46 @@
+functions:  
+
+  snsExample:
+    handler:  services/${self:service}/functions/snsExample/src/handler.lambdaFunction
+    timeout: 60
+    events:             
+      - sns:
+          # arn:                    # for existing topics
+          topicName: testSns        # create a new sns topic to trigger this function
+          displayName: SNS test     # console's display name
+          filterPolicy:             # filter out message by attribute(allow only messages with attributes "example":"test")
+            example:
+              - test
+          # redrivePolicy:          # policy for undelivered messages
+
+  sqsExample:
+    handler:  services/${self:service}/functions/sqsExample/src/handler.lambdaFunction
+    timeout: 60
+    events:             
+      - sqs:
+          queueName: testSqs
+          #CHANGE JOIN TO !SUB
+          arn: { "Fn::Join" : [":", ["arn","aws","sqs", "${self:provider.environment.REGION}", "${self:provider.environment.ACCOUNT_ID}", "testSqs" ] ]  }
+          batchSize: 1              # ammount of messages allowed per lambda function
+          maximumBatchingWindow: 10 # ammount of time to gather messages before invoking the lambda function
+
+  triggerEvents:                    # simple httpApi endpoint to trigger dummy events and trigger functions from this file, retrieving some information
+    handler:  services/${self:service}/functions/triggerEvents/src/handler.lambdaFunction
+    timeout: 28
+    environment:
+      SNS_TOPIC: testSns
+      SQS_TOPIC: testSqs
+    events:
+      - httpApi:                    
+          method: POST              
+          path: /triggerEvents      # can trigger functions individually passed at url parameter "{URL}?events=event1,event2,etc...", defaults to trigger all events    
+    iamRoleStatements:              # granting permissions to the lambda function
+      - Effect: "Allow"
+        Action:
+          - SNS:Publish
+        Resource: { "Fn::Join" : [":", ["arn","aws","sns", "${self:provider.environment.REGION}", "${self:provider.environment.ACCOUNT_ID}", "${self:functions.triggerEvents.environment.SNS_TOPIC}" ] ]  }
+      - Effect: "Allow"
+        Action:
+          - SQS:SendMessage
+        Resource: { "Fn::Join" : [":", ["arn","aws","sns", "${self:provider.environment.REGION}", "${self:provider.environment.ACCOUNT_ID}", "${self:functions.triggerEvents.environment.SNS_TOPIC}" ] ]  }
+        
