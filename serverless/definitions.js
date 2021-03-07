@@ -1,19 +1,44 @@
 /* eslint-disable no-template-curly-in-string */
 const { getProvider } = require('./defaults/provider');
 const { getFunctions } = require('./defaults/functions');
-const { getPlugins } = require('./defaults/plugins');
+const { getAllPlugins, getAllCompatiblePlugins, getMatchingPlugins } = require('./defaults/plugins');
 const { getCustom } = require('./defaults/custom');
 
-module.exports.functions = (serverless) => {
-  const service = serverless ? serverless.processedInput.options.service : undefined;
+// Serverless configurations loaded as .js variables
+// CLI options and configurations from other variables available to access
+
+module.exports.functions = async ({ options, resolveConfigurationProperty }) => {
+  const { service } = options;
 
   const functions = getFunctions(service);
 
   return functions;
 };
 
-module.exports.provider = getProvider(); // cannot be imported as .js variable(require to be resolved before serverless.js)
+module.exports.provider = async ({ options, resolveConfigurationProperty }) => {
+  const { service } = options;
+  const cloud = 'aws';
 
-module.exports.plugins = getPlugins(); // cannot be imported as .js variable(require to be resolved before serverless.js)
+  const provider = getProvider();
 
-module.exports.custom = getCustom();
+  return provider;
+};
+
+module.exports.plugins = async ({ options, resolveConfigurationProperty }) => {
+  const { plugins } = options || {};
+  const functions = await resolveConfigurationProperty(['functions']);
+
+  switch (plugins) {
+    case 'all': return getAllPlugins(); // get all plugins, even potentially incompatible ones
+    case 'compatible': return getAllCompatiblePlugins(functions); // get all compatible plugins
+    default: return getMatchingPlugins(functions); // get only compatible plugins matching functions events
+  }
+};
+
+module.exports.custom = async ({ options, resolveConfigurationProperty }) => {
+  const { service } = options;
+
+  const custom = getCustom();
+
+  return custom;
+};

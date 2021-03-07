@@ -16,10 +16,10 @@ up:
 clean-up:
 	docker-compose --file $(COMPOSE_PATH) up --detach --build --force-recreate --always-recreate-deps
 
-down: wipe
-	docker-compose --file $(COMPOSE_PATH) down
+down:
+	make wipe && docker-compose --file $(COMPOSE_PATH) down
 clean-down:	wipe
-	docker-compose --file $(COMPOSE_PATH) down --rmi all --volumes --remove-orphans
+	make wipe && docker-compose --file $(COMPOSE_PATH) down --rmi all --volumes --remove-orphans
 wipe:
 	sudo rm -rf .serverless/ .webpack/ .mongodb-storage/ .mysql-storage/ .redis-storage/
 

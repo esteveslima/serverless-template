@@ -9,7 +9,7 @@ module.exports.postExample = {
         method: 'POST',
         path: '/postExample',
         request: {
-          schema: {
+          schemas: { // TODO: set schema path automatically(maybe only base path)
             'application/json': '${file(project/services/${self:service}/postExample/assets/schema.json)}',
           },
         },

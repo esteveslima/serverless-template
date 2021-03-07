@@ -1,6 +1,6 @@
-const { pluginsConfigurations } = require('./plugins');
+const { pluginsCustomConfig } = require('./plugins');
 
-const pluginsConfig = pluginsConfigurations();
+const pluginsConfig = pluginsCustomConfig();
 
 // Set custom configuration(including plugins)
 module.exports.getCustom = (service) => {

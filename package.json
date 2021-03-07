@@ -38,7 +38,14 @@
     "webpack-node-externals": "^2.5.2"
   },
   "scripts": {
+    "docker": "${npm_package_config_ALIAS_DOCKER} up",
+    "sls": "serverless --service ${INIT_CWD##*/}",
     "test": "jest"
+  },
+  "config": {
+    "ALIAS": {
+      "DOCKER": "sudo docker-compose --file ./docker-compose.yml"
+    }
   },
   "repository": {
     "type": "git",

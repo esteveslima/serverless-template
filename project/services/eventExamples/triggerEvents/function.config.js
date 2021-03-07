@@ -2,11 +2,14 @@
 // Defining function individually(reference from root path, working just like a normal .yml configuration)
 // handler path is automatically set
 
+const snsTopic = 'testSns';
+const sqsTopic = 'testSqs';
+
 module.exports.triggerEvents = {
   timeout: 28,
-  environment: {
-    SNS_TOPIC: 'testSns', // TODO: import sns event functions to get their names
-    SQS_TOPIC: 'testSqs',
+  environment: { // passing names to function
+    SNS_TOPIC: snsTopic,
+    SQS_TOPIC: sqsTopic,
   },
   events: [
     {
@@ -19,10 +22,8 @@ module.exports.triggerEvents = {
   iamRoleStatements: [
     {
       Effect: 'Allow',
-      Action: [
-        'SNS:Publish',
-      ],
-      Resource: {
+      Action: ['SNS:Publish'],
+      Resource: `arn:aws:sns:\${self:provider.environment.REGION}:\${self:provider.environment.ACCOUNT_ID}:${snsTopic}`, /* {
         'Fn::Join': [
           ':',
           [
@@ -34,26 +35,24 @@ module.exports.triggerEvents = {
             '${self:functions.triggerEvents.environment.SNS_TOPIC}',
           ],
         ],
-      },
+      }, */
     },
     {
       Effect: 'Allow',
-      Action: [
-        'SQS:SendMessage',
-      ],
-      Resource: {
+      Action: ['SQS:SendMessage'],
+      Resource: `arn:aws:sqs:\${self:provider.environment.REGION}:\${self:provider.environment.ACCOUNT_ID}:${sqsTopic}`, /* {
         'Fn::Join': [
           ':',
           [
             'arn',
             'aws',
-            'sns',
+            'sqs',
             '${self:provider.environment.REGION}',
             '${self:provider.environment.ACCOUNT_ID}',
-            '${self:functions.triggerEvents.environment.SNS_TOPIC}',
+            '${self:functions.triggerEvents.environment.SQS_TOPIC}',
           ],
         ],
-      },
+      }, */
     },
   ],
 };
