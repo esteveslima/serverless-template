@@ -29,7 +29,9 @@ const provider = {
 };
 
 module.exports.getProvider = (cloud) => {
-  provider.aws.lambdaHashingVersion = '20201221'; // DEPRECATION_RESOLUTION - new lambda hashing algoritm upcoming in next version
-  provider.aws.apiGateway = { shouldStartNameWithService: true }; // DEPRECATION_RESOLUTION - new naming pattern upcomming in next version
-  return provider.aws;
+  if (cloud === 'aws') {
+    provider.aws.lambdaHashingVersion = '20201221'; // DEPRECATION_RESOLUTION - new lambda hashing algoritm upcoming in next version
+    provider.aws.apiGateway = { shouldStartNameWithService: true }; // DEPRECATION_RESOLUTION - new naming pattern upcomming in next version
+  }
+  return provider[cloud];
 };

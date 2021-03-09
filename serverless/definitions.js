@@ -7,21 +7,21 @@ const { getCustom } = require('./defaults/custom');
 // Serverless configurations loaded as .js variables
 // CLI options and configurations from other variables available to access
 
+module.exports.provider = async ({ options }) => {
+  const { service, cloud = 'aws' } = options;
+
+  const provider = getProvider(cloud);
+
+  return provider;
+};
+
 module.exports.functions = async ({ options, resolveConfigurationProperty }) => {
   const { service } = options;
+  const provider = await resolveConfigurationProperty(['provider']);
 
   const functions = getFunctions(service);
 
   return functions;
-};
-
-module.exports.provider = async ({ options, resolveConfigurationProperty }) => {
-  const { service } = options;
-  const cloud = 'aws';
-
-  const provider = getProvider();
-
-  return provider;
 };
 
 module.exports.plugins = async ({ options, resolveConfigurationProperty }) => {
@@ -37,6 +37,7 @@ module.exports.plugins = async ({ options, resolveConfigurationProperty }) => {
 
 module.exports.custom = async ({ options, resolveConfigurationProperty }) => {
   const { service } = options;
+  const functions = await resolveConfigurationProperty(['functions']);
 
   const custom = getCustom();
 
