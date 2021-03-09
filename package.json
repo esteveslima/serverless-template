@@ -30,6 +30,7 @@
     "serverless-apigw-binary": "^0.4.4",
     "serverless-iam-roles-per-function": "^3.0.0-d84bffd",
     "serverless-offline": "^6.8.0",
+    "serverless-offline-scheduler": "^0.4.2",
     "serverless-offline-sns": "^0.68.0",
     "serverless-offline-sqs": "^4.1.1",
     "serverless-plugin-typescript": "^1.1.9",

@@ -8,9 +8,17 @@ const { getCustom } = require('./defaults/custom');
 // CLI options and configurations from other variables available to access
 
 module.exports.provider = async ({ options }) => {
-  const { service, cloud = 'aws' } = options;
+  const {
+    service, stage, cloud, region,
+  } = options;
 
-  const provider = getProvider(cloud);
+  const configurations = {
+    region,
+  };
+
+  const provider = getProvider(cloud, stage, configurations);
+
+  process.env.stage = provider.stage;
 
   return provider;
 };

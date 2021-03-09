@@ -9,7 +9,7 @@ const pluginsDefinitions = {
     },
   },
 
-  // // config serverless offline sqs plugin(must come before offline server)
+  // // must come before offline server
   // 'serverless-offline-sqs': { // ---------------sqs offline plugin is conflicting------------
   //   'serverless-offline-sqs': {
   //     autoCreate: true,
@@ -22,13 +22,16 @@ const pluginsDefinitions = {
   //   },
   // },
 
-  // config serverless offline sns plugin(must come before offline server)
+  // must come before offline server
   'serverless-offline-sns': {
     'serverless-offline-sns': {
       port: '4001',
       accountId: '{ "Ref" : "AWS::AccountId" }',
     },
   },
+
+  //
+  'serverless-offline-scheduler': {},
 
   // plugin to locally debug with api gateway
   'serverless-offline': {
@@ -63,9 +66,7 @@ const pluginsDefinitions = {
   // 'serverless-plugin-aws-alerts':{},
   // 'serverless-prune-plugin':{},
   // 'serverless-plugin-lambda-dead-letter':{},
-  // 'serverless-offline-scheduler':{},
   // 'serverless-plugin-scripts':{},
-  // 'serverless-offline-scheduler':{},
 };
 
 // Get only plugins names list
@@ -74,6 +75,7 @@ const pluginsList = () => Object.keys(pluginsDefinitions);
 // Get only plugins configs from the definitions(config from unused plugins doesn't interfeer)
 const pluginConfigurations = () => {
   const pluginsConfigs = Object.values(pluginsDefinitions).reduce((acc, curr) => {
+    if (Object.keys(curr).length === 0) return acc;
     const [configKey, configProps] = [Object.keys(curr)[0], Object.values(curr)[0]];
     acc[configKey] = configProps;
     return acc;
