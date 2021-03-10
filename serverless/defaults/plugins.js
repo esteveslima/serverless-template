@@ -1,12 +1,20 @@
 /* eslint-disable no-template-curly-in-string */
+
 // List of every plugin with its custom configuration(the items order is relevant)
 const pluginsDefinitions = {
   // plugin to bundle only necessary code from service functions(must be the first on the list)
   'serverless-webpack': {
-    webpack: {
-      webpackConfig: './webpack.config.js',
-      includeModules: true,
+    custom: {
+      webpack: {
+        webpackConfig: './webpack.config.js',
+        includeModules: true,
+      },
     },
+  },
+
+  //
+  'serverless-offline-scheduler': {
+    custom: {},
   },
 
   // // must come before offline server
@@ -24,35 +32,64 @@ const pluginsDefinitions = {
 
   // must come before offline server
   'serverless-offline-sns': {
-    'serverless-offline-sns': {
-      port: '4001',
-      accountId: '{ "Ref" : "AWS::AccountId" }',
+    custom: {
+      'serverless-offline-sns': {
+        port: '4001',
+        accountId: '{ "Ref" : "AWS::AccountId" }',
+      },
     },
   },
 
-  //
-  'serverless-offline-scheduler': {},
+  // must come before offline server
+  'serverless-s3-local': { // TODO: SCRIPT TO AUTOMATICALLY UPLOAD FILE THROUGHT AWS-SDK WITH DRAG-DROP FILES IN BUCKET FOLDER
+    custom: {
+      s3: {
+        host: 'localhost',
+        port: '4569',
+        httpsProtocol: './resources/local-ssl-tls',
+        directory: './.s3-local-bucket',
+        accessKeyId: 'S3RVER',
+        secretAccessKey: 'S3RVER',
+      },
+    },
+    resources: {
+      Resources: {
+        NewResource: {
+          Type: 'AWS::S3::Bucket',
+          Properties: {
+            BucketName: 'local-bucket',
+          },
+        },
+      },
+    },
+  },
 
   // plugin to locally debug with api gateway
   'serverless-offline': {
-    'serverless-offline': {
-      httpsProtocol: './resources/local-ssl-tls',
-      host: '0.0.0.0', // binding to special address to make "offline" server reachable from outside docker network
-      httpPort: '4000',
+    custom: {
+      'serverless-offline': {
+        httpsProtocol: './resources/local-ssl-tls',
+        host: '0.0.0.0', // binding to special address to make "offline" server reachable from outside docker network
+        httpPort: '4000',
+      },
     },
   },
 
   // REQUIRES DOWNGRADE TO serverless@2.4.0, UPGRADE TO @NEXT and disable configValidationMode
-  'serverless-iam-roles-per-function': {},
+  'serverless-iam-roles-per-function': {
+    custom: {},
+  },
 
   // plugin to allow returning binary data throught API Gateway(it will throw an error if there is a non http triggered function in the service deploy)
   'serverless-apigw-binary': {
-    apigwBinary: {
-      types: [
-        'image/jpeg',
-        'text/html',
-        'application/pdf',
-        'application/vnd.ms-excel'],
+    custom: {
+      apigwBinary: {
+        types: [
+          'image/jpeg',
+          'text/html',
+          'application/pdf',
+          'application/vnd.ms-excel'],
+      },
     },
   },
 
@@ -69,29 +106,38 @@ const pluginsDefinitions = {
   // 'serverless-plugin-scripts':{},
 };
 
-// Get only plugins names list
+//
+//
+//
+
 const pluginsList = () => Object.keys(pluginsDefinitions);
 
-// Get only plugins configs from the definitions(config from unused plugins doesn't interfeer)
-const pluginConfigurations = () => {
-  const pluginsConfigs = Object.values(pluginsDefinitions).reduce((acc, curr) => {
-    if (Object.keys(curr).length === 0) return acc;
-    const [configKey, configProps] = [Object.keys(curr)[0], Object.values(curr)[0]];
-    acc[configKey] = configProps;
+const bundleConfigObject = (objectsList/* , configType */) => {
+  // const filteredObjectsList = Object.values(objectsList).filter((obj) => obj[configType]).map((obj) => obj[configType]);
+  const bundleObject = objectsList.reduce((acc, curr) => {
+    const [objKey, objProps] = [Object.keys(curr)[0], Object.values(curr)[0]];
+    acc[objKey] = objProps;
     return acc;
   }, {});
+
+  return bundleObject;
+};
+// Get only plugins custom configs from the definitions(config from unused plugins doesn't interfeer)
+const pluginCustoms = () => {
+  const custom = Object.values(pluginsDefinitions).filter((plugin) => plugin.custom).map((plugin) => plugin.custom);
+  const pluginsConfigs = bundleConfigObject(custom);
+
+  return pluginsConfigs;
+};
+// Get only plugins resources configs from the definitions
+const pluginResources = () => {
+  const resources = Object.values(pluginsDefinitions).filter((plugin) => plugin.resources).map((plugin) => plugin.resources);
+  const pluginsConfigs = bundleConfigObject(resources);
 
   return pluginsConfigs;
 };
 
-//
-
-module.exports.pluginsCustomConfig = pluginConfigurations;
-
-module.exports.getAllPlugins = pluginsList;
-
-// Filter out potentially incompatible plugins
-module.exports.getAllCompatiblePlugins = (functions) => {
+const getFunctionsEvents = (functions) => {
   const configuredEvents = Object.keys(functions).reduce((acc, curr) => {
     const functionEvents = functions[curr].events;
     functionEvents.forEach((event) => {
@@ -101,47 +147,68 @@ module.exports.getAllCompatiblePlugins = (functions) => {
     return acc;
   }, []);
 
-  const compatiblePlugins = pluginsList();
+  return configuredEvents;
+};
+// TODO: GET FUCNCTIONS/PROVIDER IAMROLESTATEMENTS TO FILTER/RECOVER PLUGINS FROM SELECTION
 
-  // Remove plugins based on conditions
-  if (!configuredEvents.includes('http') && !configuredEvents.includes('httpApi')) {
-    const plugin = 'serverless-apigw-binary';
-    const pluginPosition = compatiblePlugins.indexOf(plugin);
-    if (pluginPosition !== -1) compatiblePlugins.splice(pluginPosition, 1);
-  }
+//
+//
+//
+
+// Filter out unused plugins
+module.exports.getMatchingPlugins = (functions) => {
+  const functionEvents = getFunctionsEvents(functions);
+
+  const removedPlugins = (() => {
+    const list = [];
+    // Mark plugins to remove based on matching conditions
+    if (!functionEvents.includes('http') && !functionEvents.includes('httpApi')) {
+      list.push('serverless-apigw-binary');
+    }
+    if (!functionEvents.includes('schedule')) {
+      list.push('serverless-offline-scheduler');
+    }
+    if (!functionEvents.includes('sns')) {
+      list.push('serverless-offline-sns');
+    }
+    if (!functionEvents.includes('sqs')) {
+      list.push('serverless-offline-sqs');
+    }
+    if (!functionEvents.includes('s3')) {
+      list.push('serverless-s3-local');
+    }
+
+    return list;
+  })();
+
+  const allPlugins = pluginsList();
+  const matchingPlugins = allPlugins.filter((plugin) => !removedPlugins.includes(plugin));
+
+  return matchingPlugins;
+};
+
+// Filter out potentially incompatible plugins
+module.exports.getAllCompatiblePlugins = (functions) => {
+  const functionEvents = getFunctionsEvents(functions);
+
+  const removedPlugins = (() => {
+    const list = [];
+    // Mark plugins to remove based on compatibility conditions
+    if (!functionEvents.includes('http') && !functionEvents.includes('httpApi')) {
+      list.push('serverless-apigw-binary');
+    }
+
+    return list;
+  })();
+
+  const allPlugins = pluginsList();
+  const compatiblePlugins = allPlugins.filter((plugin) => !removedPlugins.includes(plugin));
 
   return compatiblePlugins;
 };
 
-// Filter out unused plugins
-module.exports.getMatchingPlugins = (functions) => {
-  const configuredEvents = Object.keys(functions).reduce((acc, curr) => {
-    const functionEvents = functions[curr].events;
-    functionEvents.forEach((event) => {
-      const functionEvent = Object.keys(event)[0];
-      if (!acc.includes(functionEvent)) acc.push(functionEvent);
-    });
-    return acc;
-  }, []);
+module.exports.getAllPlugins = pluginsList;
 
-  const matchingPlugins = pluginsList();
+module.exports.pluginsResourcesConfig = pluginResources;
 
-  // Remove plugins based on conditions
-  if (!configuredEvents.includes('http') && !configuredEvents.includes('httpApi')) {
-    const plugin = 'serverless-apigw-binary';
-    const pluginPosition = matchingPlugins.indexOf(plugin);
-    if (pluginPosition !== -1) matchingPlugins.splice(pluginPosition, 1);
-  }
-  if (!configuredEvents.includes('sns')) {
-    const plugin = 'serverless-offline-sns';
-    const pluginPosition = matchingPlugins.indexOf(plugin);
-    if (pluginPosition !== -1) matchingPlugins.splice(pluginPosition, 1);
-  }
-  if (!configuredEvents.includes('sqs')) {
-    const plugin = 'serverless-offline-sqs';
-    const pluginPosition = matchingPlugins.indexOf(plugin);
-    if (pluginPosition !== -1) matchingPlugins.splice(pluginPosition, 1);
-  }
-
-  return matchingPlugins;
-};
+module.exports.pluginsCustomConfig = pluginCustoms;

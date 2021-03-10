@@ -34,6 +34,7 @@
     "serverless-offline-sns": "^0.68.0",
     "serverless-offline-sqs": "^4.1.1",
     "serverless-plugin-typescript": "^1.1.9",
+    "serverless-s3-local": "^0.6.7",
     "serverless-webpack": "^5.3.5",
     "webpack": "^5.23.0",
     "webpack-node-externals": "^2.5.2"
