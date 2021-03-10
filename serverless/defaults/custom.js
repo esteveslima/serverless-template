@@ -3,7 +3,7 @@ const { pluginsCustomConfig } = require('./plugins');
 const pluginsConfig = pluginsCustomConfig();
 
 // Set custom configuration(including plugins)
-module.exports.getCustom = (service) => {
+module.exports.getCustom = () => {
   const custom = {
     ...pluginsConfig,
   };

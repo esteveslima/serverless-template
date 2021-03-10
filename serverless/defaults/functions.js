@@ -11,7 +11,7 @@ const bundleServiceFunctions = (service) => {
   const servicePath = `project/services/${service}`;
   const configFileName = 'function.config.js';
 
-  // Import function.config.js from folders of selected --service and bundle into a object
+  // Import function.config.js from folders of selected --service and bundle into an object
   const directoriesNames = readdirSync(servicePath).filter((f) => statSync(join(servicePath, f)).isDirectory());
   const functionsList = directoriesNames.map((dirName) => require(`${rootPath}/${servicePath}/${dirName}/${configFileName}`));
   const functionsObject = functionsList.reduce((acc, curr) => {

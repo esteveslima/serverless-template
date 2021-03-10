@@ -17,11 +17,11 @@ clean-up:
 	docker-compose --file $(COMPOSE_PATH) up --detach --build --force-recreate --always-recreate-deps
 
 down:
-	make wipe && docker-compose --file $(COMPOSE_PATH) down
-clean-down:	wipe
-	make wipe && docker-compose --file $(COMPOSE_PATH) down --rmi all --volumes --remove-orphans
+	docker-compose --file $(COMPOSE_PATH) down && make wipe
+clean-down:
+	docker-compose --file $(COMPOSE_PATH) down --rmi all --volumes --remove-orphans && make wipe
 wipe:
-	sudo rm -rf .serverless/ .webpack/ .mongodb-storage/ .mysql-storage/ .redis-storage/
+	sudo rm -rf .serverless/ .webpack/ .mongodb-storage/ .mysql-storage/ .redis-storage/ .s3-local-bucket/
 
 sh:
 	docker-compose --file $(COMPOSE_PATH) exec --privileged $(SERVERLESS_SERVICE_NAME) bash

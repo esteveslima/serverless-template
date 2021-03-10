@@ -24,9 +24,9 @@ const provider = {
       // API_ID: { "Ref" : "ApiGatewayRestApi" }       # throws and error if there is no "http" event in the service(rather use it per function)
       // HTTP_API_ID: { "Ref" : "HttpApi" }            # throws and error if there is no "httpApi" event in the service(rather use it per function)
 
-      lambdaHashingVersion: '20201221', // DEPRECATION_RESOLUTION - new lambda hashing algoritm upcoming in next version
-      apiGateway: { shouldStartNameWithService: true }, // DEPRECATION_RESOLUTION - new naming pattern upcomming in next version
     },
+    lambdaHashingVersion: '20201221', // DEPRECATION_RESOLUTION - new lambda hashing algoritm upcoming in next version
+    apiGateway: { shouldStartNameWithService: true }, // DEPRECATION_RESOLUTION - new naming pattern upcomming in next version
   },
 
 };

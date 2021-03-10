@@ -1,6 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 
-// configuring serverless by exporting json from javascript(works just like .yaml configuration with path reference from this file)
+// configuring serverless by exporting json from javascript(works just like .yaml configuration with paths references from this file)
 module.exports = {
   service: '${opt:service}',
   frameworkVersion: '^2',
@@ -14,4 +14,5 @@ module.exports = {
   },
   plugins: '${file(./serverless/definitions.js):plugins}',
   custom: '${file(./serverless/definitions.js):custom}',
+  resources: '${file(./serverless/definitions.js):resources}',
 };

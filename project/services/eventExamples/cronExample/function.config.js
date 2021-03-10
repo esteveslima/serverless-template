@@ -4,7 +4,7 @@
 
 const { stage } = process.env;
 
-const rate = stage === 'local' ? 'rate(1 minutes)' : 'cron(0 0 * * ? *)';
+const rate = stage === 'local' ? 'rate(1 minute)' : 'cron(0 0 * * ? *)';
 
 module.exports.cronExample = {
   timeout: 60,
