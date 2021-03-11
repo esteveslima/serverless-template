@@ -7,6 +7,7 @@ FROM node:12-alpine as nodeBuilderStage
 RUN apk add --no-cache curl && \
     apk add --no-cache bash && \
     apk add --no-cache nano && \
+    apk add --no-cache inotify-tools && \
     npm install -g serverless 
     #curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install
 
