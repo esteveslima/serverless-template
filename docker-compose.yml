@@ -11,7 +11,8 @@ services:
            - ./:/serverless-container                                 # Using the entire project folder as volume for development
            - ./resources/.aws:/root/.aws                                 # Setting up AWS credentials inside the container
         working_dir: /serverless-container      
-        #environment:
+        environment:
+            - NODE_TLS_REJECT_UNAUTHORIZED=0                          # Fixing SSL/TLS errors in local development environment
         restart: "no"
         depends_on:
             - mysql-container

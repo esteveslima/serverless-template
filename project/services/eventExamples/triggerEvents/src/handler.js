@@ -3,10 +3,10 @@ import { triggerEvents } from './controller/index';
 
 // Decoupling provider integration from business logic
 export const lambdaFunction = lambda.wrapper(async (event) => {
-  const queryStringParameters = event.queryStringParameters || [];
-  const { events } = queryStringParameters;
-  const allEvents = ['sns'];
-  const triggeredEvents = events ? events.split(',') : allEvents;
+  const { events } = event.queryStringParameters || {};
+
+  const availableEvents = ['sns', /* 'sqs', */ 's3'];
+  const triggeredEvents = events?.split(',') ?? availableEvents;
 
   const result = await triggerEvents(triggeredEvents);
 

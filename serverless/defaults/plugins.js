@@ -44,24 +44,26 @@ const pluginsDefinitions = {
   'serverless-s3-local': { // TODO: SCRIPT TO AUTOMATICALLY UPLOAD FILE THROUGHT AWS-SDK WITH DRAG-DROP FILES IN BUCKET FOLDER(inotifywait with script)
     custom: {
       s3: {
+        address: 'localhost',
         host: 'localhost',
         port: '4569',
-        httpsProtocol: './resources/local-ssl-tls',
-        directory: './.s3-local-bucket',
         accessKeyId: 'S3RVER',
         secretAccessKey: 'S3RVER',
+        httpsProtocol: './resources/local-ssl-tls',
+        directory: './.s3-local-bucket',
+        silent: true,
       },
     },
-    resources: {
-      Resources: {
-        NewResource: {
-          Type: 'AWS::S3::Bucket',
-          Properties: {
-            BucketName: 'local-bucket',
-          },
-        },
-      },
-    },
+    // resources: {
+    //   Resources: {
+    //     NewResource: {
+    //       Type: 'AWS::S3::Bucket',
+    //       Properties: {
+    //         BucketName: 'local-bucket',
+    //       },
+    //     },
+    //   },
+    // },
   },
 
   // plugin to locally debug with api gateway

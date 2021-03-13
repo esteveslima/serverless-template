@@ -18,7 +18,7 @@ module.exports.s3Example = {
             prefix: 'uploads/',
           },
           {
-            suffix: '.jpg',
+            suffix: '.txt',
           },
         ],
       },

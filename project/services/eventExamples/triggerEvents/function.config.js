@@ -4,12 +4,14 @@
 
 const snsTopic = 'testSns';
 const sqsTopic = 'testSqs';
+const s3Bucket = 'testS3';
 
 module.exports.triggerEvents = {
   timeout: 28,
   environment: { // passing names to function
     SNS_TOPIC: snsTopic,
     SQS_TOPIC: sqsTopic,
+    S3_BUCKET: s3Bucket,
   },
   events: [
     {
