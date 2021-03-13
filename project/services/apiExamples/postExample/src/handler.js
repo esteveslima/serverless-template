@@ -5,8 +5,6 @@ import { postExample } from './controller';
 export const lambdaFunction = lambda.wrapper(async (event) => {
   const parameters = event.body;
 
-  console.log(event);
-
   const result = await postExample(parameters);
 
   return result;

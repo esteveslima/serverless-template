@@ -5,8 +5,6 @@ import { httpApiExample } from './controller/index';
 export const lambdaFunction = lambda.wrapper(async (event) => {
   const { pathParameters, queryStringParameters, headers } = event;
 
-  console.log(event);
-
   const result = await httpApiExample(pathParameters, queryStringParameters, headers);
 
   return result;

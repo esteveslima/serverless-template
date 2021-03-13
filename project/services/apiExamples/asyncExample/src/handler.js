@@ -7,8 +7,6 @@ export const lambdaFunction = lambda.wrapper(async (event) => {
     path, query, headers, body,
   } = event;
 
-  console.log(event);
-
   const result = await asyncExample(path, query, headers, body);
 
   return result;

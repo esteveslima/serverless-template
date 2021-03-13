@@ -8,7 +8,7 @@ module.exports = {
   entry: slsw.lib.entries,
   target: 'node',
   devtool: 'source-map', // map bundle code for better debugging
-  mode: 'production', // 'none'
+  mode: 'none', // 'production'
   externals: [
     // selectively remove modules from bundle marking them as external...
     // { 'aws-sdk': 'commonjs aws-sdk' }, // remove aws-sdk from output bundle

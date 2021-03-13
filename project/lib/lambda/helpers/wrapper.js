@@ -1,5 +1,8 @@
+/* eslint-disable prefer-rest-params */
 import { parseResponse } from './response';
 import { errorHandler } from '../../core/error/error-handler';
+
+const { stage } = process.env;
 
 // Wrapper for lambda functions
 export const wrapper = (func) => async function lambdaWrapper() {
@@ -7,7 +10,8 @@ export const wrapper = (func) => async function lambdaWrapper() {
     try {
       // run before function...
 
-      // eslint-disable-next-line prefer-rest-params
+      if (stage !== 'local') console.info(arguments);
+
       const functionResult = await func.apply(this, arguments);
 
       // run after function return...
