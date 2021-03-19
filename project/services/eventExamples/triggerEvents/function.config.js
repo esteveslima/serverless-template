@@ -1,17 +1,22 @@
 /* eslint-disable no-template-curly-in-string */
-// Defining function individually(reference from root path, working just like a normal .yml configuration)
-// handler path is automatically set
 
-const snsTopic = 'testSns';
-const sqsTopic = 'testSqs';
-const s3Bucket = 'testS3';
+// Defining function individually
+// Handler path is automatically set (reference from root path, working just like a normal .yml configuration)
+
+const snsArn = 'arn:aws:sns:us-east-1:809635126572:testSns';
+
+const sqsArn = '';
+const sqsUrl = '';
+
+const s3Arn = 'arn:aws:s3:::sls-test-s3-bucket';
+const s3BucketName = s3Arn.split(':').slice(-1)[0];
 
 module.exports.triggerEvents = {
   timeout: 28,
-  environment: { // passing names to function
-    SNS_TOPIC: snsTopic,
-    SQS_TOPIC: sqsTopic,
-    S3_BUCKET: s3Bucket,
+  environment: { // passing resouces reference inside function
+    SNS_ARN: snsArn,
+    SQS_URL: sqsUrl,
+    S3_BUCKET: s3BucketName,
   },
   events: [
     {
@@ -21,40 +26,27 @@ module.exports.triggerEvents = {
       },
     },
   ],
-  iamRoleStatements: [
+  role: 'triggerEventsRole', // reference the name of created role with extra permissions
+  dependsOn: ['triggerEventsRole'], // TODO: AUTOMATICALLY CREATE PROPS ROLE AND DEPENDSON
+};
+
+// Defining function resources
+// Prefer to create it manually if the resource isn't strictly tied to the function(e.g. iam role permissions)...
+// ...making it independent from stack and avoiding problems like stack unsyncing and data loss
+
+const { iamRole } = require('../../../../serverless/resources/iam/iamRole');
+
+module.exports.resources = {
+  triggerEventsRole: iamRole([
     {
       Effect: 'Allow',
-      Action: ['SNS:Publish'],
-      Resource: `arn:aws:sns:\${self:provider.environment.REGION}:\${self:provider.environment.ACCOUNT_ID}:${snsTopic}`, /* {
-        'Fn::Join': [
-          ':',
-          [
-            'arn',
-            'aws',
-            'sns',
-            '${self:provider.environment.REGION}',
-            '${self:provider.environment.ACCOUNT_ID}',
-            '${self:functions.triggerEvents.environment.SNS_TOPIC}',
-          ],
-        ],
-      }, */
+      Action: ['s3:PutObject'],
+      Resource: `${s3Arn}/*`,
     },
     {
       Effect: 'Allow',
-      Action: ['SQS:SendMessage'],
-      Resource: `arn:aws:sqs:\${self:provider.environment.REGION}:\${self:provider.environment.ACCOUNT_ID}:${sqsTopic}`, /* {
-        'Fn::Join': [
-          ':',
-          [
-            'arn',
-            'aws',
-            'sqs',
-            '${self:provider.environment.REGION}',
-            '${self:provider.environment.ACCOUNT_ID}',
-            '${self:functions.triggerEvents.environment.SQS_TOPIC}',
-          ],
-        ],
-      }, */
+      Action: ['sns:Publish'],
+      Resource: snsArn,
     },
-  ],
+  ]),
 };

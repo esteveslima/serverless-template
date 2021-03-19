@@ -1,6 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
-// Defining function individually(reference from root path, working just like a normal .yml configuration)
-// handler path is automatically set
+
+// Defining function individually
+// Handler path is automatically set (reference from root path, working just like a normal .yml configuration)
 
 module.exports.postExample = {
   events: [

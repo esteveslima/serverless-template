@@ -1,10 +1,11 @@
 /* eslint-disable no-template-curly-in-string */
-// Defining function individually(reference from root path, working just like a normal .yml configuration)
-// handler path is automatically set
 
-const { stage } = process.env;
+// Defining function individually
+// Handler path is automatically set (reference from root path, working just like a normal .yml configuration)
 
-const bucket = stage === 'local' ? 'local-bucket' : 'testS3';
+const { SLS_STAGE } = process.env;
+
+const bucket = SLS_STAGE === 'local' ? 'local-bucket' : 'sls-test-s3-bucket';
 
 module.exports.s3Example = {
   timeout: 60,
@@ -12,6 +13,7 @@ module.exports.s3Example = {
     {
       s3: {
         bucket,
+        existing: true, // Prefer to create resources independently from this stack, preventing syncing and data loss problems
         event: 's3:ObjectCreated:*',
         rules: [
           {

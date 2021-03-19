@@ -2,19 +2,19 @@
 import { parseResponse } from './response';
 import { errorHandler } from '../../core/error/error-handler';
 
-const { stage } = process.env;
+const { STAGE } = process.env;
 
 // Wrapper for lambda functions
 export const wrapper = (func) => async function lambdaWrapper() {
   const result = await (async () => {
     try {
       // run before function...
-
-      if (stage !== 'local') console.info(arguments);
+      if (STAGE !== 'local') console.info(arguments);
 
       const functionResult = await func.apply(this, arguments);
 
       // run after function return...
+      if (STAGE !== 'local') console.info(functionResult);
 
       return functionResult;
     } catch (error) {

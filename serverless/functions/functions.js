@@ -11,11 +11,13 @@ const bundleServiceFunctions = (service) => {
   const servicePath = `project/services/${service}`;
   const configFileName = 'function.config.js';
 
-  // Import function.config.js from folders of selected --service and bundle into an object
+  // Import function.config.js from folders of selected --service and bundle functions into an object
   const directoriesNames = readdirSync(servicePath).filter((f) => statSync(join(servicePath, f)).isDirectory());
   const functionsList = directoriesNames.map((dirName) => require(`${rootPath}/${servicePath}/${dirName}/${configFileName}`));
   const functionsObject = functionsList.reduce((acc, curr) => {
-    Object.keys(curr).forEach((func) => { acc[func] = curr[func]; });
+    const func = { ...curr };
+    delete func.resources; // remove non-function definitions
+    Object.keys(func).forEach((f) => { acc[f] = curr[f]; });
     return acc;
   }, {});
 

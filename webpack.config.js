@@ -14,7 +14,7 @@ module.exports = {
     // { 'aws-sdk': 'commonjs aws-sdk' }, // remove aws-sdk from output bundle
     //
     // ... or make all modules external(fixing all conflicts, but making deployment possibly larger)
-    nodeExternals(),
+    // nodeExternals(),
   ],
 
   module: {

@@ -1,10 +1,11 @@
 /* eslint-disable no-template-curly-in-string */
-// Defining function individually(reference from root path, working just like a normal .yml configuration)
-// handler path is automatically set
 
-const { stage } = process.env;
+// Defining function individually
+// Handler path is automatically set (reference from root path, working just like a normal .yml configuration)
 
-const rate = stage === 'local' ? 'rate(1 minute)' : 'cron(0 0 * * ? *)';
+const { SLS_STAGE } = process.env;
+
+const rate = SLS_STAGE === 'local' ? 'rate(1 minute)' : 'cron(0 0 * * ? *)';
 
 module.exports.cronExample = {
   timeout: 60,

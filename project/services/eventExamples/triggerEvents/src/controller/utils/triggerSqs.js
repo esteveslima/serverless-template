@@ -2,7 +2,7 @@ import { } from '../../../../../../lib/lib';
 import { SQS } from 'aws-sdk';
 
 const {
-  stage, REGION, ACCOUNT_ID, SQS_TOPIC,
+  STAGE, REGION, SQS_URL,
 } = process.env;
 
 export default async () => {
@@ -22,7 +22,7 @@ export default async () => {
       },
     },
     MessageBody: JSON.stringify({ messageKey: 'messageValue' }),
-    QueueUrl: `https://sqs.${REGION}.amazonaws.com/${ACCOUNT_ID}/${SQS_TOPIC}`,
+    QueueUrl: SQS_URL, // `https://sqs.${REGION}.amazonaws.com/${ACCOUNT_ID}/${SQS_TOPIC}`,
   };
   const submission = await sqs.sendMessage(params).promise();
 
