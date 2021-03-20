@@ -22,7 +22,7 @@ module.exports = {
     ],
     shouldStartNameWithService: true, // DEPRECATION_RESOLUTION - new naming pattern upcomming in next version
   },
-  environment: {
+  environment: { // TODO: LOOK AT #Referencing Serverless Core Variables #Reference CloudFormation Outputs #Reference Variables using the SSM Parameter Store #Reference Variables using AWS Secrets Manager #Pseudo Parameters Reference
     REGION: '${self:provider.region}',
     STAGE: '${self:provider.stage}',
     // ACCOUNT_ID: '{ "Ref" : "AWS::AccountId" }', // refs not working with .js variables, resolving as string instead

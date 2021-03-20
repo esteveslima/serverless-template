@@ -1,6 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 
-// List of every plugin with its custom configuration(the items order is relevant)
+// List of every plugin with its custom configuration(the items order may be relevant)
 module.exports = {
   // plugin to bundle only necessary code from service functions(must be the first on the list)
   'serverless-webpack': {
@@ -13,9 +13,7 @@ module.exports = {
   },
 
   //
-  'serverless-offline-scheduler': {
-    custom: {},
-  },
+  'serverless-offline-scheduler': {},
 
   // // must come before offline server
   // 'serverless-offline-sqs': { // ---------------sqs offline plugin is conflicting------------
@@ -50,13 +48,13 @@ module.exports = {
         accessKeyId: 'S3RVER',
         secretAccessKey: 'S3RVER',
         httpsProtocol: './resources/local-ssl-tls',
-        directory: './.S3-local-bucket',
+        directory: './.s3-local',
         silent: true,
       },
     },
   },
 
-  // plugin to locally debug with api gateway
+  // plugin to locally debug with api gateway(requires content-type header to parse data)
   'serverless-offline': {
     custom: {
       'serverless-offline': {
@@ -67,37 +65,39 @@ module.exports = {
     },
   },
 
-  // DEPRECATED
-  // REQUIRES DOWNGRADE TO serverless@2.4.0, UPGRADE TO @NEXT and disable configValidationMode
-  // 'serverless-iam-roles-per-function': {
-  //   custom: {},
-  // },
-
-  // DEPRECATED
-  // plugin to allow returning binary data throught API Gateway(it will throw an error if there is a non http triggered function in the service deploy)
-  // 'serverless-apigw-binary': {
-  //   custom: {
-  //     apigwBinary: {
-  //       types: [
-  //         'image/jpeg',
-  //         'text/html',
-  //         'application/pdf',
-  //         'application/vnd.ms-excel'],
-  //     },
-  //   },
-  // },
+  // plugin to run scripts based on serverless commands and hooks(serverless-scriptable-plugin is similar)
+  // Serverless hooks: https://gist.github.com/HyperBrain/50d38027a8f57778d5b0f135d80ea406 and https://gist.github.com/MikeSouza/b9d2c89aec768a8871c8778f530cf4ab
+  'serverless-plugin-scripts': {
+    custom: {
+      scripts: {
+        commands: {
+          teste: './resources/scripts/plugin-scripts/check-deploy-stage.sh',
+        },
+        hooks: {
+          // Run before offline -> prevent accidental runs outside docker environment
+          'before:offline:start': './resources/scripts/plugin-scripts/check-dev-env.sh',
+          // Run before deployment -> prevent accidental runs outside docker environment and deployments in stage 'local'
+          'before:deploy:deploy': `\
+            ./resources/scripts/plugin-scripts/check-dev-env.sh && \
+            ./resources/scripts/plugin-scripts/check-deploy-stage.sh
+          `,
+          // Run after deployment
+          // 'after:deploy:finalize': '',
+        },
+      },
+    },
+  },
 
   // TODO...
   // 'serverless-domain-manager':{},
   // 'serverless-localstack':{},
-  // 'serverless-s3-local': {},
   // 'serverless-plugin-conditional-functions':{},
   // 'serverless-plugin-ifelse':{},
   // 'serverless-pseudo-parameters':{},
   // 'serverless-plugin-aws-alerts':{},
   // 'serverless-prune-plugin':{},
   // 'serverless-plugin-lambda-dead-letter':{},
-  // 'serverless-plugin-scripts':{},
+
   // 'serverless-aws-documentation':{},
   // 'serverless-reqvalidator-plugin':{},
 };

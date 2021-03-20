@@ -8,5 +8,5 @@ module.exports.getResources = (service) => {
 
   // set some extra resources...
 
-  return { Resources: resources };
+  return resources;
 };

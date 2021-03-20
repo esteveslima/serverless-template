@@ -17,6 +17,8 @@ const bundleServiceFunctions = (service) => {
   const functionsObject = functionsList.reduce((acc, curr) => {
     const func = { ...curr };
     delete func.resources; // remove non-function definitions
+    // delete func['']
+    if (Object.keys(func).length > 1) throw new Error(`More than one function specified: ${Object.keys(func)}`);
     Object.keys(func).forEach((f) => { acc[f] = curr[f]; });
     return acc;
   }, {});

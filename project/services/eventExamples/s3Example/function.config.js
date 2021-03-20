@@ -3,9 +3,7 @@
 // Defining function individually
 // Handler path is automatically set (reference from root path, working just like a normal .yml configuration)
 
-const { SLS_STAGE } = process.env;
-
-const bucket = SLS_STAGE === 'local' ? 'local-bucket' : 'sls-test-s3-bucket';
+const bucket = 'sls-test-s3-bucket';
 
 module.exports.s3Example = {
   timeout: 60,

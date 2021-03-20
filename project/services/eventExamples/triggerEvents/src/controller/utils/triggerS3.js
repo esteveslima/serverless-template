@@ -2,7 +2,7 @@ import { } from '../../../../../../lib/lib';
 import { S3, Endpoint } from 'aws-sdk';
 
 const {
-  STAGE, REGION, S3_BUCKET,
+  IS_OFFLINE, REGION, S3_BUCKET,
 } = process.env;
 
 export default async () => {
@@ -19,8 +19,7 @@ export default async () => {
     Body: Buffer.from('abc'),
   };
 
-  if (STAGE === 'local') { // for local testing purposes
-    params.Bucket = 'local-bucket';
+  if (IS_OFFLINE) { // for local testing purposes
     s3Config.s3ForcePathStyle = true;
     s3Config.accessKeyId = 'S3RVER'; // This specific key is required when working offline
     s3Config.secretAccessKey = 'S3RVER';

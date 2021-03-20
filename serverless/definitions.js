@@ -5,12 +5,12 @@ const { getAllPlugins, getAllCompatiblePlugins, getMatchingPlugins } = require('
 const { getCustom } = require('./custom/custom');
 const { getResources } = require('./resources/resources');
 
-const updateSlsEnvironmentVariables = (options) => {
-  const { stage, region } = options;
-
-  // Variables accessible from another configuration files(not in function)
-  process.env.SLS_STAGE = stage;
-  process.env.SLS_REGION = region;
+const saveSlsEnvVar = (options) => {
+  // Define(and validate) options as environment variables(SLS_'OPTION') accessible ONLY in build/bundle time(not running time)
+  Object.keys(options).forEach((option) => {
+    if (typeof options[option] !== 'string') throw new Error(`\n\nInvalid Option -> ${option}: ${options[option]}\n\n`);
+    process.env[`SLS_${option.toUpperCase()}`] = options[option];
+  });
 };
 
 // Serverless configurations loaded as .js variables
@@ -24,11 +24,13 @@ module.exports.provider = async ({ options }) => {
     region = 'us-east-1',
   } = options;
 
-  updateSlsEnvironmentVariables({ stage, region });
-
   const config = {
     region,
   };
+
+  saveSlsEnvVar({
+    service, cloud, stage, ...config,
+  });
 
   const provider = getProvider(cloud, stage, config);
 
@@ -71,5 +73,5 @@ module.exports.resources = async ({ options, resolveConfigurationProperty }) => 
 
   const resources = getResources(service);
 
-  return resources;
+  return { Resources: resources };
 };
