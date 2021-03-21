@@ -12,7 +12,7 @@ module.exports.s3Example = {
       s3: {
         bucket,
         existing: true, // Prefer to create resources independently from this stack, preventing syncing and data loss problems
-        event: 's3:ObjectCreated:*',
+        event: 's3:ObjectCreated:*', // event do not trigger if the object is updated(not created)
         rules: [
           {
             prefix: 'uploads/',

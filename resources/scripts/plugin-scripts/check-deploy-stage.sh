@@ -18,5 +18,6 @@ else
 fi
 
 printf "\n";
+printf "\n";
 
 exit $STATUS;

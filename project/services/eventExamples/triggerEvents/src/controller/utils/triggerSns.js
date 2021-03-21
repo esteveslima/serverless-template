@@ -26,7 +26,7 @@ export default async () => {
     snsConfig.endpoint = 'http://127.0.0.1:4002';
     params.TopicArn = SNS_ARN.replace(SNS_ARN.split(':')[4], '123456789012'); // change accountId with the offline-sns one
   }
-  console.log(params);
+
   const sns = new SNS(snsConfig);
   const publication = await sns.publish(params).promise();
 

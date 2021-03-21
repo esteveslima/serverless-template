@@ -14,7 +14,7 @@ export default async () => {
   };
   const params = {
     Bucket: S3_BUCKET,
-    Key: 'uploads/testS3.png',
+    Key: 'uploads/testS3.txt',
     // ContentType: '',
     Body: Buffer.from('abc'),
   };
