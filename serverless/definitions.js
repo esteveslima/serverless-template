@@ -1,19 +1,13 @@
 /* eslint-disable no-template-curly-in-string */
-const { getProvider } = require('./provider/provider');
-const { getFunctions } = require('./functions/functions');
-const { getAllPlugins, getAllCompatiblePlugins, getMatchingPlugins } = require('./plugins/plugins');
-const { getCustom } = require('./custom/custom');
-const { getResources } = require('./resources/resources');
+const { saveSlsEnvVar } = require('./tools/tools');
+const { getProvider } = require('./definitions/provider/provider');
+const { getFunctions } = require('./definitions/functions/functions');
+const { getPlugins } = require('./definitions/plugins/plugins');
+const { getCustom } = require('./definitions/custom/custom');
+const { getResources } = require('./definitions/resources/resources');
+const { getPluginsCustoms } = require('./definitions/plugins/utils/pluginsCustoms');
 
-const saveSlsEnvVar = (options) => {
-  // Define(and validate) options as environment variables(SLS_'OPTION') accessible ONLY in build/bundle time(not running time)
-  Object.keys(options).forEach((option) => {
-    if (typeof options[option] !== 'string') throw new Error(`\n\nInvalid Option -> ${option}: ${options[option]}\n\n`);
-    process.env[`SLS_${option.toUpperCase()}`] = options[option];
-  });
-};
-
-// Serverless configurations loaded as .js variables
+// Serverless configurations loaded as .js variables(loading provider and than functions before anything else)
 // CLI options and configurations from other variables available for access
 
 module.exports.provider = async ({ options }) => {
@@ -47,15 +41,12 @@ module.exports.functions = async ({ options, resolveConfigurationProperty }) => 
 };
 
 module.exports.plugins = async ({ options, resolveConfigurationProperty }) => {
-  const { plugins } = options;
+  const { service } = options;
   const functions = await resolveConfigurationProperty(['functions']);
 
-  switch (plugins) {
-    case 'all': return getAllPlugins(); // get all plugins, even potentially incompatible ones
-    case 'compatible': return getAllCompatiblePlugins(functions); // get all plugins compatible with functions
-    case 'matching': return getAllCompatiblePlugins(functions); // get all plugins matching functions
-    default: return getMatchingPlugins(functions);
-  }
+  const plugins = getPlugins(functions, options.plugins);
+
+  return plugins;
 };
 
 module.exports.custom = async ({ options, resolveConfigurationProperty }) => {

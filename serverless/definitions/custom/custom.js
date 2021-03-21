@@ -1,11 +1,11 @@
-const { getPluginsCustoms } = require('../plugins/plugins');
-
-const pluginsConfig = getPluginsCustoms();
+const bundlePluginsCustom = require('./utils/bundlePluginsCustom');
 
 // Set custom configuration(including plugins)
 module.exports.getCustom = () => {
+  const pluginsCustom = bundlePluginsCustom();
+
   const custom = {
-    ...pluginsConfig,
+    ...pluginsCustom,
   };
 
   // set some extra custom configurations...

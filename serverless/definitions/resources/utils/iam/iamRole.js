@@ -10,7 +10,7 @@ module.exports.iamRole = (permissions = []) => {
   return roleConfig;
 };
 
-// TODO: ADD NEW PERMISSION TEMPLATES
+// TODO: ADD NEW PERMISSIONS TEMPLATES
 // module.exports.s3Permission = (bucketName, permission = '*') => {
 
 // }

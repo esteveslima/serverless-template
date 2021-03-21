@@ -1,9 +1,9 @@
-const { getResources } = require('./utils/functionsResources');
+const bundleResources = require('./utils/bundleResources');
 
-// Set stack resources
+// Get stack resources
 module.exports.getResources = (service) => {
   const resources = {
-    ...getResources(service),
+    ...bundleResources(service),
   };
 
   // set some extra resources...
