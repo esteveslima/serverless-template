@@ -9,7 +9,7 @@ module.exports = (service) => {
     delete func.resources; // remove non-function definitions
     // delete func['']
     // ...
-    if (Object.keys(func).length > 1) throw new Error(`More than one function specified: ${Object.keys(func)}`);
+    if (Object.keys(func).length > 1) throw new Error(`More than one function specified: ${Object.keys(func)}`); // TODO: function name has to be the name of its folder?
     Object.keys(func).forEach((f) => { acc[f] = curr[f]; });
     return acc;
   }, {});

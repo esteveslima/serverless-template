@@ -1,4 +1,4 @@
-const plugins = require('../pluginsList');
+const plugins = require('../plugins-list');
 
 // TODO: GET FUCNCTIONS/PROVIDER IAMROLESTATEMENTS TO FILTER/RECOVER PLUGINS FROM SELECTION
 const getFunctionsEvents = (functions) => {

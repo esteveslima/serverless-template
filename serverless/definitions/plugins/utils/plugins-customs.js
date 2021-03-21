@@ -1,4 +1,4 @@
-const pluginsList = require('../pluginsList');
+const pluginsList = require('../plugins-list');
 
 const bundleConfigObject = (objectsList/* , configType */) => {
   // const filteredObjectsList = Object.values(objectsList).filter((obj) => obj[configType]).map((obj) => obj[configType]);

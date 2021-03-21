@@ -5,7 +5,6 @@ const { getFunctions } = require('./definitions/functions/functions');
 const { getPlugins } = require('./definitions/plugins/plugins');
 const { getCustom } = require('./definitions/custom/custom');
 const { getResources } = require('./definitions/resources/resources');
-const { getPluginsCustoms } = require('./definitions/plugins/utils/pluginsCustoms');
 
 // Serverless configurations loaded as .js variables(loading provider and than functions before anything else)
 // CLI options and configurations from other variables available for access

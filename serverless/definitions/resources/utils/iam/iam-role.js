@@ -1,4 +1,4 @@
-const iamDefaultRole = require('./iamDefaultRole');
+const iamDefaultRole = require('./iam-default-role');
 
 const { defaultRole } = iamDefaultRole;
 

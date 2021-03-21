@@ -1,6 +1,6 @@
-const pluginsList = require('./pluginsList');
-const { getAllCompatiblePlugins, getMatchingPlugins } = require('./utils/functionsPlugins');
-const { getPluginsCustoms } = require('./utils/pluginsCustoms');
+const pluginsList = require('./plugins-list');
+const { getAllCompatiblePlugins, getMatchingPlugins } = require('./utils/functions-plugins');
+const { getPluginsCustoms } = require('./utils/plugins-customs');
 
 module.exports.getPluginsCustoms = getPluginsCustoms;
 

@@ -34,7 +34,7 @@ module.exports.triggerEvents = {
 // Prefer to create it manually if the resource isn't strictly tied to the function(e.g. iam role permissions)...
 // ...making it independent from stack and avoiding problems like stack unsyncing and data loss
 
-const { iamRole } = require('../../../../serverless/definitions/resources/utils/iam/iamRole');
+const { iamRole } = require('../../../../serverless/definitions/resources/utils/iam/iam-role');
 
 module.exports.resources = {
   triggerEventsRole: iamRole([

@@ -1,4 +1,4 @@
-const bundleFunctions = require('./utils/bundleFunctions');
+const bundleFunctions = require('./utils/bundle-functions');
 
 // Get service functions' definitions
 module.exports.getFunctions = (service) => {
