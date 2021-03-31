@@ -51,8 +51,9 @@ RUN apk add --no-cache curl && \
     apk add --no-cache bash && \
     apk add --no-cache nano && \
     apk add --no-cache inotify-tools && \
-    npm install -g serverless 
-    #curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install
+    npm install -g serverless@2.30.3
+    #THIS IS THE LATEST WORKING VERSION WITH THIS STRUCTURE(breaking changes introduced at 2.31.0)
+    #curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install # not working with alpine
 
 # Keeps de container running
 CMD tail -f /dev/null
