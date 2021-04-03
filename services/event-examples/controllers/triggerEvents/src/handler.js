@@ -1,5 +1,5 @@
 import fs, { ReadStream } from 'fs';
-import { lambda } from '../../../../../serverless/lib/lib';
+import { lambda } from '@sls/lib';
 import { triggerEvents } from './index';
 
 // Decoupling provider integration from business logic

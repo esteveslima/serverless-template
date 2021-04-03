@@ -1,5 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
-const { provider, plugins } = require('../../serverless/definitions/definitions');
+const { provider, plugins } = require('@sls/definitions');
 
 const { aws } = provider;
 const { allPlugins, pluginsCustoms } = plugins;

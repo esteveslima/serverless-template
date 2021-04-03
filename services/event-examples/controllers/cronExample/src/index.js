@@ -1,4 +1,4 @@
-import { } from '../../../../../serverless/lib/lib';
+import { } from '@sls/lib';
 
 export const cronExample = async () => {
   const message = 'This lambda function was triggered by a cloudwatch event';

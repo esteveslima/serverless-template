@@ -4,6 +4,8 @@
   "description": "",
   "main": "",
   "scripts": {
+    "sls": "serverless",
+    "serverless": "serverless",
     "wipe": "sudo rm -rf .serverless/",
     "test": "jest"
   },

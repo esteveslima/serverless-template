@@ -1,4 +1,4 @@
-import { } from '../../../../../../serverless/lib/lib';
+import { } from '@sls/lib';
 import { S3, Endpoint } from 'aws-sdk';
 
 const {

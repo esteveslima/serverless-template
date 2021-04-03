@@ -1,4 +1,4 @@
-import { } from '../../../../../serverless/lib/lib';
+import { } from '@sls/lib';
 
 export const asyncExample = async (path, query, headers, body) => {
   const message = 'This is a simple post request that ran in async mode(apiGateway instantaneously returns 200 response but lambda continues running)';

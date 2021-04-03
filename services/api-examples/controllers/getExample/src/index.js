@@ -1,4 +1,4 @@
-import { } from '../../../../../serverless/lib/lib';
+import { } from '@sls/lib';
 
 export const getExample = async (pathParameters, queryStringParameters, headers) => {
   const message = 'This is a simple get request with some path, query and header parameters';

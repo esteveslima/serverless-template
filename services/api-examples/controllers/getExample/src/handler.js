@@ -1,4 +1,4 @@
-import { lambda } from '../../../../../serverless/lib/lib';
+import { lambda } from '@sls/lib';
 import { getExample } from './index';
 
 // Decoupling provider integration from business logic

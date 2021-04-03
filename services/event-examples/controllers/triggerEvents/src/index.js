@@ -1,4 +1,4 @@
-import { } from '../../../../../serverless/lib/lib';
+import { } from '@sls/lib';
 import triggerSns from './utils/triggerSns';
 import triggerSqs from './utils/triggerSqs';
 import triggerS3 from './utils/triggerS3';
