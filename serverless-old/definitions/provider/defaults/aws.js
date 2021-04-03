@@ -2,8 +2,8 @@
 module.exports = {
   name: 'aws',
   runtime: 'nodejs12.x',
-  stage: "${opt:stage, 'local'}",
-  region: "${opt:region, 'us-east-1'}",
+  stage: 'local', // "${opt:stage, 'local'}",
+  region: 'us-east-1', // "${opt:region, 'us-east-1'}",
   // apiName: 'serverless-template-${self:service}',
   memorySize: 128,
   timeout: 30,

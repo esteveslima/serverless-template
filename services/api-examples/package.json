@@ -1,0 +1,15 @@
+{
+  "name": "@services/api-examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "dependencies": {
+    "jsonwebtoken": "8.5.1"
+  },
+  "scripts": {
+    "wipe": "sudo rm -rf .serverless/",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC"
+}

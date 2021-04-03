@@ -20,11 +20,17 @@ module.exports = {
     /* 'import/no-extraneous-dependencies': 'off',
     camelcase: 'off', */
   },
-  /* settings: {
-    'import/resolver': {
-      webpack: {
-        config: 'webpack.config.js',
-      },
-    },
-  }, */
+  // settings: {
+  //   'import/resolver': {
+  //     // webpack: {
+  //     //   config: 'webpack.config.js',
+  //     // },
+  //     // // alias: {
+  //     // //   map: [
+  //     // //     ['@', '/'],
+  //     // //   ],
+  //     // //   extensions: ['.js', '.jsx'/* , '.ts', '.tsx' */],
+  //     // // },
+  //   },
+  // },
 };

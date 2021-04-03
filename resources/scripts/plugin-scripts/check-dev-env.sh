@@ -10,7 +10,7 @@ printf "\n";
 
 CONTAINER_DIR="/serverless-container"
 
-if (grep 'docker\|lxc' /proc/1/cgroup -qa) && [ "$PWD" = "$CONTAINER_DIR" ]
+if (grep 'docker\|lxc' /proc/1/cgroup -qa) && [ "${PWD##$CONTAINER_DIR}" != "${PWD}" ]
 then 
     printf "${CYAN}Serverless script plugin: Detected docker environment${NO_COLOR}"; 
     STATUS=0;

@@ -1,6 +1,6 @@
 module.exports = {
   testEnvironment: 'node',
-  roots: ['<rootDir>/project'],
+  roots: ['<rootDir>/services'],
   coverageDirectory: '.coverage',
   // collectCoverageFrom: ['!**/__mocks__/**'],
   // coveragePathIgnorePatterns: ['/__mocks__/', '/mock/'],

@@ -1,14 +1,15 @@
-const pluginsList = require('./plugins-list');
-const { getAllCompatiblePlugins, getMatchingPlugins } = require('./utils/functions-plugins');
-const { getPluginsCustoms } = require('./utils/plugins-customs');
+const allPlugins = require('./sets/all-plugins');
 
-module.exports.getPluginsCustoms = getPluginsCustoms;
+module.exports = {
+  allPlugins: Object.keys(allPlugins),
 
-module.exports.getPlugins = (functions, option) => {
-  switch (option) {
-    case 'all': return Object.keys(pluginsList); // get all plugins, even potentially incompatible ones
-    case 'compatible': return getAllCompatiblePlugins(functions); // get all plugins compatible with functions
-    case 'matching': return getAllCompatiblePlugins(functions); // get all plugins matching functions
-    default: return getMatchingPlugins(functions);
-  }
+  pluginsCustoms: (plugins) => {
+    const customs = plugins.reduce((acc, curr) => {
+      const [key, value] = [Object.keys(allPlugins[curr])[0], Object.values(allPlugins[curr])[0]];
+      if (key && value) acc[key] = value;
+      return acc;
+    }, {});
+
+    return customs;
+  },
 };

@@ -1,12 +1,5 @@
-const bundleResources = require('./utils/bundle-resources');
+const { iamRole } = require('./iam/iam-role');
 
-// Get stack resources
-module.exports.getResources = (service) => {
-  const resources = {
-    ...bundleResources(service),
-  };
-
-  // set some extra resources...
-
-  return resources;
+module.exports = {
+  iamRole,
 };

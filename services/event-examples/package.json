@@ -1,0 +1,12 @@
+{
+  "name": "@services/event-examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "wipe": "sudo rm -rf .serverless/",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC"
+}

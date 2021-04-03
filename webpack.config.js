@@ -19,8 +19,8 @@ module.exports = {
 
   module: {
     rules: [
-      // transcompile code to a compatible version(aws supports node 12)...
-      // ... allowing to use new js features
+      // transcompile code to a compatible version(cloud supported node version)...
+      // ... allowing to use new js features while being compatible
       {
         test: /\.m?js$/,
         exclude: /node_modules/,
@@ -58,9 +58,7 @@ module.exports = {
       }, */
     ],
   },
-  resolve: {
-    extensions: ['.ts', '.js'],
-  },
+
   output: {
     libraryTarget: 'commonjs2',
     path: path.join(__dirname, '.webpack'),
@@ -68,12 +66,12 @@ module.exports = {
   },
 
   // ---------------------testing path alias---------------------------
-  /* resolve: {
-    extensions: ['.js'],
-    alias: {
-      '~': path.resolve(__dirname, './serverless/'),
-    },
-  }, */
+  resolve: {
+    extensions: ['.ts', '.js'],
+    // alias: {
+    //   root: path.resolve(__dirname, '/'),
+    // },
+  },
   /* resolve: {
     root: __dirname,
     alias: npmPackage.moduleAliases || {},
