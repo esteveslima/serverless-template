@@ -1,11 +1,3 @@
-// Wrapping function to lambda responses, which requires body to be strigified
-// DEPRECATED
-/* export const response = (statusCode, headers = undefined, data = undefined) => ({
-  statusCode,
-  headers,
-  body: typeof data === 'string' ? data : JSON.stringify(data),
-}); */
-
 // Parse results from functions(accepts statusCode and headers in result object) to lambda responses
 export const parseResponse = (functionResult) => {
   try {
@@ -22,14 +14,8 @@ export const parseResponse = (functionResult) => {
       };
     }
 
-    return {
-      statusCode: 200,
-      body: functionResult,
-    };
+    return { statusCode: 200, body: functionResult };
   } catch (err) {
-    return {
-      statusCode: 500,
-      body: 'Error while parsing response',
-    };
+    return { statusCode: 500, body: 'Error on parse response' };
   }
 };

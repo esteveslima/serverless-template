@@ -1,9 +1,9 @@
 import { } from '@sls/lib';
-import triggerSns from './utils/triggerSns';
-import triggerSqs from './utils/triggerSqs';
-import triggerS3 from './utils/triggerS3';
+import triggerSns from './triggerSns';
+import triggerSqs from './triggerSqs';
+import triggerS3 from './triggerS3';
 
-export const triggerEvents = async (triggeredEvents) => {
+export default async (triggeredEvents) => {
   const eventsInfo = {};
 
   // Triggering sns event

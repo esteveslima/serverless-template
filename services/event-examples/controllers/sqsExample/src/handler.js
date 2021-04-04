@@ -1,14 +1,14 @@
-import { lambda } from '@sls/lib';
-import { sqsExample } from './index';
+import { lambda, middleware } from '@sls/lib';
 
-// Decoupling provider integration from business logic
-export const lambdaFunction = lambda.wrapper(async (event) => {
-  const snsMessages = 'event.Records.map((record) => JSON.parse(record.Sns.Message));';
+middleware.before((event) => { console.log('sqsExample'); });
 
-  // const result = await snsExample(snsMessages);
+export default lambda(async (event) => {
+  const sqsMessages = 'event.Records.map((record) => JSON.parse(record.Sns.Message));';
 
-  return {
-    statusCode: 200,
-    body: event,
-  };
+  const message = 'This lambda function was triggered by a sns topic';
+
+  console.log(message);
+  console.log(sqsMessages);
+
+  return event;
 });

@@ -53,7 +53,7 @@ module.exports = {
 
   functions: {
     cronExample: {
-      handler: './controllers/cronExample/src/handler.lambdaFunction',
+      handler: './controllers/cronExample/src/handler.default',
       timeout: 60,
       events: [
         {
@@ -66,7 +66,7 @@ module.exports = {
       ],
     },
     s3Example: {
-      handler: './controllers/s3Example/src/handler.lambdaFunction',
+      handler: './controllers/s3Example/src/handler.default',
       timeout: 60,
       events: [
         {
@@ -87,7 +87,7 @@ module.exports = {
       ],
     },
     snsExample: {
-      handler: './controllers/snsExample/src/handler.lambdaFunction',
+      handler: './controllers/snsExample/src/handler.default',
       timeout: 60,
       events: [
         {
@@ -103,7 +103,7 @@ module.exports = {
       ],
     },
     // sqsExample: {
-    //   handler: './controllers/sqsExample/src/handler.lambdaFunction',
+    //   handler: './controllers/sqsExample/src/handler.default',
     //   timeout: 60,
     //   events: [
     //     {
@@ -117,7 +117,7 @@ module.exports = {
     //   ],
     // },
     triggerEvents: {
-      handler: './controllers/triggerEvents/src/handler.lambdaFunction',
+      handler: './controllers/triggerEvents/src/handler.default',
       timeout: 28,
       environment: { // passing resouces reference inside function
         SNS_ARN: snsArn,

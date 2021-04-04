@@ -1,9 +1,11 @@
-import { lambda } from '@sls/lib';
-import { s3Example } from './index';
+import { lambda, middleware } from '@sls/lib';
 
-// Decoupling provider integration from business logic
-export const lambdaFunction = lambda.wrapper(async (event) => {
-  const result = await s3Example();
+middleware.before((event) => { console.log('s3Example'); });
 
-  return result;
+export default lambda(async (event) => {
+  const message = 'This lambda function was triggered by a s3 event';
+
+  console.log(message);
+
+  return true;
 });

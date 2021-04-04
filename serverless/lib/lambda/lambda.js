@@ -1,5 +1,5 @@
-import { wrapper } from './helpers/wrapper';
+import lambdaResolver from './resolver/lambda-resolver';
 
-export {
-  wrapper,
+export default {
+  lambda: lambdaResolver,
 };

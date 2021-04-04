@@ -1,11 +1,15 @@
-import { lambda } from '@sls/lib';
-import { httpApiExample } from './index';
+import { lambda, middleware } from '@sls/lib';
 
-// Decoupling provider integration from business logic
-export const lambdaFunction = lambda.wrapper(async (event) => {
+middleware.before((event) => { console.log('httpApiExample'); });
+
+export default lambda(async (event) => {
   const { pathParameters, queryStringParameters, headers } = event;
 
-  const result = await httpApiExample(pathParameters, queryStringParameters, headers);
+  const message = 'This is a simple get request to an aws httpApi endpoint';
 
-  return result;
+  return {
+    message,
+    pathParameters,
+    queryStringParameters,
+  };
 });

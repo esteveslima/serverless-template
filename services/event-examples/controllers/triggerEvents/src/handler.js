@@ -1,14 +1,14 @@
-import fs, { ReadStream } from 'fs';
-import { lambda } from '@sls/lib';
-import { triggerEvents } from './index';
+import { lambda, middleware } from '@sls/lib';
+import trigger from './utils/trigger';
 
-// Decoupling provider integration from business logic
-export const lambdaFunction = lambda.wrapper(async (event) => {
+middleware.before((event) => { console.log('triggerEventsExample'); });
+
+export default lambda(async (event) => {
   const { events } = event.queryStringParameters ?? {};
   const availableEvents = ['sns', /* 'sqs', */ 's3'];
   const triggeredEvents = events?.split(',') ?? availableEvents;
 
-  const result = await triggerEvents(triggeredEvents);
+  const result = await trigger(triggeredEvents);
 
   return result;
 });

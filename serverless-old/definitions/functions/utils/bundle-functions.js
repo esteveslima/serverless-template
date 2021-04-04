@@ -17,7 +17,7 @@ module.exports = (service) => {
   const servicePath = `project/services/${service}`;
   // automatically sets default definitions
   Object.keys(functionsDefinitionsObject).forEach((func) => {
-    functionsDefinitionsObject[func].handler = `${servicePath}/${func}/src/handler.lambdaFunction`; // set handler path
+    functionsDefinitionsObject[func].handler = `${servicePath}/${func}/src/handler.default`; // set handler path
     // TODO: automatically set role and dependson for resources from definitions
   });
 

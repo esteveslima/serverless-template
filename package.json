@@ -4,13 +4,14 @@
   "description": "",
   "main": "",
   "devDependencies": {
+    "@babel/core": "^7.13.14",
     "@babel/plugin-transform-runtime": "^7.13.10",
     "@babel/preset-env": "^7.13.10",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.2.2",
-    "eslint": "^7.22.0",
+    "eslint": "^7.23.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "file-loader": "^6.2.0",
@@ -19,11 +20,9 @@
     "webpack-node-externals": "^2.5.2"
   },
   "scripts": {
-    "ws": "npm run --workspaces -- ",
+    "wsp": "npm run --workspaces -- ",
     "workspaces": "npm run --workspaces -- ",
-
     "services": "npm run --workspace=@services/api-examples --workspace=@services/event-examples ",
-
     "wipe": "sudo rm -rf .serverless/ .webpack/ .mongodb-storage/ .mysql-storage/ .redis-storage/ .s3-local/",
     "docker": "${npm_package_config_ALIAS_DOCKER_COMPOSE}",
     "docker:up": "${npm_package_config_ALIAS_DOCKER_COMPOSE} up --detach",

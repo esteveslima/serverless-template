@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "",
+  "dependencies": {
+    "jsonwebtoken": "8.5.1"
+  },
   "scripts": {
     "sls": "serverless",
     "serverless": "serverless",

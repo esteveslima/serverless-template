@@ -1,11 +1,12 @@
 import ErrorResponse from './error-response';
+import logger from '../logger/logger';
 
-export const errorHandler = (err) => {
+export default (err) => {
   // Maps the error and parses it to an appropriate ErrorResponse object, if it is not already
   const errorResponse = ErrorResponse.parse(err);
 
   // eslint-disable-next-line no-console
-  console.error({
+  logger.error({
     errorMessage: JSON.stringify(errorResponse.result),
     stack: err.stack,
   });

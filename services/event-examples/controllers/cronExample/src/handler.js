@@ -1,9 +1,9 @@
-import { lambda } from '@sls/lib';
-import { cronExample } from './index';
+import { lambda, middleware } from '@sls/lib';
 
-// Decoupling provider integration from business logic
-export const lambdaFunction = lambda.wrapper(async (event) => {
-  const result = await cronExample();
+middleware.before((event) => { console.log('cronExample'); });
 
-  return result;
+export default lambda(async (event) => {
+  const message = 'This lambda function was triggered by a cloudwatch event';
+
+  console.log(message);
 });

@@ -1,11 +1,15 @@
-import { lambda } from '@sls/lib';
-import { getExample } from './index';
+import { lambda, middleware } from '@sls/lib';
 
-// Decoupling provider integration from business logic
-export const lambdaFunction = lambda.wrapper(async (event) => {
+middleware.before((event) => { console.log('getExample'); });
+
+export default lambda(async (event) => {
   const { pathParameters, queryStringParameters, headers } = event;
 
-  const result = await getExample(pathParameters, queryStringParameters, headers);
+  const message = 'This is a simple get request with some path, query and header parameters';
 
-  return result;
+  return {
+    message,
+    pathParameters,
+    queryStringParameters,
+  };
 });

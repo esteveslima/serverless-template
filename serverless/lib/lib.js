@@ -1,11 +1,22 @@
-import * as core from './core/core';
-import * as lambda from './lambda/lambda';
-//
-import { ErrorResponse } from './core/core';
+import Core from './core/core';
+import Lambda from './lambda/lambda';
+
+// Export resources objects
+export {
+  Core,
+  Lambda,
+};
+
+// Export frequently used lambda resources
+const { lambda } = Lambda;
 
 export {
-  core,
   lambda,
-  //
-  ErrorResponse,
+};
+
+// Export frequently used core resources
+const { middleware } = Core;
+
+export {
+  middleware,
 };

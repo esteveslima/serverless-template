@@ -16,7 +16,6 @@ module.exports = {
     // ... or make all modules external(fixing all conflicts, but making deployment possibly larger)
     // nodeExternals(),
   ],
-
   module: {
     rules: [
       // transcompile code to a compatible version(cloud supported node version)...
@@ -25,7 +24,7 @@ module.exports = {
         test: /\.m?js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: 'babel-loader', // TODO: find config to retain original lines on error
           options: {
             presets: [
               [

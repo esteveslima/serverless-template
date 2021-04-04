@@ -18,7 +18,7 @@ module.exports = {
 
   functions: {
     asyncExample: {
-      handler: './controllers/asyncExample/src/handler.lambdaFunction',
+      handler: './controllers/asyncExample/src/handler.default',
       timeout: 900,
       events: [
         {
@@ -31,7 +31,7 @@ module.exports = {
       ],
     },
     getExample: {
-      handler: './controllers/getExample/src/handler.lambdaFunction',
+      handler: './controllers/getExample/src/handler.default',
       events: [
         {
           http: {
@@ -55,7 +55,7 @@ module.exports = {
       ],
     },
     httpApiExample: {
-      handler: './controllers/httpApiExample/src/handler.lambdaFunction',
+      handler: './controllers/httpApiExample/src/handler.default',
       timeout: 28,
       events: [
         {
@@ -67,7 +67,7 @@ module.exports = {
       ],
     },
     postExample: {
-      handler: './controllers/postExample/src/handler.lambdaFunction',
+      handler: './controllers/postExample/src/handler.default',
       events: [
         {
           http: {

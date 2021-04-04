@@ -1,11 +1,11 @@
-import { lambda } from '@sls/lib';
-import { postExample } from './index';
+import { lambda, middleware } from '@sls/lib';
 
-// Decoupling provider integration from business logic
-export const lambdaFunction = lambda.wrapper(async (event) => {
+middleware.before((event) => { console.log('postExample'); });
+
+export default lambda(async (event) => {
   const parameters = event.body;
 
-  const result = await postExample(parameters);
+  const message = 'This is a simple post request with input validation';
 
-  return result;
+  return { message, parameters };
 });
