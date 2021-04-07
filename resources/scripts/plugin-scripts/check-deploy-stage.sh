@@ -8,7 +8,7 @@ NO_COLOR="\033[0m"
 
 printf "\n";
 
-if  [ $SLS_STAGE != "local" ]
+if  [ $SLS_STAGE != "local" ]#TODO:NEEDS REFACTORING SINCE ENV VARIABLE SLS_STAGE ISN'T AVAILABLE IN THIS NEW STRUCTURE
 then 
     printf "${CYAN}Serverless script plugin: detected deploy in stage \"$SLS_STAGE\"${NO_COLOR}";
     STATUS=0;

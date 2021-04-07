@@ -87,22 +87,16 @@ module.exports = {
   'serverless-plugin-scripts': {
     scripts: {
       commands: {
-        // teste: './resources/scripts/plugin-scripts/check-deploy-stage.sh',
-        teste: '../../resources/scripts/plugin-scripts/check-dev-env.sh',
+        teste: '. ../../resources/scripts/plugin-scripts/update-aws-keys-prod.sh',
+        checkdeploystage: '../../resources/scripts/plugin-scripts/check-deploy-stage.sh',
       },
       hooks: {
         // Run before offline -> prevent accidental runs outside docker environment
-        // 'before:offline:start': './resources/scripts/plugin-scripts/check-dev-env.sh',
-        // 'before:offline:start': '../../resources/scripts/plugin-scripts/check-dev-env.sh',
+        'before:offline:start': '../../resources/scripts/plugin-scripts/check-dev-env.sh',
         // Run before deployment -> prevent accidental runs outside docker environment and deployments in stage 'local'
-        // 'before:deploy:deploy': `\
-        //   ./resources/scripts/plugin-scripts/check-dev-env.sh && \
-        //   ./resources/scripts/plugin-scripts/check-deploy-stage.sh
-        // `,
-        // 'before:deploy:deploy': `\
-        //   ../../resources/scripts/plugin-scripts/check-dev-env.sh && \
-        //   ../../resources/scripts/plugin-scripts/check-deploy-stage.sh
-        // `,
+        'before:deploy:deploy': `\
+          ../../resources/scripts/plugin-scripts/check-dev-env.sh
+        `,
         // Run after deployment
         // 'after:deploy:finalize': '',
       },

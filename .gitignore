@@ -12,5 +12,6 @@
 **/--*
 **/testes-serverless
 
-# Sensitive resources
-**/.aws
+# Exceptions from ignoring
+!.md
+!.gitkeep

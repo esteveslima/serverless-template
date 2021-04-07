@@ -8,7 +8,7 @@ NO_COLOR="\033[0m"
 
 printf "\n";
 
-CONTAINER_DIR="/serverless-container"
+CONTAINER_DIR="/serverless-template"
 
 if (grep 'docker\|lxc' /proc/1/cgroup -qa) && [ "${PWD##$CONTAINER_DIR}" != "${PWD}" ]
 then 
