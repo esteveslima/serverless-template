@@ -1,5 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
-
+// TODO: rename "sets" to "profiles"?
 // References from project folder(not monorepo root folder)
 // List of every plugin with its custom configuration(the items order may be relevant)
 module.exports = {
@@ -38,7 +38,7 @@ module.exports = {
 
   },
 
-  // must come before offline server
+  // must come before offline server(bucket folder automatically created only if there is a function with s3 event)
   'serverless-s3-local': { // TODO: SCRIPT TO AUTOMATICALLY UPLOAD FILE THROUGHT AWS-SDK WITH DRAG-DROP FILES IN BUCKET FOLDER(inotifywait with script)
     s3: {
       address: 'localhost',
@@ -53,6 +53,23 @@ module.exports = {
 
     },
   },
+
+  // 'serverless-dynamodb-local': {
+  //   dynamodb: {
+  //     stages: ['local'],
+  //     start: {
+  //       port: 8000,
+  //       inMemory: false, // true,
+  //       heapInitial: '200m',
+  //       heapMax: '1g',
+  //       migration: true,
+  //       migrate: true,
+  //       seed: true,
+  //       convertEmptyValues: true,
+  //       noStart: true, // using dynamoDB docker image
+  //     },
+  //   },
+  // },
 
   // plugin to locally debug with api gateway(requires content-type header to parse data)
   'serverless-offline': {

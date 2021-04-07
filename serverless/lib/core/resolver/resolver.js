@@ -4,7 +4,7 @@
 function Resolver() {
   this.middlewaresBefore = [];
   this.middlewaresAfter = [];
-  this.functionArgs = undefined;
+  // this.functionArgs = undefined;
 
   this.before = function addMiddlewareBefore(func) {
     if (typeof func === 'function') this.middlewaresBefore.push(func);
@@ -14,22 +14,20 @@ function Resolver() {
   };
 
   this.runBefore = async function runMiddlewaresBefore(functionArgs) {
-    this.functionArgs = functionArgs;
+    // this.functionArgs = functionArgs;
     this.middlewaresBefore.forEach(async (func) => {
       const middlewareResult = await func(functionArgs);
     });
   };
-  this.runAfter = async function runMiddlewaresAfter(functionResult) {
+  this.runAfter = async function runMiddlewaresAfter(functionResult, functionArgs) {
     this.middlewaresAfter.forEach(async (func) => {
-      const middlewareResult = await func(functionResult, this.functionArgs);
+      const middlewareResult = await func(functionResult, functionArgs);
     });
   };
   this.resolve = async function resolver(func, args) {
     this.runBefore(args);
-
     const functionResult = await func.apply(this, args);
-
-    this.runAfter(functionResult);
+    this.runAfter(functionResult, args);
 
     return functionResult;
   };

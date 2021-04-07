@@ -50,7 +50,15 @@ module.exports = {
                 ],
               },
 
-              // Add here new permissions...
+              // Add here new permissions like below...
+              // {
+              //   Effect: 'Allow',
+              //   Action: ['sns:Publish'],
+              //   Resource: "arn:...",
+              // }
+              // References:
+              // https://gist.github.com/mechcozmo/bb06948169862771f980c8af39d952e9
+              // https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_action.html
 
             ],
           },
