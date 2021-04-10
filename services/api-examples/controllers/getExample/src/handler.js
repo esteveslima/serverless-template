@@ -1,4 +1,9 @@
-import { lambda, middleware } from '@sls/lib';
+import {
+  lambda,
+  middleware,
+  WarningResponse,
+} from '@sls/lib';
+import functionErrorObjects from '../assets/functionErrorObjects';
 
 middleware.before((event) => { console.log('getExample'); });
 

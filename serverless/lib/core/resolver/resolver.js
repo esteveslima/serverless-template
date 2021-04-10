@@ -1,4 +1,6 @@
 /* eslint-disable prefer-rest-params */
+import { errorHandler } from '../error/error';
+
 // TODO: change to class
 // Function with the purpose of wrapping original function between middlewares executions
 function Resolver() {
@@ -6,6 +8,7 @@ function Resolver() {
   this.middlewaresAfter = [];
   // this.functionArgs = undefined;
 
+  // Register middlewares
   this.before = function addMiddlewareBefore(func) {
     if (typeof func === 'function') this.middlewaresBefore.push(func);
   };
@@ -13,6 +16,7 @@ function Resolver() {
     if (typeof func === 'function') this.middlewaresAfter.push(func);
   };
 
+  // Run middlewares(does not modify arguments)
   this.runBefore = async function runMiddlewaresBefore(functionArgs) {
     // this.functionArgs = functionArgs;
     this.middlewaresBefore.forEach(async (func) => {
@@ -24,30 +28,25 @@ function Resolver() {
       const middlewareResult = await func(functionResult, functionArgs);
     });
   };
-  this.resolve = async function resolver(func, args) {
-    this.runBefore(args);
-    const functionResult = await func.apply(this, args);
-    this.runAfter(functionResult, args);
 
-    return functionResult;
+  // Resolve function between middlewares executions
+  this.resolve = async function resolver(func, args) {
+    const result = await (async () => {
+      try {
+        this.runBefore(args);
+        const functionResult = await func.apply(this, args);
+        this.runAfter(functionResult, args);
+
+        return functionResult;
+      } catch (err) {
+        const errorMessage = errorHandler(err);
+        return errorMessage;
+      }
+    })();
+
+    return result;
   };
 }
-
-// Resolver.prototype.before = function addMiddlewareBefore(func) {
-//   this.middlewaresBefore.push(func);
-// };
-// Resolver.prototype.after = function addMiddlewareAfter(func) {
-//   this.middlewaresAfter.push(func);
-// };
-// Resolver.prototype.resolve = async function resolver(func, args) {
-//   this.runBefore(args);
-
-//   const functionResult = await func.apply(this, args);
-
-//   this.runAfter(functionResult);
-
-//   return functionResult;
-// };
 
 const resolver = new Resolver();
 const middleware = {

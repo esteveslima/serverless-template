@@ -1,20 +1,23 @@
-import ErrorResponse from './error-response';
+import { parseErrorResponse } from './response/response';
+import errorObjects from './error-objects';
 import logger from '../logger/logger';
 
-export default (err) => {
-  // Maps the error and parses it to an appropriate ErrorResponse object, if it is not already
-  const errorResponse = ErrorResponse.parse(err);
+const { IS_OFFLINE } = process.env;
 
-  // eslint-disable-next-line no-console
-  logger.error({
-    errorMessage: JSON.stringify(errorResponse.result),
-    stack: err.stack,
+export default (err) => {
+  const errorResponse = parseErrorResponse(err);
+  errorResponse.stack ??= err.stack;
+
+  logger[errorResponse.errorLevel]({
+    errorResponse,
+    // error: JSON.stringify(err),
+    // stack: err.stack,
   });
 
   return {
-    statusCode: errorResponse.error.httpCode,
-    // headers,
-    Error: errorResponse.error.errorCode,
-    Message: errorResponse.error.message,
+    statusCode: errorResponse.errorObject?.httpCode ?? errorObjects.INTERNAL_SERVER_ERROR.httpCode,
+    // headers, //TODO: return id?
+    Error: errorResponse.errorObject?.errorCode ?? errorObjects.INTERNAL_SERVER_ERROR.errorCode,
+    Message: errorResponse.errorObject?.message ?? errorObjects.INTERNAL_SERVER_ERROR.message,
   };
 };

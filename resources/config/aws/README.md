@@ -1,6 +1,6 @@
 # AWS Deployment credentials
 
-## Create a "credentials" file inside this folder, with the following content:
+## (Inside this folder)Create a folder ".aws" with "credentials" file inside, with the following content:
 
 ```
 [default]

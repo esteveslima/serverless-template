@@ -82,6 +82,7 @@ module.exports = {
 
   },
 
+  // TODO: attach vscode debugger to use with 'sls offline' plugins
   // plugin to run scripts based on serverless commands and hooks(serverless-scriptable-plugin is similar)
   // Serverless hooks: https://gist.github.com/HyperBrain/50d38027a8f57778d5b0f135d80ea406 and https://gist.github.com/MikeSouza/b9d2c89aec768a8871c8778f530cf4ab
   'serverless-plugin-scripts': {
@@ -116,4 +117,5 @@ module.exports = {
 
   // 'serverless-aws-documentation':{},
   // 'serverless-reqvalidator-plugin':{},
+  // 'serverless-api-gateway-throttling': {},
 };

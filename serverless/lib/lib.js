@@ -1,22 +1,28 @@
 import Core from './core/core';
-import Lambda from './lambda/lambda';
+import Aws from './providers/aws/aws';
 
-// Export resources objects
+// Export main resources objects
 export {
   Core,
-  Lambda,
-};
-
-// Export frequently used lambda resources
-const { lambda } = Lambda;
-
-export {
-  lambda,
+  Aws,
 };
 
 // Export frequently used core resources
-const { middleware } = Core;
+const {
+  logger, middleware, WarningResponse, ErrorResponse, ErrorObjects,
+} = Core;
 
 export {
+  logger,
   middleware,
+  WarningResponse,
+  ErrorResponse,
+  ErrorObjects,
+};
+
+// Export frequently used aws resources
+const { lambda } = Aws;
+
+export {
+  lambda,
 };

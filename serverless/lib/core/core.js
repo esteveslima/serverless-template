@@ -1,14 +1,14 @@
-import ErrorResponse from './error/error-response';
-import errorHandler from './error/error-handler';
-import * as utils from './helpers/utils';
+import { ErrorResponse, WarningResponse, ErrorObjects } from './error/error';
 import logger from './logger/logger';
 import { resolver, middleware } from './resolver/resolver';
 
 export default {
-  errorHandler,
   ErrorResponse,
-  utils,
+  WarningResponse,
+  ErrorObjects,
+
   logger,
+
   resolver,
   middleware,
 };

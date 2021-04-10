@@ -51,7 +51,7 @@ module.exports = {
     },
   },
 
-  functions: {
+  functions: { // TODO: documentation per function definition(native or by plugin)
     cronExample: {
       handler: './controllers/cronExample/src/handler.default',
       timeout: 60,
@@ -60,7 +60,7 @@ module.exports = {
           schedule: {
             enabled: true,
             rate,
-            // input: {}
+            // input: {}  // may be useful to differ between multiple crons
           },
         },
       ],
