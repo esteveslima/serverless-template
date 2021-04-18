@@ -8,8 +8,8 @@
   },
   "scripts": {
     "sls": "serverless",
-    "serverless": "serverless",
-    "wipe": "sudo rm -rf .serverless/",
+    "serverless": "serverless",    
+    "wipe": "sudo rm -rf .serverless/ .webpack/",
     "test": "jest"
   },
   "author": "",

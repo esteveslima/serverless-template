@@ -6,7 +6,7 @@ import logger from '../logger/logger';
 
 export default (err) => {
   const errorResponse = parseErrorResponse(err);
-  errorResponse.stack ??= err.stack;
+  errorResponse.stack = err.stack;
 
   logger[errorResponse.errorLevel]({
     errorResponse,

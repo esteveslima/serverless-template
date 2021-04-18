@@ -1,4 +1,4 @@
-import { lambda, middleware } from '@sls/lib';
+import { ErrorResponse, lambda, middleware } from '@sls/lib';
 
 middleware.before((event) => { console.log('snsExample'); });
 // TODO: test examples with actions plugged at sns topic(aws console)

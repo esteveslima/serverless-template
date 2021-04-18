@@ -19,23 +19,27 @@ function Resolver() {
   // Run middlewares(does not modify arguments)
   this.runBefore = async function runMiddlewaresBefore(functionArgs) {
     // this.functionArgs = functionArgs;
-    this.middlewaresBefore.forEach(async (func) => {
-      const middlewareResult = await func(functionArgs);
-    });
+    await Promise.all(
+      this.middlewaresBefore.map(async (func) => {
+        const middlewareResult = await func(functionArgs);
+      }),
+    );
   };
   this.runAfter = async function runMiddlewaresAfter(functionResult, functionArgs) {
-    this.middlewaresAfter.forEach(async (func) => {
-      const middlewareResult = await func(functionResult, functionArgs);
-    });
+    await Promise.all(
+      this.middlewaresAfter.map(async (func) => {
+        const middlewareResult = await func(functionResult, functionArgs);
+      }),
+    );
   };
 
   // Resolve function between middlewares executions
   this.resolve = async function resolver(func, args) {
     const result = await (async () => {
       try {
-        this.runBefore(args);
+        await this.runBefore(args);
         const functionResult = await func.apply(this, args);
-        this.runAfter(functionResult, args);
+        await this.runAfter(functionResult, args);
 
         return functionResult;
       } catch (err) {

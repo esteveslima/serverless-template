@@ -1,7 +1,6 @@
 import {
   lambda,
   middleware,
-  WarningResponse,
 } from '@sls/lib';
 import functionErrorObjects from '../assets/functionErrorObjects';
 

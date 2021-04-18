@@ -4,6 +4,8 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 // const npmPackage = require('./package.json');
 
+const { isLocal } = slsw.lib.webpack;
+
 module.exports = {
   entry: slsw.lib.entries,
   target: 'node',
@@ -57,24 +59,14 @@ module.exports = {
       }, */
     ],
   },
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
 
   output: {
     libraryTarget: 'commonjs2',
     path: path.join(__dirname, '.webpack'),
     filename: '[name].js',
   },
-
-  // ---------------------testing path alias---------------------------
-  resolve: {
-    extensions: ['.ts', '.js'],
-    // alias: {
-    //   root: path.resolve(__dirname, '/'),
-    // },
-  },
-  /* resolve: {
-    root: __dirname,
-    alias: npmPackage.moduleAliases || {},
-    modules: npmPackage.moduleDirectories || [],
-  }, */
 
 };

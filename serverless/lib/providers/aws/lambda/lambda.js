@@ -1,4 +1,5 @@
 /* eslint-disable prefer-rest-params */
+import 'source-map-support/register'; // enable source-map registering at the entry point, to map webpack error logs
 import Core from '../../../core/core';
 import { parseResponse } from './utils/parse-response';
 

@@ -1,4 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
+// TODO: check and clean eslint disables
 // TODO: rename "sets" to "profiles"?
 // References from project folder(not monorepo root folder)
 // List of every plugin with its custom configuration(the items order may be relevant)
@@ -8,6 +9,7 @@ module.exports = {
     webpack: {
       webpackConfig: '../../webpack.config.js',
       includeModules: true,
+      // keepOutputDirectory: true,
     },
   },
 
