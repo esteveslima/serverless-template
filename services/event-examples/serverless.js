@@ -4,7 +4,7 @@ const { provider, plugins, resources } = require('@sls/definitions');
 const { aws } = provider;
 const { allPlugins, pluginsCustoms } = plugins;
 const { iamRole } = resources;
-
+// TODO: REMOVE ARNS AND RECREATE NEW ONES, moving to a .env file
 // cronExample
 const rate = 'cron(0 0 * * ? *)';// 'rate(1 minute)';// SLS_STAGE === 'local' ? 'rate(1 minute)' : 'cron(0 0 * * ? *)';
 
@@ -12,15 +12,13 @@ const rate = 'cron(0 0 * * ? *)';// 'rate(1 minute)';// SLS_STAGE === 'local' ? 
 const bucket = 'sls-test-s3-bucket';
 
 // snsExample
-
-// sqsExample
-
-// triggerEvents
 const snsArn = 'arn:aws:sns:us-east-1:809635126572:testSns';
 
-const sqsArn = '';
-const sqsUrl = '';
+// sqsExample
+const sqsArn = 'arn:aws:sqs:us-east-1:809635126572:testSqs';
+const sqsUrl = 'https://sqs.us-east-1.amazonaws.com/809635126572/testSqs';
 
+// triggerEvents
 const s3Arn = 'arn:aws:s3:::sls-test-s3-bucket';
 const s3BucketName = s3Arn.split(':').slice(-1)[0];
 
@@ -46,6 +44,11 @@ module.exports = {
           Effect: 'Allow',
           Action: ['sns:Publish'],
           Resource: snsArn,
+        },
+        {
+          Effect: 'Allow',
+          Action: ['sqs:SendMessage'],
+          Resource: sqsArn,
         },
       ]),
     },
@@ -92,7 +95,7 @@ module.exports = {
       events: [
         {
           sns: {
-            arn: 'arn:aws:sns:us-east-1:809635126572:testSns', // Prefer to create resources independently from this stack, preventing syncing and data loss problems
+            arn: snsArn, // Prefer to create resources independently from this stack, preventing syncing and data loss problems
             filterPolicy: {
               example: [
                 'test',
@@ -102,20 +105,20 @@ module.exports = {
         },
       ],
     },
-    // sqsExample: {
-    //   handler: './controllers/sqsExample/src/handler.default',
-    //   timeout: 60,
-    //   events: [
-    //     {
-    //       sqs: {
-    //         arn: 'arn:aws:sqs:us-east-1:809635126572:testSqs', // Prefer to create resources independently from this stack, preventing syncing and data loss problems
-    //         enabled: true,
-    //         batchSize: 1,
-    //         maximumBatchingWindow: 10,
-    //       },
-    //     },
-    //   ],
-    // },
+    sqsExample: {
+      handler: './controllers/sqsExample/src/handler.default',
+      timeout: 30, // limited to queue timeout
+      events: [
+        {
+          sqs: {
+            arn: sqsArn, // Prefer to create resources independently from this stack, preventing syncing and data loss problems
+            enabled: true,
+            batchSize: 1,
+            maximumBatchingWindow: 10,
+          },
+        },
+      ],
+    },
     triggerEvents: {
       handler: './controllers/triggerEvents/src/handler.default',
       timeout: 28,

@@ -1,17 +1,9 @@
-import { } from '@sls/lib';
-import { SQS } from 'aws-sdk';
+import { sqs } from '@sls/lib';
 
-const {
-  STAGE, REGION, SQS_URL,
-} = process.env;
+const { SQS_URL } = process.env;
 
 export default async () => {
   // Triggering sqs event
-  const sqsConfig = {
-    apiVersion: '2012-11-05',
-    region: REGION,
-  };
-  const sqs = new SQS(sqsConfig);
 
   const params = {
     DelaySeconds: 10,
@@ -22,7 +14,7 @@ export default async () => {
       },
     },
     MessageBody: JSON.stringify({ messageKey: 'messageValue' }),
-    QueueUrl: SQS_URL, // `https://sqs.${REGION}.amazonaws.com/${ACCOUNT_ID}/${SQS_TOPIC}`,
+    QueueUrl: SQS_URL,
   };
   const submission = await sqs.sendMessage(params).promise();
 

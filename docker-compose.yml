@@ -1,29 +1,32 @@
-# docker-compose file setting up local testing environment for AWS services alongside serverless-offline plugins
+# docker-compose file setting up local testing environment for AWS services alongside serverless plugins
+# Feel free to comment out unnused services
 
 version: '3.8'
 services:
-    serverless-container:                                             # Setting up Serverless environment        
+    serverless-container:                                             # Setting up Serverless development environment        
         image: esteveslima/serverless-template-image:latest           
         build:
             context: .
             dockerfile: Dockerfile
         volumes:
-           - ./:/serverless-template                                 # Using the entire project folder as volume for development
-           - ./resources/.aws:/home/node/.aws                         # Setting up AWS credentials inside the container(~/.aws)
+           - ./:/serverless-template                                  # Using the entire project folder as volume for development
+           - ./resources/config/aws/.aws:/home/node/.aws              # Setting up AWS credentials inside the container(~/.aws)
         working_dir: /serverless-template      
         environment:
-            - NODE_TLS_REJECT_UNAUTHORIZED=0                          # Fixing SSL/TLS errors in local development environment
+            - NODE_TLS_REJECT_UNAUTHORIZED=0                          # Fixing SSL/TLS errors in local development environment(only to enable sls offline https endpoints)
         restart: "no"
-        # depends_on:
-        #     - mysql-container
-        #     - mongo-container
-        #     - redis-container
-        #     - queue-container
+        depends_on:
+            # - mysql-container
+            # - mongo-container
+            # - redis-container
+            - queue-container
+            # - dynamodb-container
         expose:
             - "4000-4010"
         ports:
-            - "4000-4010:4000-4010"
-    # mysql-container:                                                  # Setting up RDS local testing environment with mysql
+            - "4000:4000"
+            # - "4000-4010:4000-4010"
+    # mysql-container:                                                 # Setting up RDS local testing environment with mysql
     #     image: mysql
     #     volumes:
     #        - ./.mysql-storage:/var/lib/mysql                                 
@@ -37,7 +40,7 @@ services:
     #        - '3306'             
     #     # ports:
     #     #   - '3306:3306'                 
-    # mongo-container:                                                  # Setting up DynamoDB local testing environment with mongo              
+    # mongo-container:                                                  # Setting up MongoDB local testing environment with mongo
     #    image: mongo
     #    volumes:
     #        - ./.mongodb-storage:/data/db                                 
@@ -50,6 +53,18 @@ services:
     #        - '27017'                         
     #     # ports:
     #     #     - '27017:27017'
+    # dynamodb-container:                                                 # Setting up DynamoDB local testing environment with dynamoDB local
+    #     image: amazon/dynamodb-local
+    #     restart: always        
+    #     command: "-jar DynamoDBLocal.jar -port 8000 -sharedDb -optimizeDbBeforeStartup -dbPath ./data"
+    #     working_dir: /home/dynamodblocal
+    #     user: root
+    #     volumes:
+    #         - "./.dynamodb-storage:/home/dynamodblocal/data"
+    #     expose:
+    #        - '8000'
+    #     ports:
+    #        - '8000:8000'                                                # shell available at http://localhost:8000/shell/  
     # redis-container:                                                  # Setting up ElastiCache local testing environment with redis
     #     image: redis
     #     command: ["redis-server", "--appendonly", "yes"]
@@ -60,12 +75,12 @@ services:
     #     expose:
     #        - '6379'
     #     # ports:
-    #     #    - '6379:6379'
-    # queue-container:                                                  # Setting up SQS local testing environment with elasticMQ
-    #     image: softwaremill/elasticmq
-    #     restart: always
-    #     expose:
-    #        - '9324'
-    #     # ports:
-    #     #    - '9324:9324'
+    #     #    - '6379:6379'         
+    queue-container:                                                  # Setting up SQS local testing environment with elasticMQ
+        image: softwaremill/elasticmq
+        restart: always
+        expose:
+           - '9324'
+        ports:
+           - '9324:9324'
             
