@@ -12,8 +12,6 @@ RUN apk add --no-cache curl && \
 # Install development packages(beware of versions) TODO: register last working versions
 RUN npm install -g npm@lts && \    
     npm install -g serverless
-    # not working with alpine
-    #curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install && \
     #apk add --no-cache inotify-tools
 
 # Install AWS-CLI and glibc for compatibility in alpine
@@ -35,6 +33,7 @@ RUN apk --no-cache add binutils && \
         glibc-*.apk && \
     apk --no-cache del binutils && \
     rm -rf /var/cache/apk/*
+# TODO: doc: mention the requirement for "--" to isolate npm scripts parameters from the commands parameters(as in aws cli for "npm run aws")
 
 # Grant privileges to alpine native node user
 RUN echo "node ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/node && \

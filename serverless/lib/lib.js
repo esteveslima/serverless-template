@@ -21,8 +21,16 @@ export {
 };
 
 // Export frequently used aws resources
-const { lambda } = Aws;
+const {
+  lambda,
+  s3,
+  sns,
+  sqs,
+} = Aws;
 
 export {
   lambda,
+  s3,
+  sns,
+  sqs,
 };
