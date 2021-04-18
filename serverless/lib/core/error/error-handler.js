@@ -2,7 +2,7 @@ import { parseErrorResponse } from './response/response';
 import errorObjects from './error-objects';
 import logger from '../logger/logger';
 
-const { IS_OFFLINE } = process.env;
+// const { IS_OFFLINE } = process.env;
 
 export default (err) => {
   const errorResponse = parseErrorResponse(err);
@@ -10,8 +10,6 @@ export default (err) => {
 
   logger[errorResponse.errorLevel]({
     errorResponse,
-    // error: JSON.stringify(err),
-    // stack: err.stack,
   });
 
   return {

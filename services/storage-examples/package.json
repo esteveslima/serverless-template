@@ -1,0 +1,19 @@
+{
+  "name": "@services/storage-examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "dependencies": {
+    "dynamoose": "^2.7.3",
+    "faker": "^5.5.3"
+  },
+  "scripts": {
+    "sls": "serverless",
+    "serverless": "serverless",
+    "wipe": "sudo rm -rf .serverless/",
+    "test": "jest",
+    "aws:ddb": "aws --endpoint-url http://dynamodb-container:8000 --region us-east-1 dynamodb"
+  },
+  "author": "",
+  "license": "ISC"
+}
