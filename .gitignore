@@ -15,3 +15,4 @@
 # Exceptions from ignoring
 !.md
 !.gitkeep
+!**/.vscode/
