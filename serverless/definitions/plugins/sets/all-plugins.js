@@ -9,7 +9,6 @@ module.exports = {
     webpack: {
       webpackConfig: '../../webpack.config.js',
       includeModules: true,
-      // keepOutputDirectory: true,
     },
   },
 

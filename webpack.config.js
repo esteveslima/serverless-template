@@ -5,7 +5,7 @@ const nodeExternals = require('webpack-node-externals');
 // const npmPackage = require('./package.json');
 
 const { isLocal } = slsw.lib.webpack;
-
+console.log(__dirname);
 module.exports = {
   entry: slsw.lib.entries,
   target: 'node',
@@ -20,35 +20,21 @@ module.exports = {
   ],
   module: {
     rules: [
-      // transcompile code to a compatible version(cloud supported node version)...
-      // ... allowing to use new js features while being compatible
+      // transcompile code to a compatible version using babel(allow new js features)
       {
         test: /\.m?js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader', // TODO: find config to retain original lines on error
+          loader: 'babel-loader',
           options: {
-            presets: [
-              [
-                '@babel/preset-env',
-                {
-                  targets: {
-                    esmodules: true,
-                    node: '12',
-                  },
-                },
-              ],
-            ],
-            // plugins: [
-            //   '@babel/plugin-transform-runtime',
-            // ],
+            configFile: path.resolve(__dirname, 'babel.config.js'),
           },
         },
       },
       // include extra files with original path directory(when imported)
       {
         test: /\.(jpe?g|png)$/i,
-        loader: 'file-loader', // npm package required
+        loader: 'file-loader',
         options: {
           name: '[path][name].[ext]',
         },
@@ -67,6 +53,8 @@ module.exports = {
     libraryTarget: 'commonjs2',
     path: path.join(__dirname, '.webpack'),
     filename: '[name].js',
+
+    // vscode debugger resolution for breakpoints in original files
     devtoolModuleFilenameTemplate: '[absolute-resource-path]',
     devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]',
   },

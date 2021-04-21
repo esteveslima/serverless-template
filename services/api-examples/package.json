@@ -7,16 +7,17 @@
     "jsonwebtoken": "8.5.1"
   },
   "scriptsDescriptions": {
-    "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm)",
-
-    "sls": "alias for serverless command(further command will be applied. E.g: npm run sls deploy ...)",
-    "serverless": "alias for serverless command(further command will be applied. E.g: npm run serverless deploy ...)",
+    "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm) -> TODO: check the necessity to migrate over to yarn workspaces(or lerna) to manage inter package dependency(like services pakcages dependency on serverless lib package)",
+    "sls:babel": "TODO: test using babel directly to be able to not use webpack",
+    "sls": "alias for serverless command(further command will be applied. E.g: npm run sls deploy -- --stage local ...)",
+    "serverless": "alias for serverless command(further command will be applied. E.g: npm run serverless deploy -- --stage local ...)",
     "offline:debug:global": "[DEPRECATED:USE LOCAL NPM BIN] script used to start serverless offline with docker-compatible vscode debugger(Referencing global node_modules bin)",
     "offline:debug": "script used to start serverless offline with docker-compatible vscode debugger(Referencing local node_modules bin)",
     "wipe": "script used to easly wipe temporary files",
     "test": "test command"
   },
   "scripts": {
+    "sls:babel": "babel-node --presets=@babel/preset-env . && node --inspect=0.0.0.0:9229 $INIT_CWD/../../node_modules/.bin/sls offline start",
     "sls": "serverless",
     "serverless": "serverless",
     "offline:debug:global": "node --inspect=0.0.0.0:9229 $(npm config get prefix)/bin/sls offline start",

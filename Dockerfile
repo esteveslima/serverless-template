@@ -1,6 +1,6 @@
 # Setting up a serverless container for development
 
-# Use the official node image 
+# Use the official node image (TODO: switch to nvm?)
 FROM node:lts-alpine as nodeBuilderStage
 
 # Install extra useful packages for alpine version
@@ -11,7 +11,7 @@ RUN apk add --no-cache curl && \
 
 # Install development packages(beware of versions) TODO: register last working versions
 RUN npm install -g npm@lts    
-    # npm install -g serverless          # Using serverless installed locally to track version(using npm scripts as aliases)
+    # npm install -g serverless          # Using serverless installed locally to track version(using npm scripts as aliases) -> TODO: check if commands doesnt become too much verbose with the extas double dashes '--' to isolate npm scripts options from command options
     # apk add --no-cache inotify-tools   # Possible future feature which would monitor folders(such as s3 local) to automatically generate commands(such as s3 aws-cli)
 
 # Install AWS-CLI and glibc for compatibility in alpine

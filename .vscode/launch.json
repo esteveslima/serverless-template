@@ -9,7 +9,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Host Serverless Offline",
+            "name": "Debug Serverless Offline",
             "type": "node",
             "request": "attach",            
             "protocol": "inspector",
