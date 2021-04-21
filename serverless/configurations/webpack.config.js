@@ -1,11 +1,11 @@
-/* eslint-disable max-len */
 const slsw = require('serverless-webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
-// const npmPackage = require('./package.json');
 
+// Using plugin to get sls variables
+const { serviceDir } = slsw.lib.serverless;
 const { isLocal } = slsw.lib.webpack;
-console.log(__dirname);
+
 module.exports = {
   entry: slsw.lib.entries,
   target: 'node',
@@ -27,7 +27,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            configFile: path.resolve(__dirname, 'babel.config.js'),
+            configFile: path.resolve(__dirname, 'babel.config.js'), // Using package's babel config file
           },
         },
       },
@@ -51,7 +51,7 @@ module.exports = {
 
   output: {
     libraryTarget: 'commonjs2',
-    path: path.join(__dirname, '.webpack'),
+    path: `${serviceDir}/.temp/.webpack`, // Set output bundle to the service folder(.temp)
     filename: '[name].js',
 
     // vscode debugger resolution for breakpoints in original files

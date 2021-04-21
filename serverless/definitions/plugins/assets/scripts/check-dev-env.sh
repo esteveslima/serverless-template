@@ -4,6 +4,7 @@ CONTAINER_DIR="/serverless-template"
 
 RED="\033[0;31m"
 CYAN="\033[0;36m"
+BLACK="\033[0;30m"
 NO_COLOR="\033[0m"
 
 
@@ -26,6 +27,7 @@ then
     STATUS=0;
 else 
     printf "${RED}Serverless script plugin: USE DOCKER ENVIRONMENT${NO_COLOR}";
+    printf "${BLACK}\t(Disable this verification script with SLS_MODE=no-scripts)${NO_COLOR}";
     STATUS=1;
 fi
 printf "\n";

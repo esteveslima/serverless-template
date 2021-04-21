@@ -1,13 +1,20 @@
-/* eslint-disable no-template-curly-in-string */
+const path = require('path');
+
+const pluginsAssets = path.resolve(`${__dirname}/../assets`); // absolute path to definitions package plugin assets
+const monorepoRoot = '../../';                                // relative monorepo root path
+const serviceTempDir = '.temp/';                              // relative path to temporary folder used for each service
+
+// TODO: move .serverless to .temp in each service(?)
 // TODO: check and clean eslint disables
-// TODO: rename "sets" to "profiles"?
-// References from project folder(not monorepo root folder)
+
+
+// The paths references in properties are from the project folder scope(not the monorepo root folder), because this file will be imported and used as boilerplate
 // List of every plugin with its custom configuration(the items order may be relevant)
 module.exports = {
   // plugin to bundle only necessary code from service functions(must be the first on the list)
   'serverless-webpack': {
     webpack: {
-      webpackConfig: '../../webpack.config.js',
+      webpackConfig: './webpack.config.js',
       includeModules: true,
     },
   },
@@ -22,10 +29,9 @@ module.exports = {
       host: 'localhost',
       port: '4569',
       accessKeyId: 'S3RVER',
-      secretAccessKey: 'S3RVER',
-      // httpsProtocol: './resources/local-ssl-tls',
-      httpsProtocol: '../../resources/local-ssl-tls', // TODO: move plugins resources(maybe to definitions, importing here loaded from js 'path')
-      directory: '../../.s3-local',
+      secretAccessKey: 'S3RVER',      
+      httpsProtocol: `${pluginsAssets}/local-ssl-tls`,
+      directory: `${serviceTempDir}/.s3-local`, // uploaded files at service .temp folder
       silent: true,
     },
   },
@@ -57,7 +63,7 @@ module.exports = {
   // plugin to locally debug with api gateway(requires content-type header to parse data)
   'serverless-offline': {
     'serverless-offline': {
-      httpsProtocol: '../../resources/local-ssl-tls',
+      httpsProtocol: `${pluginsAssets}/local-ssl-tls`,
       host: '0.0.0.0', // binding to special address to make "offline" server reachable from outside docker network
       httpPort: '4000',
     },
@@ -67,15 +73,16 @@ module.exports = {
   'serverless-plugin-scripts': {
     scripts: {
       commands: {
-        teste: '. ../../resources/scripts/plugin-scripts/update-aws-keys-prod.sh',
-        checkdeploystage: '../../resources/scripts/plugin-scripts/check-deploy-stage.sh',
+        teste: `. ${monorepoRoot}/resources/scripts/update-aws-keys-prod.sh`,
+        checkdeploystage: `${pluginsAssets}/scripts/check-deploy-stage.sh`,
       },
       hooks: { // See some serverless hooks: export SLS_DEBUG=* or https://gist.github.com/HyperBrain/50d38027a8f57778d5b0f135d80ea406 and https://gist.github.com/MikeSouza/b9d2c89aec768a8871c8778f530cf4ab
         // Run before offline -> prevent accidental runs outside docker environment
-        'before:offline:start': '../../resources/scripts/plugin-scripts/check-dev-env.sh',
+        'before:offline:start': `${pluginsAssets}/scripts/check-dev-env.sh`,
         // Run before deployment -> prevent accidental runs outside docker environment
         'before:deploy:deploy': `\
-          ../../resources/scripts/plugin-scripts/check-dev-env.sh
+          ${pluginsAssets}/scripts/check-dev-env.sh && \
+          echo Deploy Finished
         `,
         // Run after deployment
         // 'after:deploy:finalize': '',

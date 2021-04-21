@@ -20,7 +20,7 @@
             "outFiles": [
                 "${workspaceFolder}/.webpack/**/*.js"        // set distribution(webpack bundle) file path
             ],
-            "remoteRoot": "/serverless-template",            // set project root-path
+            "remoteRoot": "/serverless-template",            // set project remote root-path
             "address": "localhost",
             "port": 4000,                                    // sls offline plugin port
         }

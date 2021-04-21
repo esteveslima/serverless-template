@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "definitions.js",
-  "dependencies": {
+  "devDependencies": {
     "serverless": "^2.37.0",
     "serverless-offline": "^6.8.0",
     "serverless-offline-scheduler": "^0.4.2",

@@ -30,7 +30,7 @@ services:
     # mysql-container:                                                 # Setting up RDS local testing environment with mysql
     #     image: mysql
     #     volumes:
-    #        - ./.mysql-storage:/var/lib/mysql                                 
+    #        - ./.volumes/.mysql-storage:/var/lib/mysql                                 
     #     environment:
     #        - MYSQL_USER=root
     #        - MYSQL_PASSWORD=password
@@ -44,7 +44,7 @@ services:
     # mongo-container:                                                  # Setting up MongoDB local testing environment with mongo
     #    image: mongo
     #    volumes:
-    #        - ./.mongodb-storage:/data/db                                 
+    #        - ./.volumes/.mongodb-storage:/data/db                                 
     #    environment:
     #        - MONGO_INITDB_DATABASE=mongo-db                      
     #        #- MONGO_INITDB_ROOT_USERNAME=user                                 
@@ -61,7 +61,7 @@ services:
         working_dir: /home/dynamodblocal
         user: root
         volumes:
-            - "./.dynamodb-storage:/home/dynamodblocal/data"
+            - "./.volumes/.dynamodb-storage:/home/dynamodblocal/data"
         expose:
            - '8000'
         ports:
@@ -70,7 +70,7 @@ services:
     #     image: redis
     #     command: ["redis-server", "--appendonly", "yes"]
     #     volumes:
-    #        - ./.redis-storage:/data
+    #        - ./.volumes/.redis-storage:/data
     #     #environment:
     #     restart: always
     #     expose:
