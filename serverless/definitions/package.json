@@ -4,6 +4,7 @@
   "description": "",
   "main": "definitions.js",
   "dependencies": {
+    "serverless": "^2.37.0",
     "serverless-offline": "^6.8.0",
     "serverless-offline-scheduler": "^0.4.2",
     "serverless-offline-sns": "^0.68.0",

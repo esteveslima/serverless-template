@@ -18,6 +18,7 @@ wipe:
 rebuild:
 	make down && make up
 
+# Commands to attach shell(In vscode can be attached by rigt-clicking the container in the docker extension section)
 sh:
 	docker-compose --file $(COMPOSE_PATH) exec --privileged $(SERVERLESS_SERVICE_NAME) bash
 bash:

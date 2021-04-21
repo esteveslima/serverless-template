@@ -7,13 +7,27 @@
     "dynamoose": "^2.7.3",
     "faker": "^5.5.3"
   },
+  "scriptsDescriptions": {
+    "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm)",
+    
+    "sls": "alias for serverless command(further command will be applied. E.g: npm run sls deploy ...)",
+    "serverless": "alias for serverless command(further command will be applied. E.g: npm run serverless deploy ...)",
+    "offline:debug:global": "[DEPRECATED:USE LOCAL NPM BIN] script used to start serverless offline with docker-compatible vscode debugger(Referencing global node_modules bin)",
+    "offline:debug": "script used to start serverless offline with docker-compatible vscode debugger(Referencing local node_modules bin)",
+    "wipe": "script used to easly wipe temporary files",
+    "test": "test command",
+    "aws:ddb": "alias for local container dynamodb aws-cli command(requires a double dash '--' to isolate npm script options from command(aws-cli) options. E.g: npm run aws:ddb describe-table -- --table-name ...)"
+  },
   "scripts": {
     "sls": "serverless",
     "serverless": "serverless",
-    "wipe": "sudo rm -rf .serverless/",
+    "offline:debug:global": "node --inspect=0.0.0.0:9229 $(npm config get prefix)/bin/sls offline start",
+    "offline:debug": "node --inspect=0.0.0.0:9229 $INIT_CWD/../../node_modules/.bin/sls offline start",
+    "wipe": "sudo rm -rf .serverless/ .webpack/",
     "test": "jest",
     "aws:ddb": "aws --endpoint-url http://dynamodb-container:8000 --region us-east-1 dynamodb"
   },
+
   "author": "",
   "license": "ISC"
 }

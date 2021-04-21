@@ -10,7 +10,7 @@ module.exports = {
   entry: slsw.lib.entries,
   target: 'node',
   devtool: 'source-map', // map bundle code for better debugging
-  mode: 'none', // 'production' // set to 'production' to colapse bundled code
+  mode: isLocal ? 'none' : 'production', // production mode colapses bundled code, 'none' keep bundled file identation for better visualization
   externals: [
     // selectively remove modules from bundle marking them as external...
     // { 'aws-sdk': 'commonjs aws-sdk' }, // remove aws-sdk from output bundle

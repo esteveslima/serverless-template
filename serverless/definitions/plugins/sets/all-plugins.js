@@ -25,7 +25,7 @@ module.exports = {
       accessKeyId: 'S3RVER',
       secretAccessKey: 'S3RVER',
       // httpsProtocol: './resources/local-ssl-tls',
-      httpsProtocol: '../../resources/local-ssl-tls',
+      httpsProtocol: '../../resources/local-ssl-tls', // TODO: move plugins resources(maybe to definitions, importing here loaded from js 'path')
       directory: '../../.s3-local',
       silent: true,
     },

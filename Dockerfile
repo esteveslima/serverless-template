@@ -10,9 +10,9 @@ RUN apk add --no-cache curl && \
     apk add --no-cache sudo
 
 # Install development packages(beware of versions) TODO: register last working versions
-RUN npm install -g npm@lts && \    
-    npm install -g serverless
-    #apk add --no-cache inotify-tools
+RUN npm install -g npm@lts    
+    # npm install -g serverless          # Using serverless installed locally to track version(using npm scripts as aliases)
+    # apk add --no-cache inotify-tools   # Possible future feature which would monitor folders(such as s3 local) to automatically generate commands(such as s3 aws-cli)
 
 # Install AWS-CLI and glibc for compatibility in alpine
 ENV GLIBC_VER=2.31-r0
@@ -33,7 +33,6 @@ RUN apk --no-cache add binutils && \
         glibc-*.apk && \
     apk --no-cache del binutils && \
     rm -rf /var/cache/apk/*
-# TODO: doc: mention the requirement for "--" to isolate npm scripts parameters from the commands parameters(as in aws cli for "npm run aws")
 
 # Grant privileges to alpine native node user
 RUN echo "node ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/node && \
