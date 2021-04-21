@@ -3,34 +3,63 @@
   "version": "1.0.0",
   "description": "",
   "main": "",
+
   "workspaces": [
     "./serverless/*",
     "./services/*"
   ],
+
+  "config": {
+    "ALIAS": {
+      "DOCKER_COMPOSE_PATH": "./docker-compose.yml",
+      "DOCKER_COMPOSE_SERVICE": "serverless-container"
+    }
+  },
+
   "scripts": {
     "wsp": "npm run --workspaces",
     "workspaces": "npm run --workspaces",
     "services": "npm run --workspace=@services/api-examples --workspace=@services/event-examples ",
-    "wipe": "sudo rm -rf .serverless/ .webpack/ .mongodb-storage/ .mysql-storage/ .redis-storage/ .s3-local/ .dynamodb-storage/",
-    "docker": "${npm_package_config_ALIAS_DOCKER_COMPOSE}",
-    "docker:up": "${npm_package_config_ALIAS_DOCKER_COMPOSE} up --detach",
-    "docker:up:clean": "${npm_package_config_ALIAS_DOCKER_COMPOSE} up --detach --build --force-recreate --always-recreate-deps",
-    "docker:down": "${npm_package_config_ALIAS_DOCKER_COMPOSE} down",
-    "docker:down:clean": "${npm_package_config_ALIAS_DOCKER_COMPOSE} down --rmi all --volumes --remove-orphans",
+
+    "wipe": "sudo rm -rf .volumes/",
+    "docker": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH}",
+    "docker:up": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} up --detach",
+    "docker:up:clean": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} up --detach --build --force-recreate --always-recreate-deps",
+    "docker:down": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} down",
+    "docker:down:clean": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} down --rmi all --volumes --remove-orphans",
     "postdocker:down": "npm run wipe",
     "postdocker:down:clean": "npm run wipe",
     "docker:rebuild": "npm run docker:down && npm run docker:up",
-    "docker:sh": "${npm_package_config_ALIAS_DOCKER_COMPOSE} exec --privileged ${npm_package_config_ALIAS_DOCKER_COMPOSE_SERVICE} bash",
-    "docker:bash": "${npm_package_config_ALIAS_DOCKER_COMPOSE} exec --privileged ${npm_package_config_ALIAS_DOCKER_COMPOSE_SERVICE} bash",
+    "docker:sh": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} exec --privileged ${npm_package_config_ALIAS_DOCKER_COMPOSE_SERVICE} bash",
+    "docker:bash": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} exec --privileged ${npm_package_config_ALIAS_DOCKER_COMPOSE_SERVICE} bash",
+
     "aws": "aws --endpoint-url http://localstack-container:8000 --region us-east-1",
     "aws:ddb": "aws --endpoint-url http://dynamodb-container:8000 --region us-east-1 dynamodb"
   },
-  "config": {
-    "ALIAS": {
-      "DOCKER_COMPOSE": "docker-compose --file ./docker-compose.yml",
-      "DOCKER_COMPOSE_SERVICE": "serverless-container"
-    }
+
+  "scriptsDescriptions": {
+    "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm) -> TODO",
+
+    "wsp": "npm run --workspaces",
+    "workspaces": "npm run --workspaces",
+    "services": "npm run --workspace=@services/api-examples --workspace=@services/event-examples ",
+
+    "wipe": "sudo rm -rf .volumes/",
+    "docker": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH}",
+    "docker:up": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} up --detach",
+    "docker:up:clean": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} up --detach --build --force-recreate --always-recreate-deps",
+    "docker:down": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} down",
+    "docker:down:clean": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} down --rmi all --volumes --remove-orphans",
+    "postdocker:down": "npm run wipe",
+    "postdocker:down:clean": "npm run wipe",
+    "docker:rebuild": "npm run docker:down && npm run docker:up",
+    "docker:sh": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} exec --privileged ${npm_package_config_ALIAS_DOCKER_COMPOSE_SERVICE} bash",
+    "docker:bash": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} exec --privileged ${npm_package_config_ALIAS_DOCKER_COMPOSE_SERVICE} bash",
+
+    "aws": "aws --endpoint-url http://localstack-container:8000 --region us-east-1",
+    "aws:ddb": "aws --endpoint-url http://dynamodb-container:8000 --region us-east-1 dynamodb"
   },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/esteveslima/serverless-template.git"

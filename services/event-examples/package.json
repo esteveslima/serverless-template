@@ -6,6 +6,16 @@
   "dependencies": {
     "jsonwebtoken": "8.5.1"
   },
+
+  "scripts": {
+    "sls": "serverless",
+    "serverless": "serverless",
+    "offline:debug:global": "node --inspect=0.0.0.0:9229 $(npm config get prefix)/bin/sls offline start",
+    "offline:debug": "node --inspect=0.0.0.0:9229 $INIT_CWD/../../node_modules/.bin/sls offline start",
+    "wipe": "sudo rm -rf .serverless/ .temp/",
+    "test": "jest"
+  },
+
   "scriptsDescriptions": {
     "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm)",
     
@@ -16,14 +26,7 @@
     "wipe": "script used to easly wipe temporary files",
     "test": "test command"
   },
-  "scripts": {
-    "sls": "serverless",
-    "serverless": "serverless",
-    "offline:debug:global": "node --inspect=0.0.0.0:9229 $(npm config get prefix)/bin/sls offline start",
-    "offline:debug": "node --inspect=0.0.0.0:9229 $INIT_CWD/../../node_modules/.bin/sls offline start",
-    "wipe": "sudo rm -rf .serverless/ .webpack/",
-    "test": "jest"
-  },
+  
   "author": "",
   "license": "ISC"
 }

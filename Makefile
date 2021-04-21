@@ -13,7 +13,7 @@ down:
 clean-down:
 	docker-compose --file $(COMPOSE_PATH) down --rmi all --volumes --remove-orphans && make wipe
 wipe:
-	sudo rm -rf .serverless/ .webpack/ .mongodb-storage/ .mysql-storage/ .redis-storage/ .s3-local/ .dynamodb-storage/
+	sudo rm -rf .volumes/
 
 rebuild:
 	make down && make up
