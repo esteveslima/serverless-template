@@ -2,16 +2,13 @@ const path = require('path');
 
 const pluginsAssets = path.resolve(`${__dirname}/../assets`); // absolute path to definitions package plugin assets
 const monorepoRoot = '../../';                                // relative monorepo root path
-const serviceTempDir = '.temp/';                              // relative path to temporary folder used for each service
-
-// TODO: move .serverless to .temp in each service(?)
-// TODO: check and clean eslint disables
-
+const serviceTempDir = '.temp/';                              // relative path to temporary folder used for each service --> TODO: move .serverless to .temp in each service(?)
 
 // The paths references in properties are from the project folder scope(not the monorepo root folder), because this file will be imported and used as boilerplate
 // List of every plugin with its custom configuration(the items order may be relevant)
 module.exports = {
-  // plugin to bundle only necessary code from service functions(must be the first on the list)
+  // must be the first on the list
+  // bundle functions code with tree shaking, transcompiling with babel
   'serverless-webpack': {
     webpack: {
       webpackConfig: './webpack.config.js',
@@ -19,10 +16,10 @@ module.exports = {
     },
   },
 
-  //
+  // test cronjobs with sls offline
   'serverless-offline-scheduler': {},
 
-  // plugin to test s3 events with sls offline(bucket folder automatically created only if there is a function with s3 event)
+  // test s3 events with sls offline
   'serverless-s3-local': { // TODO: SCRIPT TO AUTOMATICALLY UPLOAD FILE THROUGHT AWS-SDK WITH DRAG-DROP FILES IN BUCKET FOLDER(inotifywait with script)
     s3: {
       address: 'localhost',
@@ -31,12 +28,12 @@ module.exports = {
       accessKeyId: 'S3RVER',
       secretAccessKey: 'S3RVER',      
       httpsProtocol: `${pluginsAssets}/local-ssl-tls`,
-      directory: `${serviceTempDir}/.s3-local`, // uploaded files at service .temp folder
+      directory: `${serviceTempDir}/.s3-local`, // uploaded files at service .temp folder(bucket folder automatically created if there's a function with s3 event)
       silent: true,
     },
   },
 
-  // plugin to test sns events with sls offline
+  // test sns events with sls offline
   'serverless-offline-sns': {
     'serverless-offline-sns': {
       port: '4002',
@@ -44,7 +41,8 @@ module.exports = {
     },
   },
 
-  // // plugin to test sqs events with sls offline, removed by default(need fix: not working inside docker container)
+  // // test sqs events with sls offline
+  // // removed by default(need fix: not working inside docker container)
   // // to use it, test directly on host machine with command: export NODE_TLS_REJECT_UNAUTHORIZED=0 && sls offline start
   // // also, remove serverless-plugin-scripts environment check, change serverless-offline port if containers are still running and enable the call at trigger.js for offline environment
   // 'serverless-offline-sqs': {
@@ -58,9 +56,8 @@ module.exports = {
   //     skipCacheInvalidation: false,
   //   },
   // },
-
-  // TODO: attach vscode debugger to use with 'sls offline' plugins
-  // plugin to locally debug with api gateway(requires content-type header to parse data)
+  
+  // local api gateway debug server(dependant plugins must come before)
   'serverless-offline': {
     'serverless-offline': {
       httpsProtocol: `${pluginsAssets}/local-ssl-tls`,
@@ -69,7 +66,7 @@ module.exports = {
     },
   },
 
-  // plugin to run scripts based on serverless commands and hooks(serverless-scriptable-plugin is similar)
+  // run scripts with serverless commands/hooks
   'serverless-plugin-scripts': {
     scripts: {
       commands: {

@@ -1,4 +1,3 @@
-// TODO: change to babelrc and test if webpack works without babel inline config
 module.exports = {
   presets: [
     [

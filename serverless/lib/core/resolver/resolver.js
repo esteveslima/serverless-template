@@ -1,4 +1,3 @@
-/* eslint-disable prefer-rest-params */
 import { errorHandler } from '../error/error';
 
 // TODO: change to class
