@@ -14,7 +14,8 @@
             "request": "attach",            
             "protocol": "inspector",
             "processId": "${command:PickProcess}",
-            "restart": true,            
+            "restart": true,
+            "smartStep": true,
             "sourceMaps": true,
             "outFiles": [
                 "${workspaceFolder}/.webpack/**/*.js"        // set distribution(webpack bundle) file path
@@ -27,13 +28,10 @@
     ]
 }
 
-// PS.: With webpack, breakpoints can be added only in bundled files
-// sourceMaps working only with host machine, not inside docker container
 
 // References:
 // https://github.com/serverless-heaven/serverless-webpack/blob/master/README.md#vscode-debugging
 // https://medium.com/@OneMuppet_/debugging-lambada-functions-locally-in-vscode-with-actual-break-points-deee6235f590
 // https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_remote-debugging
 // https://github.com/dherault/serverless-offline/issues/45
-
-// TODO: map breakpoints from original files(or disable bundle in sls offline -> this would require to use modules(.mjs) due to es6 import/export and the latest node versions)
+// https://github.com/serverless-heaven/serverless-webpack/issues/42
