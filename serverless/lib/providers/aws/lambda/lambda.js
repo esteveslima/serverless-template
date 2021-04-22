@@ -10,7 +10,7 @@ const {
 const { IS_OFFLINE } = process.env;
 
 // Register default middlewares for lambda functions
-middleware.before((args) => { if (!IS_OFFLINE) logger.info(args); });
+middleware.before((args) => { if (!IS_OFFLINE) logger.info(args); }); //TODO: enhance logs to beautify view on cloudwatch
 middleware.after((result, args) => { if (!IS_OFFLINE) logger.info(result); });
 
 // Wrapper for lambda functions

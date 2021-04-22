@@ -3,8 +3,8 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
 // Using plugin to get sls variables
-const { serviceDir } = slsw.lib.serverless;
-const { isLocal } = slsw.lib.webpack;
+const { serviceDir } = slsw.lib.serverless || {}; // requires the empty object fallback due eslint conflicting with this file
+const { isLocal } = slsw.lib.webpack || {};
 
 module.exports = {
   entry: slsw.lib.entries,

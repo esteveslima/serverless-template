@@ -17,8 +17,8 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-unused-vars': 'off',
     'import/no-extraneous-dependencies': 'off',
-    /* 'import/no-extraneous-dependencies': 'off',
-    camelcase: 'off', */
+    // 'import/no-extraneous-dependencies': 'off',  // TODO: check if this is the rule to help prevent problems with versions in imports in monorepo
+    // camelcase: 'off',
   },
   // settings: {
   //   'import/resolver': {

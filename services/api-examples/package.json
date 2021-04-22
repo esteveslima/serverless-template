@@ -6,7 +6,6 @@
   "dependencies": {
     "jsonwebtoken": "8.5.1"
   },
-
   "scripts": {
     "sls:babel": "babel-node --presets=@babel/preset-env . && node --inspect=0.0.0.0:9229 $INIT_CWD/../../node_modules/.bin/sls offline start",
     "sls": "serverless",
@@ -16,7 +15,6 @@
     "wipe": "sudo rm -rf .serverless/ .temp/",
     "test": "jest"
   },
-
   "scriptsDescriptions": {
     "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm) -> TODO: check the necessity to migrate over to yarn workspaces(or lerna) to manage inter package dependency(like services pakcages dependency on serverless lib package)",
     "sls:babel": "TODO: test using babel directly to be able to not use webpack",
@@ -27,7 +25,6 @@
     "wipe": "script used to easly wipe temporary files",
     "test": "test command"
   },
-  
   "author": "",
   "license": "ISC"
 }
