@@ -1,8 +1,8 @@
 const path = require('path');
 
 const pluginsAssets = path.resolve(`${__dirname}/../assets`); // absolute path to definitions package plugin assets
-const monorepoRoot = '../../';                                // relative monorepo root path
-const serviceTempDir = '.temp/';                              // relative path to temporary folder used for each service --> TODO: move .serverless to .temp in each service(?)
+const monorepoRoot = '../../'; // relative monorepo root path
+const serviceTempDir = '.temp/'; // relative path to temporary folder used for each service --> TODO: move .serverless to .temp in each service(?)
 
 // The paths references in properties are from the project folder scope(not the monorepo root folder), because this file will be imported and used as boilerplate
 // List of every plugin with its custom configuration(the items order may be relevant)
@@ -26,7 +26,7 @@ module.exports = {
       host: 'localhost',
       port: '4569',
       accessKeyId: 'S3RVER',
-      secretAccessKey: 'S3RVER',      
+      secretAccessKey: 'S3RVER',
       httpsProtocol: `${pluginsAssets}/local-ssl-tls`,
       directory: `${serviceTempDir}/.s3-local`, // uploaded files at service .temp folder(bucket folder automatically created if there's a function with s3 event)
       silent: true,
@@ -56,7 +56,7 @@ module.exports = {
   //     skipCacheInvalidation: false,
   //   },
   // },
-  
+
   // local api gateway debug server(dependant plugins must come before)
   'serverless-offline': {
     'serverless-offline': {
@@ -79,10 +79,10 @@ module.exports = {
         // Run before deployment -> prevent accidental runs outside docker environment
         'before:deploy:deploy': `\
           ${pluginsAssets}/scripts/check-dev-env.sh && \
-          echo Deploy Finished
+          printf "\nDeployment starting...\n\n"
         `,
         // Run after deployment
-        // 'after:deploy:finalize': '',
+        'after:deploy:finalize': 'printf "\nDeployment finished\n\n"',
       },
     },
   },

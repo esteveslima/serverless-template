@@ -1,6 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 
-// Provider section of serverless with default configurations for functions(many can also be defined at function level, check https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml/)
+// Provider default configurations for AWS
+// These configurations can be overrided and also be defined at function level, check https://www.serverless.com/framework/docs/providers/aws/guide/serverless.yml/)
 module.exports = {
   // Main config
   name: 'aws',
@@ -8,19 +9,19 @@ module.exports = {
   profile: 'aws-cloud', // profile with production keys in the credentials file
   stage: "${opt:stage, 'local'}",
   region: "${opt:region, 'us-east-1'}",
-  // deploymentBucket: {},
-
-  // Logs config
-  logs: true,
-  logRetentionInDays: 7,
-  // onError: arn:aws:sns:...,
+  // deploymentBucket: {},   // TODO(?)
 
   // Performance related config
   memorySize: 128,
-  timeout: 10, // max -> 900seg(30seg for API Gateway)
+  timeout: 10,
   // reservedConcurrency: ,
   // provisionedConcurrency: ,
   // endpointType: ,
+
+  // Logs config
+  logRetentionInDays: 7,
+  // logs: {},
+  // onError: arn:aws:sns:...,
 
   // Specific configs
   apiGateway: {
@@ -44,17 +45,21 @@ module.exports = {
     // ],
     shouldStartNameWithService: true, // DEPRECATION_RESOLUTION - new naming pattern upcomming in next version
   },
+
   // httpApi: {},
+
   // vpc: {}, // TODO: rate-limiting, firewall and others security configurations
+
   // TODO: see possibility of lambda layer for common functions from @sls/lib(propagating modifications in all lambdas on deploy)
 
-  environment: { // TODO: LOOK AT #Referencing Serverless Core Variables #Reference CloudFormation Outputs #Reference Variables using the SSM Parameter Store #Reference Variables using AWS Secrets Manager #Pseudo Parameters Reference
-    REGION: '${self:provider.region}',
-    STAGE: '${self:provider.stage}',
-    // ACCOUNT_ID: '{ "Ref" : "AWS::AccountId" }', // refs not working with .js variables, resolving as string instead
-    // API_ID: { "Ref" : "ApiGatewayRestApi" }       # throws and error if there is no "http" event in the service(rather use it per function)
-    // HTTP_API_ID: { "Ref" : "HttpApi" }            # throws and error if there is no "httpApi" event in the service(rather use it per function)
-
+  // Default non-sensitive environment variables
+  // AWS provides a set of default environment variables, check: https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html, https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html#cfn-pseudo-param-partition
+  environment: {
+    STAGE: '${sls:stage}',
+    ACCOUNT_ID: { Ref: 'AWS::AccountId' },
+    // API_ID: { Ref: 'ApiGatewayRestApi' }, // requires a function with "http" event in the stack
+    // HTTP_API_ID: { Ref: 'HttpApi' }, // requires a function with "httpApi" event in the stack
+    // URL_SUFFIX: { Ref: 'AWS::URLSuffix' },
   },
 
   lambdaHashingVersion: '20201221', // DEPRECATION_RESOLUTION - new lambda hashing algoritm upcoming in next version
