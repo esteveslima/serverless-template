@@ -87,6 +87,9 @@ module.exports = {
     },
   },
 
+  // enables providing extra permissions for each lambda function individually
+  'serverless-iam-roles-per-function': {},
+
   // TODO...
   // 'serverless-offline-dynamodb-streams': {},
   // 'serverless-domain-manager':{},

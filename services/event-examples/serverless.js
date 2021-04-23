@@ -1,9 +1,9 @@
 /* eslint-disable no-template-curly-in-string */
-const { provider, plugins, resources } = require('@sls/definitions');
+const { provider, plugins } = require('@sls/definitions');
 
 const { aws } = provider;
 const { allPlugins, pluginsCustoms } = plugins;
-const { iamRole } = resources;
+
 // TODO: REMOVE ARNS AND RECREATE NEW ONES, moving to a .env file
 // cronExample
 const rate = 'cron(0 0 * * ? *)';// 'rate(1 minute)';// SLS_STAGE === 'local' ? 'rate(1 minute)' : 'cron(0 0 * * ? *)';
@@ -32,27 +32,7 @@ module.exports = {
   package: { individually: true },
   plugins: [...allPlugins],
   custom: { ...pluginsCustoms(allPlugins) },
-  resources: {
-    Resources: {
-      triggerEventsRole: iamRole([
-        {
-          Effect: 'Allow',
-          Action: ['s3:PutObject'],
-          Resource: `${s3Arn}/*`,
-        },
-        {
-          Effect: 'Allow',
-          Action: ['sns:Publish'],
-          Resource: snsArn,
-        },
-        {
-          Effect: 'Allow',
-          Action: ['sqs:SendMessage'],
-          Resource: sqsArn,
-        },
-      ]),
-    },
-  },
+  resources: { /* Resources: {} */ },
 
   functions: { // TODO: documentation per function definition(native or by plugin)
     cronExample: {
@@ -135,8 +115,24 @@ module.exports = {
           },
         },
       ],
-      role: 'triggerEventsRole', // reference the name of created role with extra permissions
-      dependsOn: ['triggerEventsRole'], // TODO: AUTOMATICALLY CREATE PROPS ROLE AND DEPENDSON
+      // extra permissions for function
+      iamRoleStatements: [
+        {
+          Effect: 'Allow',
+          Action: ['s3:PutObject'],
+          Resource: `${s3Arn}/*`,
+        },
+        {
+          Effect: 'Allow',
+          Action: ['sns:Publish'],
+          Resource: snsArn,
+        },
+        {
+          Effect: 'Allow',
+          Action: ['sqs:SendMessage'],
+          Resource: sqsArn,
+        },
+      ],
     },
   },
 };

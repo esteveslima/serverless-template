@@ -6,7 +6,6 @@
   "dependencies": {
     "jsonwebtoken": "8.5.1"
   },
-
   "scripts": {
     "sls": "serverless",
     "serverless": "serverless",
@@ -15,10 +14,8 @@
     "wipe": "sudo rm -rf .serverless/ .temp/",
     "test": "jest"
   },
-
   "scriptsDescriptions": {
     "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm)",
-    
     "sls": "alias for serverless command(further command will be applied. E.g: npm run sls deploy -- --stage local ...)",
     "serverless": "alias for serverless command(further command will be applied. E.g: npm run serverless deploy -- --stage local ...)",
     "offline:debug:global": "[DEPRECATED:USE LOCAL NPM BIN] script used to start serverless offline with docker-compatible vscode debugger(Referencing global node_modules bin)",
@@ -26,7 +23,6 @@
     "wipe": "script used to easly wipe temporary files",
     "test": "test command"
   },
-  
   "author": "",
   "license": "ISC"
 }
