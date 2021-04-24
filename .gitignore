@@ -5,8 +5,9 @@
 **/node_modules
 **/jspm_packages
 
-# Sensitive or local resources
+# Sensitive or local/temporary resources
 **/.*/
+**/.env**
 
 # Distribution folders
 **/dist
