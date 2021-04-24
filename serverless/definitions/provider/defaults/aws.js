@@ -47,10 +47,11 @@ module.exports = {
   },
 
   // httpApi: {},
-
-  // vpc: {}, // TODO: rate-limiting, firewall and others security configurations
-
   // TODO: see possibility of lambda layer for common functions from @sls/lib(propagating modifications in all lambdas on deploy)
+
+  // Security configs
+  // iamRoleStatements: [], // service wide permissions - plugin
+  // vpc: {}, // TODO: rate-limiting, firewall and others security configurations
 
   // Default non-sensitive environment variables
   // AWS provides a set of default environment variables, check: https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html, https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html#cfn-pseudo-param-partition

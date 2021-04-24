@@ -3,24 +3,20 @@
   "version": "1.0.0",
   "description": "",
   "main": "",
-
   "workspaces": [
     "./serverless/*",
     "./services/*"
   ],
-
   "config": {
     "ALIAS": {
       "DOCKER_COMPOSE_PATH": "./docker-compose.yml",
       "DOCKER_COMPOSE_SERVICE": "serverless-container"
     }
   },
-
   "scripts": {
     "wsp": "npm run --workspaces",
     "workspaces": "npm run --workspaces",
     "services": "npm run --workspace=@services/api-examples --workspace=@services/event-examples ",
-
     "wipe": "sudo rm -rf .volumes/",
     "docker": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH}",
     "docker:up": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} up --detach",
@@ -32,18 +28,14 @@
     "docker:rebuild": "npm run docker:down && npm run docker:up",
     "docker:sh": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} exec --privileged ${npm_package_config_ALIAS_DOCKER_COMPOSE_SERVICE} bash",
     "docker:bash": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} exec --privileged ${npm_package_config_ALIAS_DOCKER_COMPOSE_SERVICE} bash",
-
     "aws": "aws --endpoint-url http://localstack-container:8000 --region us-east-1",
     "aws:ddb": "aws --endpoint-url http://dynamodb-container:8000 --region us-east-1 dynamodb"
   },
-
   "scriptsDescriptions": {
     "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm) -> TODO",
-
     "wsp": "npm run --workspaces",
     "workspaces": "npm run --workspaces",
     "services": "npm run --workspace=@services/api-examples --workspace=@services/event-examples ",
-
     "wipe": "sudo rm -rf .volumes/",
     "docker": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH}",
     "docker:up": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} up --detach",
@@ -55,11 +47,9 @@
     "docker:rebuild": "npm run docker:down && npm run docker:up",
     "docker:sh": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} exec --privileged ${npm_package_config_ALIAS_DOCKER_COMPOSE_SERVICE} bash",
     "docker:bash": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} exec --privileged ${npm_package_config_ALIAS_DOCKER_COMPOSE_SERVICE} bash",
-
     "aws": "aws --endpoint-url http://localstack-container:8000 --region us-east-1",
     "aws:ddb": "aws --endpoint-url http://dynamodb-container:8000 --region us-east-1 dynamodb"
   },
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/esteveslima/serverless-template.git"

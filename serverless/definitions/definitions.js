@@ -1,9 +1,9 @@
 const provider = require('./provider/provider');
 const plugins = require('./plugins/plugins');
-const resources = require('./resources/resources');
+const utils = require('./utils/utils');
 
 module.exports = {
   provider,
   plugins,
-  resources,
+  utils,
 };

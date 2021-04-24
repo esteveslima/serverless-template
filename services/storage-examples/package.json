@@ -6,8 +6,7 @@
   "dependencies": {
     "dynamoose": "^2.7.3",
     "faker": "^5.5.3"
-  },  
-
+  },
   "scripts": {
     "sls": "serverless",
     "serverless": "serverless",
@@ -17,10 +16,8 @@
     "test": "jest",
     "aws:ddb": "aws --endpoint-url http://dynamodb-container:8000 --region us-east-1 dynamodb"
   },
-  
   "scriptsDescriptions": {
     "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm)",
-    
     "sls": "alias for serverless command(further command will be applied. E.g: npm run sls deploy -- --stage local ...)",
     "serverless": "alias for serverless command(further command will be applied. E.g: npm run serverless deploy -- --stage local ...)",
     "offline:debug:global": "[DEPRECATED:USE LOCAL NPM BIN] script used to start serverless offline with docker-compatible vscode debugger(Referencing global node_modules bin)",
@@ -29,7 +26,6 @@
     "test": "test command",
     "aws:ddb": "alias for local container dynamodb aws-cli command(requires a double dash '--' to isolate npm script options from command(aws-cli) options. E.g: npm run aws:ddb describe-table -- --table-name ...)"
   },
-
   "author": "",
   "license": "ISC"
 }

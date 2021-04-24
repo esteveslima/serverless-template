@@ -16,7 +16,7 @@ module.exports = {
     },
   },
 
-  // test cronjobs with sls offline
+  // test cronjobs with sls offline(may be conflicting with vscode debugger)
   'serverless-offline-scheduler': {},
 
   // test s3 events with sls offline
@@ -88,7 +88,7 @@ module.exports = {
   },
 
   // enables providing extra permissions for each lambda function individually
-  'serverless-iam-roles-per-function': {},
+  'serverless-iam-roles-per-function': {}, // TODO: check due this is creating unecessary roles for another functions without plugin config
 
   // TODO...
   // 'serverless-offline-dynamodb-streams': {},
