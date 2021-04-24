@@ -4,8 +4,8 @@
   "description": "",
   "main": "",
   "workspaces": [
-    "./serverless/*",
-    "./services/*"
+    "./services/*",
+    "./sls/*"
   ],
   "config": {
     "ALIAS": {
