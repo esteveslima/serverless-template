@@ -41,7 +41,7 @@ function Resolver() {
         await this.runAfter(functionResult, args);
 
         return functionResult;
-      } catch (err) {
+      } catch (err) { // TODO: maybe a simple middleware onError for things like customized logging
         const errorMessage = errorHandler(err);
         return errorMessage;
       }

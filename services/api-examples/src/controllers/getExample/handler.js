@@ -4,7 +4,7 @@ import {
 } from '@sls/lib';
 
 middleware.before((event) => { console.log('getExample'); });
-
+// TODO: use examples with lodash
 export default lambda(async (event) => {
   const { pathParameters, queryStringParameters, headers } = event;
 

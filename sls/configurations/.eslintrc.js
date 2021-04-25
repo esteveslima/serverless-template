@@ -14,23 +14,12 @@ module.exports = {
   },
   rules: {
     'max-len': 'off',
-    'import/prefer-default-export': 'off',
     'no-unused-vars': 'off',
-    'import/no-extraneous-dependencies': 'off',
-    // 'import/no-extraneous-dependencies': 'off',  // TODO: check if this is the rule to help prevent problems with versions in imports in monorepo
-    // camelcase: 'off',
+
+    // TODO: check if this is the rule to help prevent problems with versions in imports in monorepo
+    'import/no-extraneous-dependencies': 'error',
   },
-  // settings: {
-  //   'import/resolver': {
-  //     // webpack: {
-  //     //   config: 'webpack.config.js',
-  //     // },
-  //     // // alias: {
-  //     // //   map: [
-  //     // //     ['@', '/'],
-  //     // //   ],
-  //     // //   extensions: ['.js', '.jsx'/* , '.ts', '.tsx' */],
-  //     // // },
-  //   },
-  // },
+  settings: {
+    'import/internal-regex': '^@sls/', // Resolving errors from no-extraneous-dependencies for the monorepo packages
+  },
 };
