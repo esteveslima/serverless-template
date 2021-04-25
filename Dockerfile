@@ -40,7 +40,8 @@ RUN echo "node ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/node && \
     chmod 755 /root
 # Change and config node user
 USER node
-RUN echo "PS1='\e[1;30m[\w]\$ \e[0m'" >> ~/.bashrc; source ~/.bashrc
+RUN echo "complete -d cd" >> ~/.bashrc
+RUN echo "PS1='\e[1;30m(\t)[\w]\$ \e[0m'" >> ~/.bashrc; source ~/.bashrc
 
 # Keeps de container running
 CMD tail -f /dev/null

@@ -4,8 +4,9 @@
   "description": "",
   "main": "",
   "workspaces": [
-    "./services/*",
-    "./sls/*"
+    "./packages/services/*",
+    "./packages/shared/*",
+    "./packages/sls/*"
   ],
   "config": {
     "ALIAS": {
