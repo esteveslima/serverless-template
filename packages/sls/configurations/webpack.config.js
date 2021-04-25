@@ -69,6 +69,7 @@ module.exports = {
       // Only local plugins
       new BundleAnalyzerPlugin({
         analyzerMode: 'static', // generates html report in bundle folder
+        openAnalyzer: false,
       }),
 
     ] : [

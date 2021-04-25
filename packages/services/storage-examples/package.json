@@ -13,8 +13,7 @@
     "sls": "serverless",
     "serverless": "serverless",
     "offline:debug:global": "node --inspect=0.0.0.0:9229 $(npm config get prefix)/bin/sls offline start",
-    "offline:debug": "node --inspect=0.0.0.0:9229 $INIT_CWD/../../node_modules/.bin/sls offline start",
-    "wipe": "sudo rm -rf .serverless/ .temp/",
+    "offline": "node --inspect=0.0.0.0:9229 $INIT_CWD/../../../node_modules/.bin/sls offline start",
     "test": "jest",
     "aws:ddb": "aws --endpoint-url http://dynamodb-container:8000 --region us-east-1 dynamodb"
   },
@@ -23,8 +22,7 @@
     "sls": "alias for serverless command(further command will be applied. E.g: npm run sls deploy -- --stage local ...)",
     "serverless": "alias for serverless command(further command will be applied. E.g: npm run serverless deploy -- --stage local ...)",
     "offline:debug:global": "[DEPRECATED:USE LOCAL NPM BIN] script used to start serverless offline with docker-compatible vscode debugger(Referencing global node_modules bin)",
-    "offline:debug": "script used to start serverless offline with docker-compatible vscode debugger(Referencing local node_modules bin)",
-    "wipe": "script used to easly wipe temporary files",
+    "offline": "alias for sls offline command with debugger(script used to start serverless offline with docker-compatible vscode debugger, referencing local node_modules bin)",
     "test": "test command",
     "aws:ddb": "alias for local container dynamodb aws-cli command(requires a double dash '--' to isolate npm script options from command(aws-cli) options. E.g: npm run aws:ddb describe-table -- --table-name ...)"
   },

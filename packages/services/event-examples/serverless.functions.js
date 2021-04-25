@@ -58,7 +58,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
         },
       ],
     },
-    sqsExample: {
+    sqsExample: stage !== 'local' && {
       handler: './src/controllers/sqsExample/handler.default',
       timeout: 30, // limited to queue timeout
       events: [
