@@ -1,10 +1,3 @@
-import errorHandler from './error-handler';
-import ErrorObjects from './error-objects';
-import { ErrorResponse, WarningResponse } from './response/response';
-
-export {
-  ErrorResponse,
-  WarningResponse,
-  errorHandler,
-  ErrorObjects,
-};
+export { default as errorHandler } from './error-handler';
+export { default as ErrorObjects } from './error-objects';
+export { ErrorResponse, WarningResponse } from './response/response';

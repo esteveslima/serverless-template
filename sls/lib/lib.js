@@ -1,36 +1,22 @@
-import Core from './core/core';
-import Aws from './providers/aws/aws';
-
-// Export main resources objects
-export {
-  Core,
-  Aws,
-};
+// // Export main resources objects
+// export * as Core from './core/core';
+// export * as Aws from './providers/aws/aws';
 
 // Export frequently used core resources
-const {
-  logger, middleware, WarningResponse, ErrorResponse, ErrorObjects,
-} = Core;
-
 export {
   logger,
   middleware,
   WarningResponse,
   ErrorResponse,
   ErrorObjects,
-};
+} from './core/core';
 
 // Export frequently used aws resources
-const {
-  lambda,
-  s3,
-  sns,
-  sqs,
-} = Aws;
-
 export {
   lambda,
   s3,
   sns,
   sqs,
-};
+} from './providers/aws/aws';
+
+// TODO: rename to index?

@@ -7,12 +7,11 @@ const serviceTempDir = '.temp/'; // relative path to temporary folder used for e
 // The paths references in properties are from the project folder scope(not the monorepo root folder), because this file will be imported and used as boilerplate
 // List of every plugin with its custom configuration(the items order may be relevant)
 module.exports = {
-  // must be the first on the list
-  // bundle functions code with tree shaking, transcompiling with babel
+  // (must be the first on the list)bundle functions code with tree shaking, transcompiling with babel
   'serverless-webpack': {
     webpack: {
       webpackConfig: './webpack.config.js',
-      includeModules: true,
+      includeModules: { forceExclude: ['aws-sdk'] },
     },
   },
 

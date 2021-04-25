@@ -1,5 +1,5 @@
 // Parse results from functions(accepts statusCode and headers in result object) to lambda responses
-export const parseResponse = (functionResult) => {
+export default (functionResult) => {
   try {
     if (typeof functionResult === 'object') {
       return {

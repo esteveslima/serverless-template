@@ -4,6 +4,7 @@
   "description": "",
   "main": "",
   "dependencies": {
+    "aws-sdk": "^2.892.0",
     "jsonwebtoken": "8.5.1"
   },
   "scripts": {
