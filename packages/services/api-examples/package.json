@@ -8,7 +8,7 @@
     "aws-sdk": "^2.892.0"
   },
   "scripts": {
-    "update:dependencies": "npx -y npm-check-updates -u",
+    "update-dependencies": "npx -y npm-check-updates -u",
     "sls:babel": "babel-node --presets=@babel/preset-env . && node --inspect=0.0.0.0:9229 $INIT_CWD/../../../node_modules/.bin/sls offline start",
     "sls": "serverless",
     "serverless": "serverless",
@@ -18,7 +18,7 @@
   },
   "scriptsDescriptions": {
     "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm) -> TODO: check the necessity to migrate over to yarn workspaces(or lerna) to manage inter package dependency(like services pakcages dependency on serverless lib package)",
-    "update:dependencies": "script for bumping all dependencies versions to the latest",
+    "update-dependencies": "[BEWARE OF BREAKING CHANGES]script for bumping all dependencies to the latest versions",
     "sls:babel": "TODO: test using babel directly to be able to not use webpack",
     "sls": "alias for serverless command(further command will be applied. E.g: npm run sls deploy -- --stage local ...)",
     "serverless": "alias for serverless command(further command will be applied. E.g: npm run serverless deploy -- --stage local ...)",

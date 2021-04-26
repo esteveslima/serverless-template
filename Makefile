@@ -10,7 +10,7 @@ down:
 clean-down:
 	npm run docker:down:clean
 wipe:
-	npm run wipe
+	npm run wipe-temp && npm run wipe-packages
 
 rebuild:
 	npm run docker:down && npm run docker:up

@@ -4,19 +4,25 @@
   "description": "",
   "main": "definitions.js",
   "devDependencies": {
-    "serverless": "^2.37.0",
+    "serverless": "^2.38.0",
     "serverless-iam-roles-per-function": "^3.1.0",
-    "serverless-offline": "^6.8.0",
+    "serverless-offline": "^6.9.0",
     "serverless-offline-scheduler": "^0.4.2",
     "serverless-offline-sns": "^0.68.0",
     "serverless-offline-sqs": "^4.1.1",
     "serverless-plugin-scripts": "^1.0.2",
     "serverless-plugin-typescript": "^1.1.9",
-    "serverless-s3-local": "^0.6.7",
-    "serverless-webpack": "^5.3.5"
+    "serverless-s3-local": "^0.6.14",
+    "serverless-webpack": "^5.4.1"
   },
   "scripts": {
+    "update-dependencies": "npx -y npm-check-updates -u",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "scriptsDescriptions": {
+    "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm) -> TODO: check the necessity to migrate over to yarn workspaces(or lerna) to manage inter package dependency(like services pakcages dependency on serverless lib package)",
+    "update-dependencies": "[BEWARE OF BREAKING CHANGES]script for bumping all dependencies to the latest versions",
+    "test": "test command"
   },
   "author": "",
   "license": "ISC"

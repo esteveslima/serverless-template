@@ -4,13 +4,19 @@
   "description": "",
   "main": "lib.js",
   "sideEffects": [],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.892.0",
     "source-map-support": "^0.5.19"
-  }
+  },
+  "scripts": {
+    "update-dependencies": "npx -y npm-check-updates -u",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "scriptsDescriptions": {
+    "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm) -> TODO: check the necessity to migrate over to yarn workspaces(or lerna) to manage inter package dependency(like services pakcages dependency on serverless lib package)",
+    "update-dependencies": "[BEWARE OF BREAKING CHANGES]script for bumping all dependencies to the latest versions",
+    "test": "test command"
+  },
+  "author": "",
+  "license": "ISC"
 }
