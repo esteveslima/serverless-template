@@ -1,5 +1,6 @@
 {
   "name": "serverless-template",
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "",
@@ -18,8 +19,6 @@
     "wsp": "npm run --workspaces",
     "workspaces": "npm run --workspaces",
     "services": "npm run --workspace=@services/api-examples --workspace=@services/event-examples --workspace=@services/storage-examples",
-    "wipe-temp": "npx -y rimraf ./packages/**/.temp/ ./packages/**/.serverless/",
-    "wipe-packages": "npx -y rimraf ./packages/**/node_modules/",
     "docker": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH}",
     "docker:up": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} up --detach",
     "docker:up:clean": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} up --detach --build --force-recreate --always-recreate-deps",
@@ -34,13 +33,10 @@
     "aws:ddb": "aws --endpoint-url http://dynamodb-container:8000 --region us-east-1 dynamodb"
   },
   "scriptsDescriptions": {
-    "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm) -> TODO",
-    "update-dependencies": "[BEWARE OF BREAKING CHANGES]script to update all dependencies from all packages in monorepo",
+    "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm) -> TODO",    
     "wsp": "alias for npm workspaces command",
     "workspaces": "alias for npm workspaces command",
     "services": "script for designated workspaces TODO: way to run with regex @pkg/*",
-    "wipe-temp": "wipe all temporary files from packages",    
-    "wipe-packages": "wipe all node_modules from leaf projects because dependencies should be hoisted using workspaces. TODO: check in the future if it is a npm bug)",
     "docker": "alias for docker-compose command",
     "docker:up": "start development containers (alias for docker-compose command)",
     "docker:up:clean": "recreate and start development containers (alias for docker-compose command)",

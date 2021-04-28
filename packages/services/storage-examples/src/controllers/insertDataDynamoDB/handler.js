@@ -1,15 +1,15 @@
-import { lambda, middleware } from '@sls/lib';
+import { lambda, logger, middleware } from '@sls/lib';
 import * as dynamoose from 'dynamoose';
 import * as faker from 'faker';
 
-middleware.before((event) => { console.log('insertDataDynamoDB'); });
+middleware.before((event) => { logger.log('insertDataDynamoDB'); });
 
 const { IS_OFFLINE } = process.env;
 
 export default lambda(async (event) => {
   if (IS_OFFLINE) {
     dynamoose.aws.ddb.local('http://dynamodb-container:8000');
-    console.log('local');
+    logger.log('local');
   }
 
   // Beware of options, risk of high costs and throttling
@@ -96,8 +96,8 @@ export default lambda(async (event) => {
     subjects: faker.random.words(10).split(' '),
   };
   const createdMusic = await Music.create(music);
-  console.log('createdMusic');
-  console.log(createdMusic);
+  logger.log('createdMusic');
+  logger.log(createdMusic);
 
   const musicByStyleDecade = {
     style_decade: (() => {
@@ -109,8 +109,8 @@ export default lambda(async (event) => {
     music,
   };
   const createdMusicByStyleDecade = await MusicByStyleDecade.create(musicByStyleDecade);
-  console.log('createdMusicByStyleDecade');
-  console.log(createdMusicByStyleDecade);
+  logger.log('createdMusicByStyleDecade');
+  logger.log(createdMusicByStyleDecade);
 
   // Prefer to use direct lookups, which requires the combination(unique) of hashKey & sortKey(if existant)
   const foundMusic = await Music.get({
@@ -119,8 +119,8 @@ export default lambda(async (event) => {
     attributes: undefined, // all attributes
     consistent: undefined, // non consistant operation(non completely reliable cost-effective)
   });
-  console.log(`foundMusic: ${music.name}`);
-  console.log(foundMusic);
+  logger.log(`foundMusic: ${music.name}`);
+  logger.log(foundMusic);
 
   const foundMusicByStyleDecade = await MusicByStyleDecade.get({
     style_decade: musicByStyleDecade.style_decade,
@@ -129,17 +129,17 @@ export default lambda(async (event) => {
     attributes: undefined,
     consistent: undefined,
   });
-  console.log(`foundMusicByStyleDecade: ${musicByStyleDecade.style_decade} / ${musicByStyleDecade.musicKey}`);
-  console.log(foundMusicByStyleDecade);
-  console.log(await foundMusicByStyleDecade.populate());
+  logger.log(`foundMusicByStyleDecade: ${musicByStyleDecade.style_decade} / ${musicByStyleDecade.musicKey}`);
+  logger.log(foundMusicByStyleDecade);
+  logger.log(await foundMusicByStyleDecade.populate());
 
   // Use QUERY over SCAN operations(expensive transaction which iterates over the table before filtering, useful to retrieve flat paginated data).
   // Check the documentation details and confirmation: https://dynamoosejs.com/, https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Operations_Amazon_DynamoDB.html
   // PS: package doc may be wrong as reported in an issue, check later for better examples
   const queryMusicByStyleDecade = MusicByStyleDecade.query('style_decade').eq(musicByStyleDecade.style_decade).attributes(['style_decade', 'music']);
   const allMusicByStyleDecade = await queryMusicByStyleDecade.exec();
-  console.log(`allMusicByStyleDecade: ${allMusicByStyleDecade.length}`);
-  console.log(allMusicByStyleDecade);
+  logger.log(`allMusicByStyleDecade: ${allMusicByStyleDecade.length}`);
+  logger.log(allMusicByStyleDecade);
 
   return allMusicByStyleDecade.populate();
 });

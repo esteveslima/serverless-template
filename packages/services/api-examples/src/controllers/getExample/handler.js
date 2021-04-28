@@ -1,10 +1,13 @@
 import {
   lambda,
+  logger,
   middleware,
 } from '@sls/lib';
 
-middleware.before((event) => { console.log('getExample'); });
+middleware.before((event) => { logger.log('getExample'); });
 // TODO: use examples with lodash
+// TODO:
+// TODO: improve example -> validate request parameters(check if it works), use api-key or other auth,
 export default lambda(async (event) => {
   const { pathParameters, queryStringParameters, headers } = event;
 

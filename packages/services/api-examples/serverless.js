@@ -3,7 +3,9 @@
 const { provider: { aws }, plugins: { allPlugins, pluginsCustoms } } = require('@sls/definitions');
 
 const serviceName = __dirname.split('/').slice(-1)[0]; // Using project folder name as service name
-
+// TODO: typescript examples
+// TODO: step functions example?
+// TODO: few CW alerts(in free tier range)
 module.exports = {
   service: serviceName,
 

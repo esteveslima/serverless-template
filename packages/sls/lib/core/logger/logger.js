@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const { IS_OFFLINE } = process.env;
 
 const levels = ['log', 'info', 'warning', 'error'];

@@ -1,16 +1,20 @@
 {
   "name": "@shared/utils",
-  "private": true,
+  
   "version": "1.0.0",
   "description": "",
   "main": "utils.js",
   "scripts": {
+    "wipe": "sudo rm -rf node_modules/",
     "update-dependencies": "npx -y npm-check-updates -u",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "check-lint": "npx -y eslint --max-warnings 0 --fix-dry-run .",
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
   "scriptsDescriptions": {
     "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm) -> TODO: check the necessity to migrate over to yarn workspaces(or lerna) to manage inter package dependency(like services pakcages dependency on serverless lib package)",
+    "wipe": "remove all temporary files and possible installed modules in service folder(dependencies should be hoisted using workspaces. TODO: check in the future if it is a npm bug))",
     "update-dependencies": "[BEWARE OF BREAKING CHANGES]script for bumping all dependencies to the latest versions",
+    "check-lint": "run eslint script to check for linting errors",
     "test": "test command"
   },
   "author": "",

@@ -1,7 +1,7 @@
-import { lambda, middleware } from '@sls/lib';
+import { lambda, logger, middleware } from '@sls/lib';
 import trigger from './utils/trigger';
 
-middleware.before((event) => { console.log('triggerEventsExample'); });
+middleware.before((event) => { logger.log('triggerEventsExample'); });
 
 export default lambda(async (event) => {
   const { events } = event.queryStringParameters ?? {};
