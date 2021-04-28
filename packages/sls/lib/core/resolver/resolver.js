@@ -52,7 +52,7 @@ function Resolver() {
 }
 
 const resolver = new Resolver();
-const middleware = {
+const middleware = { // TODO: refactor to middy to avoid side-effects?
   before: resolver.before.bind(resolver),
   after: resolver.after.bind(resolver),
 };

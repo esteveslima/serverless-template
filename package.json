@@ -16,6 +16,7 @@
     }
   },
   "scripts": {
+    "prepare": "husky install resources/scripts/.husky",
     "wsp": "npm run --workspaces",
     "workspaces": "npm run --workspaces",
     "services": "npm run --workspace=@services/api-examples --workspace=@services/event-examples --workspace=@services/storage-examples",
@@ -33,7 +34,8 @@
     "aws:ddb": "aws --endpoint-url http://dynamodb-container:8000 --region us-east-1 dynamodb"
   },
   "scriptsDescriptions": {
-    "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm) -> TODO",    
+    "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm) -> TODO",
+    "prepare": "required script for husky(saving to resources scripts folder)",
     "wsp": "alias for npm workspaces command",
     "workspaces": "alias for npm workspaces command",
     "services": "script for designated workspaces TODO: way to run with regex @pkg/*",
@@ -49,6 +51,16 @@
     "docker:bash": "start shell in development container (alias for docker-compose command)",
     "aws": "aws cli command for localstack container (alias for aws-cli localstack)",
     "aws:ddb": "aws cli command for local dynamodb container (alias for aws-cli local dynamodb)"
+  },
+  "devDependencies": {
+    "husky": "^6.0.0",
+    "lint-staged": "^10.5.4"
+  },
+  "lint-staged": {
+    "*.js": [
+      "echo \"disabled: npx -y eslint --max-warnings 0 --fix-dry-run packages/services/api-examples\" ",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
