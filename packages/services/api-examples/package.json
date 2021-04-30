@@ -1,6 +1,5 @@
 {
   "name": "@services/api-examples",
-
   "version": "1.0.0",
   "description": "",
   "main": "",
@@ -11,7 +10,7 @@
     "wipe-temp": "sudo rm -rf .temp/ .serverless/",
     "wipe": "npm run wipe-temp && sudo rm -rf node_modules/",
     "update-dependencies": "npx -y npm-check-updates -u",
-    "check-lint": "npx -y eslint --max-warnings 0 --fix-dry-run .",    
+    "check-lint": "npx -y eslint --max-warnings 0 --fix-dry-run .",
     "sls:babel": "babel-node --presets=@babel/preset-env . && node --inspect=0.0.0.0:9229 $INIT_CWD/../../../node_modules/.bin/sls offline start",
     "sls": "serverless",
     "serverless": "serverless",

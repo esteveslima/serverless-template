@@ -10,7 +10,13 @@ module.exports = {
       },
     ],
   ],
-  // plugins: [
-  //   '@babel/plugin-transform-runtime',
-  // ],
+  plugins: [
+    [
+      '@babel/plugin-proposal-class-properties',
+      {
+        loose: true,
+      },
+    ],
+    // '@babel/plugin-transform-runtime',
+  ],
 };

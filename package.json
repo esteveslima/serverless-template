@@ -25,8 +25,8 @@
     "docker:up:clean": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} up --detach --build --force-recreate --always-recreate-deps",
     "docker:down": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} down",
     "docker:down:clean": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} down --rmi all --volumes --remove-orphans",
-    "postdocker:down": "sudo rm -rf .volumes/ && npm run wipe-temp",
-    "postdocker:down:clean": "sudo rm -rf .volumes/ && npm run wipe-temp",
+    "postdocker:down": "sudo rm -rf .volumes/",
+    "postdocker:down:clean": "sudo rm -rf .volumes/",
     "docker:rebuild": "npm run docker:down && npm run docker:up",
     "docker:sh": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} exec --privileged ${npm_package_config_ALIAS_DOCKER_COMPOSE_SERVICE} bash",
     "docker:bash": "docker-compose --file ${npm_package_config_ALIAS_DOCKER_COMPOSE_PATH} exec --privileged ${npm_package_config_ALIAS_DOCKER_COMPOSE_SERVICE} bash",
@@ -58,8 +58,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "echo \"disabled: npx -y eslint --max-warnings 0 --fix-dry-run packages/services/api-examples\" ",
-      "git add"
+      "echo \"disabled: npx -y eslint --max-warnings 0 --fix-dry-run packages/services/api-examples\" "
     ]
   },
   "repository": {

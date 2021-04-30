@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-# Calls npm package to run script only on staged files
+# Calls npm package to run script only on staged files(TODO: use to standardize commit messages)
 npx lint-staged

@@ -31,7 +31,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            configFile: path.resolve(__dirname, 'babel.config.js'), // Using package's babel config file
+            configFile: path.resolve(__dirname, 'babel.config.js'), // Using configurations' package babel config file
           },
         },
       },
