@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 const path = require('path');
 
 const pluginsAssets = path.resolve(`${__dirname}/../assets`); // absolute path to definitions package plugin assets
@@ -36,20 +37,23 @@ module.exports = {
   'serverless-offline-sns': {
     'serverless-offline-sns': {
       port: '4002',
-      accountId: '123456789012', // '{ "Ref" : "AWS::AccountId" }',
+      accountId: '123456789012',
+      // host: '127.0.0.1',
+      // 'sns-endpoint': 'http://127.0.0.1:4567',
     },
   },
 
-  // // test sqs events with sls offline
-  // // removed by default(need fix: not working inside docker container)
-  // // to use it, test directly on host machine with command: export NODE_TLS_REJECT_UNAUTHORIZED=0 && sls offline start
-  // // also, remove serverless-plugin-scripts environment check, change serverless-offline port if containers are still running and enable the call at trigger.js for offline environment
+  // // test sqs events with sls offline(disabled by default due conflicts)
+  // // requires elastimq queue container(may be a problematic plugin with conflicts inside docker container)
+  // // to test directly on host machine, set environment variables: NODE_TLS_REJECT_UNAUTHORIZED=0 , SLS_MODE=no-scripts(may also require NODE_ENV=test to work)
+  // // example disabled by default, enable at trigger.js for offline environment
+  // // finally, run sls offline server(may require ports adjustments in docker-compose to avoid conflicts)
   // 'serverless-offline-sqs': {
   //   'serverless-offline-sqs': {
   //     autoCreate: true,
   //     apiVersion: '2012-11-05',
-  //     endpoint: 'http://localhost:9324', // 'http://queue-container:9324',  // use 'http://localhost:9324' to test directly at host machine
-  //     region: '${self:provider.region}',
+  //     endpoint: 'http://localhost:9324', // use 'http://queue-container:9324' to test directly at host machine
+  //     region: 'us-east-1', // '${self:provider.region}',
   //     accessKeyId: 'root',
   //     secretAccessKey: 'root',
   //     skipCacheInvalidation: false,
@@ -65,7 +69,7 @@ module.exports = {
     },
   },
 
-  // run scripts with serverless commands/hooks
+  // run scripts with serverless commands/hooks(TODO: fix -> not working when running sls offline directly from node_modules for vscode debugger)
   'serverless-plugin-scripts': {
     scripts: {
       commands: {

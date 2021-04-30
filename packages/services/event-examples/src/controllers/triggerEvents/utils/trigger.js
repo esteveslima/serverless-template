@@ -16,7 +16,7 @@ export default async (triggeredEvents) => {
   // Triggering sqs event
   if (triggeredEvents.includes('sqs')) {
     if (!IS_OFFLINE) eventsInfo.sqs = await triggerSqs();
-    else logger.info('Not triggering sqs with sls offline environment by default,  check sqs plugin definition for more details');
+    else logger.info('Not triggering sqs with sls offline environment by default, check sqs plugin definition for more details');
   }
 
   // Triggering sqs event

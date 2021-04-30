@@ -19,14 +19,13 @@ services:
             # - mysql-container
             # - mongo-container
             # - redis-container
-            # - queue-container
+            - queue-container
             - dynamodb-container
         expose:
             - "4000-4010"
         ports:
             - "9229:9229"                                              # VSCode debugger port
-            - "4000:4000"            
-            # - "4000-4010:4000-4010"
+            - "4000:4000"                                              # SLS offline debugger            
     # mysql-container:                                                 # Setting up RDS local testing environment with mysql
     #     image: mysql
     #     volumes:
@@ -77,11 +76,11 @@ services:
     #        - '6379'
     #     # ports:
     #     #    - '6379:6379'         
-    # queue-container:                                                  # Setting up SQS local testing environment with elasticMQ
-    #     image: softwaremill/elasticmq
-    #     restart: always
-    #     expose:
-    #        - '9324'
-    #     ports:
-    #        - '9324:9324'
+    queue-container:                                                  # Setting up SQS local testing environment with elasticMQ
+        image: softwaremill/elasticmq
+        restart: always
+        expose:
+           - '9324'
+        ports:
+           - '9324:9324'
             

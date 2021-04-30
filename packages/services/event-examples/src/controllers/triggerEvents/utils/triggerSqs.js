@@ -16,6 +16,7 @@ export default async () => {
     MessageBody: JSON.stringify({ messageKey: 'messageValue' }),
     QueueUrl: SQS_URL_EXAMPLE,
   };
+  // requires the queue to be created, use aws cli on elasticmq container(or created script "npm run aws:sqs ...")
   const submission = await sqs.sendMessage(params).promise();
 
   return submission;
