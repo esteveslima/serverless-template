@@ -11,7 +11,7 @@ middleware.before((event) => { logger.log('getExample'); });
 export default lambda(async (event) => {
   const { pathParameters, queryStringParameters, headers } = event;
 
-  const message = 'This is a simple get request with some path, query and header parameters';
+  const message = 'This is a simple get request with path, query and header parameters';
 
   return {
     message,

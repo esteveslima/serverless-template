@@ -32,7 +32,7 @@
     "services": "npm run -if-present -w @services/api-examples -w @services/event-examples -w @services/storage-examples",
     "clear": "npx -y rimraf ./**/node_modules/ ./packages/**/.serverless/ ./packages/**/.temp/",
     "update-dependencies:from": "npx -y npm-check-updates -u --cwd ",    
-    "lerna-version": "lerna version --conventional-commits --no-push --no-commit-hooks --ignore-scripts",
+    "lerna-version": "lerna version --conventional-commits --no-commit-hooks --ignore-scripts",
     "lerna-modified": "lerna ls --since",
     "docker": "docker-compose --file ${npm_package_config_DOCKER_COMPOSE_PATH}",
     "docker:up": "docker-compose --file ${npm_package_config_DOCKER_COMPOSE_PATH} up --detach",
