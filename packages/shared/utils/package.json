@@ -1,11 +1,10 @@
 {
   "name": "@shared/utils",
-  
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "utils.js",
-  "scripts": {    
-    "test": "echo disabled: jest"     
+  "scripts": {
+    "test": "echo disabled: jest"
   },
   "scriptsDescriptions": {
     "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm) -> TODO: check the necessity to migrate over to yarn workspaces(or lerna) to manage inter package dependency(like services pakcages dependency on serverless lib package)",

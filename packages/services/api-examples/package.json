@@ -1,13 +1,13 @@
 {
   "name": "@services/api-examples",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "",
   "dependencies": {
     "aws-sdk": "^2.892.0"
   },
-  "scripts": {    
-    "sls:babel": "babel-node --presets=@babel/preset-env . && node --inspect=0.0.0.0:9229 $INIT_CWD/../../../node_modules/.bin/sls offline start",    
+  "scripts": {
+    "sls:babel": "babel-node --presets=@babel/preset-env . && node --inspect=0.0.0.0:9229 $INIT_CWD/../../../node_modules/.bin/sls offline start",
     "sls": "serverless",
     "serverless": "serverless",
     "offline": "node --inspect=0.0.0.0:9229 $INIT_CWD/../../../node_modules/.bin/sls offline start",
