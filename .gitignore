@@ -5,6 +5,7 @@
 # Sensitive or local/temporary resources
 **/.*/
 **/.env**
+**/**.log
 
 # Distribution folders
 **/dist
