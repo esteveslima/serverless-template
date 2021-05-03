@@ -26,11 +26,12 @@ module.exports = {
     'max-len': 'off',
     'no-unused-vars': 'off',
 
-    // TODO: check if this is the rule to help prevent problems with versions in imports in monorepo
-    'import/no-extraneous-dependencies': 'error', // should prevent dependency versions incompatibility by prohibiting to use external dependencies(root node_modules)
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }], // should prevent dependency versions incompatibility by prohibiting to use external dependencies(from another packages hoisted to root node_modules)
   },
   settings: {
-    // TODO: check if it would be required to install these shared packages and stop using this setting
-    'import/internal-regex': '^@sls/', // Resolving errors from no-extraneous-dependencies for the monorepo packages
+    // // This setting should be avoided for the best use of the monorepo structure, requiring to add local packages as dependencies...
+    // // ...So that changes on common packages could be propagated and recognized on leaf packages...
+    // // ...This way, using tools like "lerna ls --since" would return all packages that should be updated for the CI and would be deployed
+    // 'import/internal-regex': '^@sls/', // DISABLED: Ignore pattern from no-extraneous-dependencies for the monorepo packages
   },
 };

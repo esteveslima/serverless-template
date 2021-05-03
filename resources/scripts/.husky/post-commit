@@ -3,6 +3,7 @@
 
 # Runs on post-commit hook(after commit)
 
+# TODO: fix script to offer the option to create lerna versions on every commit
 exit 0; # DISABLED
 
 # use lerna to prompt an option for updating modified packages versions(with changelogs and new commit)
@@ -10,7 +11,7 @@ exit 0; # DISABLED
 # npx lerna version --conventional-commits --no-push --no-commit-hooks --ignore-scripts  # lerna command is freezing terminal, requiring to exit with ctrl+c
 # exec <&-            # restore stdin
 
-## another possible option...
+## another possible option...(propted a weird heap error)
 # npx lerna changed -l
 # exec < /dev/tty     # assigns stdin to keyboard 
 # while true; do

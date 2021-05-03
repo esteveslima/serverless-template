@@ -4,7 +4,13 @@
   "description": "",
   "main": "",
   "dependencies": {
+    "@sls/lib": "file:../../sls/lib",
+    "@shared/utils": "file:../../shared/utils",
     "aws-sdk": "^2.892.0"
+  },
+  "devDependencies": {
+    "@sls/configurations": "file:../../sls/configurations",
+    "@sls/definitions": "file:../../sls/definitions"
   },
   "scripts": {
     "sls": "serverless",

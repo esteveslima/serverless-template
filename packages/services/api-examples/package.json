@@ -4,7 +4,13 @@
   "description": "",
   "main": "",
   "dependencies": {
+    "@sls/lib": "file:../../sls/lib",
+    "@shared/utils": "file:../../shared/utils",
     "aws-sdk": "^2.892.0"
+  },
+  "devDependencies": {
+    "@sls/configurations": "file:../../sls/configurations",
+    "@sls/definitions": "file:../../sls/definitions"
   },
   "scripts": {
     "sls:babel": "babel-node --presets=@babel/preset-env . && node --inspect=0.0.0.0:9229 $INIT_CWD/../../../node_modules/.bin/sls offline start",

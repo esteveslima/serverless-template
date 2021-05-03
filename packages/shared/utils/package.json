@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "",
   "main": "utils.js",
+  "sideEffects": [],
   "scripts": {
     "test": "echo disabled: jest"
   },
