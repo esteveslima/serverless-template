@@ -34,7 +34,7 @@
     "update-dependencies:from": "npx -y npm-check-updates -u --cwd ",
     "lerna-add": "npm install --package-lock-only --no-package-lock --prefix",
     "postlerna-add": "npm install",
-    "lerna-modified": "lerna ls --since",
+    "lerna-modified": "lerna ls -l --since",
     "lerna-version": "lerna version --conventional-commits --no-commit-hooks --ignore-scripts",
     "docker": "docker-compose --file ${npm_package_config_DOCKER_COMPOSE_PATH}",
     "docker:up": "docker-compose --file ${npm_package_config_DOCKER_COMPOSE_PATH} up --detach",

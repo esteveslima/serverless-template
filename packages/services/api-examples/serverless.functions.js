@@ -2,7 +2,7 @@
 // Functions configuration resolved as .js variable with extra custom logic
 
 const { utils: { filterFunctions } } = require('@sls/definitions');
-
+// TODO: create base variables for repetitive parameters like handler
 module.exports = async ({ options, resolveConfigurationProperty }) => {
   const stage = await resolveConfigurationProperty(['provider', 'stage']);
 
