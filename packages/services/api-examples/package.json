@@ -1,11 +1,11 @@
 {
   "name": "@services/api-examples",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "",
   "dependencies": {
-    "@sls/lib": "file:../../sls/lib",
     "@shared/utils": "file:../../shared/utils",
+    "@sls/lib": "file:../../sls/lib",
     "aws-sdk": "^2.892.0"
   },
   "devDependencies": {

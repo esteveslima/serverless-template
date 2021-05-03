@@ -1,11 +1,11 @@
 {
   "name": "@services/event-examples",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "",
   "dependencies": {
-    "@sls/lib": "file:../../sls/lib",
     "@shared/utils": "file:../../shared/utils",
+    "@sls/lib": "file:../../sls/lib",
     "aws-sdk": "^2.892.0"
   },
   "devDependencies": {

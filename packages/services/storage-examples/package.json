@@ -1,11 +1,11 @@
 {
   "name": "@services/storage-examples",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "",
   "dependencies": {
+    "@shared/utils": "file:../../shared/utils",
     "@sls/lib": "file:../../sls/lib",
-    "@shared/utils": "file:../../shared/utils",    
     "aws-sdk": "^2.892.0",
     "dynamoose": "^2.7.3",
     "faker": "^5.5.3"
