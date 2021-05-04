@@ -10,6 +10,10 @@
     "./packages/sls/*"
   ],
   "devDependencies": {
+    "@commitlint/cli": "^12.1.1",
+    "@commitlint/config-conventional": "^12.1.1",
+    "commitizen": "^4.2.3",
+    "cz-conventional-changelog": "^3.2.0",
     "husky": "^6.0.0",
     "lerna": "^4.0.0",
     "lint-staged": "^10.5.4"
@@ -20,7 +24,15 @@
       "npm run test -- --findRelatedTests --bail"
     ]
   },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
   "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
     "DOCKER": {
       "COMPOSE_PATH": "./docker-compose.yml",
       "COMPOSE_SERVICE": "serverless-container"
@@ -55,7 +67,7 @@
     "update-dependencies:from": "[BEWARE OF BREAKING CHANGES]script for bumping all dependencies to the latest versions, requires package path",
     "lerna-add": "workaround to add a package as dependency(or dev dependency) to another package non manually. This is required to enable changes recognition propagation to leaf packages(usage: 'npm run lerna-add -- <leaf_package_path> <imported_package_path>') ........TODO: check later if npm provide a proper way to add dependencies with workspaces",
     "postlerna-add": "post script to resolve dependencies and symlink after adding a package to another package",
-    "lerna-version": "use lerna to update packages versions",
+    "lerna-version": "use lerna to update packages versions(automatically creates a new commit and pushes it)",
     "lerna-modified": "use lerna to list packages that have been changed since most-recent tag",
     "docker": "alias for docker-compose command",
     "docker:up": "start development containers (alias for docker-compose command)",
