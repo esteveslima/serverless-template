@@ -68,7 +68,7 @@
     "lerna-add": "workaround to add a package as dependency(or dev dependency) to another package non manually. This is required to enable changes recognition propagation to leaf packages(usage: 'npm run lerna-add -- <leaf_package_path> <imported_package_path>') ........TODO: check later if npm provide a proper way to add dependencies with workspaces",
     "postlerna-add": "post script to resolve dependencies and symlink after adding a package to another package",
     "lerna-version": "use lerna to update packages versions(automatically creates a new commit and pushes it)",
-    "lerna-modified": "use lerna to list packages that have been changed since most-recent tag",
+    "lerna-modified": "use lerna to list packages that have been changed(default to since most-recent tag, also could compare branches)",
     "docker": "alias for docker-compose command",
     "docker:up": "start development containers (alias for docker-compose command)",
     "docker:up:clean": "recreate and start development containers (alias for docker-compose command)",
