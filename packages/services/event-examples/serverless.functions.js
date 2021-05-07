@@ -1,12 +1,12 @@
 /* eslint-disable no-template-curly-in-string */
 // Functions configuration resolved as .js variable with extra custom logic
 
-const { utils: { filterFunctions } } = require('@sls/definitions');
+const { utils: { functions } } = require('@sls/definitions');
 
 module.exports = async ({ options, resolveConfigurationProperty }) => {
   const stage = await resolveConfigurationProperty(['provider', 'stage']);
 
-  const functions = { // TODO: documentation per function definition(native or by plugin)
+  return functions({ // TODO: documentation per function definition(native or by plugin)
     // offline-scheduler plugin may conflict with vscode debugger
     cronExample: stage !== 'local' && {
       handler: './src/controllers/cronExample/handler.default',
@@ -107,7 +107,5 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
         },
       ],
     },
-  };
-
-  return filterFunctions(functions);
+  });
 };

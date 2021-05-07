@@ -26,6 +26,7 @@ export default lambda(async (event) => {
   };
 
   // TODO: study better model structures for this template(& look for indexes to better queries)
+  // USEFUL DESIGNS: https://www.serverlesslife.com/DynamoDB_Design_Patterns_for_Single_Table_Design.html
 
   // NoSQL document orientaded with transactions not ACID atomic/isolated.
   // Useful for scalable and high performance dynamic data structures with a single static lookup access.

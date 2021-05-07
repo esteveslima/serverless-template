@@ -7,9 +7,10 @@
 
 # exec < /dev/tty && npx git-cz --hook || true
 
+printf "\n\n\n";
 exec < /dev/tty
 while true; do
-    read -p "Commit with commiztzen? (Y/n) " yn
+    read -p "Commit with commitzen? (Y/n) " yn
     case $yn in
         [Yy]* ) npx git-cz --hook || true; break;;
         [Nn]* ) break;;

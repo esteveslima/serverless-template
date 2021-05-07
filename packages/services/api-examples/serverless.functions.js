@@ -1,13 +1,13 @@
 /* eslint-disable no-template-curly-in-string */
 // Functions configuration resolved as .js variable with extra custom logic
 
-const { utils: { filterFunctions } } = require('@sls/definitions');
+const { utils: { functions } } = require('@sls/definitions');
 // TODO: create base variables for repetitive parameters like handler
 module.exports = async ({ options, resolveConfigurationProperty }) => {
   const stage = await resolveConfigurationProperty(['provider', 'stage']);
 
   // TODO: option to get a mocked api version
-  const functions = {
+  return functions({
     asyncExample: stage !== 'local' && {
       handler: './src/controllers/asyncExample/handler.default',
       timeout: 900,
@@ -75,7 +75,5 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
       ],
     },
     // TODO: websocket example
-  };
-
-  return filterFunctions(functions);
+  });
 };
