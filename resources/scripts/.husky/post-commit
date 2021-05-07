@@ -3,7 +3,7 @@
 
 # Runs on post-commit hook(after commit)
 
-# TODO: fix script to offer the option to create lerna versions on every commit
+# TODO: fix script to offer the option to create lerna versions on every commit(???)
 exit 0; # DISABLED
 
 # use lerna to prompt an option for updating modified packages versions(with changelogs and new commit)
