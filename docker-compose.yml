@@ -3,6 +3,7 @@
 
 version: '3.8'
 services:
+    
     serverless-container:                                             # Setting up Serverless development environment        
         image: esteveslima/serverless-template-image:latest           
         build:
@@ -20,13 +21,14 @@ services:
             # - mongo-container
             - dynamodb-container
             # - redis-container
-            - queue-container
+            # - queue-container
             # - localstack-container
         expose:
             - "4000-4010"
         ports:
             - "9229:9229"                                              # VSCode debugger port
             - "4000:4000"                                              # SLS offline debugger            
+
     # mysql-container:                                                 # Setting up RDS local testing environment with mysql
     #     image: mysql
     #     volumes:
@@ -41,6 +43,7 @@ services:
     #        - '3306'             
     #     # ports:
     #     #   - '3306:3306'                 
+
     # mongo-container:                                                  # Setting up MongoDB local testing environment with mongo
     #    image: mongo
     #    volumes:
@@ -54,6 +57,7 @@ services:
     #        - '27017'                         
     #     # ports:
     #     #     - '27017:27017'
+
     dynamodb-container:                                                 # Setting up DynamoDB local testing environment with dynamoDB local
         image: amazon/dynamodb-local
         restart: always        
@@ -66,6 +70,7 @@ services:
             - '8000'
         ports:
             - '8000:8000'                                                # shell available at http://localhost:8000/shell/  
+            
     # redis-container:                                                  # Setting up ElastiCache local testing environment with redis
     #     image: redis
     #     command: ["redis-server", "--appendonly", "yes"]
@@ -77,13 +82,15 @@ services:
     #        - '6379'
     #     # ports:
     #     #    - '6379:6379'         
-    queue-container:                                                  # Setting up SQS local testing environment with elasticMQ
-        image: softwaremill/elasticmq
-        restart: always
-        expose:
-            - '9324'
-        ports:
-            - '9324:9324'
+
+    # queue-container:                                                  # Setting up SQS local testing environment with elasticMQ
+    #     image: softwaremill/elasticmq
+    #     restart: always
+    #     expose:
+    #         - '9324'
+    #     ports:
+    #         - '9324:9324'
+    
     # localstack-container:                                              # EXPERIMENTAL(limited and with lots of bugs)
     #     image: localstack/localstack
     #     privileged: true
