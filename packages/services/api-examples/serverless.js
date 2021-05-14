@@ -1,7 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 
 const { provider: { aws }, plugins: { allPlugins, pluginsCustoms } } = require('@sls/definitions');
-
+// TODO: https://www.npmjs.com/package/module-alias
 const serviceName = __dirname.split('/').slice(-1)[0]; // Using project folder name as service name
 // TODO: lint-stage & husky config after lerna!!!
 

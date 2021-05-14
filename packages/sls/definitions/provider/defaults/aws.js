@@ -40,9 +40,9 @@ module.exports = {
     // restApiId: ,
     // restApiRootResourceId: ,
     // websocketApiId: ,
-    // binaryMediaTypes: [ // TODO: TEST DEPRECATION OF PLUGIN apigtwbinary and verify if */* is a jokerconfig or this must be configurated
-    //   '*/*',
-    // ],
+    binaryMediaTypes: [
+      '*/*',
+    ],
     shouldStartNameWithService: true, // DEPRECATION_RESOLUTION - new naming pattern upcomming in next version
   },
 

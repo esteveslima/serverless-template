@@ -4,6 +4,7 @@
   "description": "",
   "main": "definitions.js",
   "devDependencies": {
+    "@sls/configurations": "file:../configurations",
     "serverless": "^2.38.0",
     "serverless-iam-roles-per-function": "^3.1.0",
     "serverless-localstack": "^0.4.31",
