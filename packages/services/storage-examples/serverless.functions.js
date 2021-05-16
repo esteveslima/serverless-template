@@ -33,5 +33,6 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
       ],
     },
     // TODO: stream example
+    // TODO: files only for infraestructure
   });
 };
