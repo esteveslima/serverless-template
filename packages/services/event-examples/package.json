@@ -6,7 +6,8 @@
   "dependencies": {
     "@shared/utils": "file:../../shared/utils",
     "@sls/lib": "file:../../sls/lib",
-    "aws-sdk": "^2.892.0"
+    "aws-sdk": "^2.892.0",
+    "lambda-multipart-parser": "^1.0.1"
   },
   "devDependencies": {
     "@sls/configurations": "file:../../sls/configurations",
