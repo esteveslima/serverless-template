@@ -1,0 +1,248 @@
+{
+	"info": {
+		"_postman_id": "71b8a59e-fb5e-4d60-89a8-e48e9946e519",
+		"name": "serverless-template",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API examples",
+			"item": [
+				{
+					"name": "Get example",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{HOST}}/{{STAGE}}/getExample/:someRequiredPathParameter?someRequiredQueryParameter=abc",
+							"protocol": "https",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"{{STAGE}}",
+								"getExample",
+								":someRequiredPathParameter"
+							],
+							"query": [
+								{
+									"key": "someRequiredQueryParameter",
+									"value": "abc"
+								}
+							],
+							"variable": [
+								{
+									"key": "someRequiredPathParameter",
+									"value": "123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "httpApi example",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{HOST_HTTP_API}}/{{STAGE_HTTP_API}}/httpApiExample/:someParameter?someQueryParameter=xyz",
+							"protocol": "https",
+							"host": [
+								"{{HOST_HTTP_API}}"
+							],
+							"path": [
+								"{{STAGE_HTTP_API}}",
+								"httpApiExample",
+								":someParameter"
+							],
+							"query": [
+								{
+									"key": "someQueryParameter",
+									"value": "xyz"
+								}
+							],
+							"variable": [
+								{
+									"key": "someParameter",
+									"value": "abc123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post example",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"stringExample\": \"abcdefghij\",\n    \"regexExample\": \"abc123\",\n    \"enumExample\": \"value1\",\n    \"numberExample\": 123,\n    \"arrayExample\": [\"abc\"],\n    \"objectExample\": {\n        \"prop\": \"value\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{HOST}}/{{STAGE}}/postExample",
+							"protocol": "https",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"{{STAGE}}",
+								"postExample"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Async example",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"randomProp\": 3.1415\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{HOST}}/{{STAGE}}/asyncExample/:parameter?someQuery=123",
+							"protocol": "https",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"{{STAGE}}",
+								"asyncExample",
+								":parameter"
+							],
+							"query": [
+								{
+									"key": "someQuery",
+									"value": "123"
+								}
+							],
+							"variable": [
+								{
+									"key": "parameter",
+									"value": "some value"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Event examples",
+			"item": [
+				{
+					"name": "Trigger events",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "s3File",
+									"type": "file",
+									"src": "/home/esteveslima/Downloads/abc2.jpg"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{HOST_HTTP_API}}/{{STAGE_HTTP_API}}/triggerEvents",
+							"protocol": "https",
+							"host": [
+								"{{HOST_HTTP_API}}"
+							],
+							"path": [
+								"{{STAGE_HTTP_API}}",
+								"triggerEvents"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Storage examples",
+			"item": [
+				{
+					"name": "randomMusicsInfo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://{{HOST}}/{{STAGE}}/insertDataDynamoDB",
+							"protocol": "https",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"{{STAGE}}",
+								"insertDataDynamoDB"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST",
+			"value": "localhost:4000"
+		},
+		{
+			"key": "STAGE",
+			"value": "local"
+		},
+		{
+			"key": "HOST_HTTP_API",
+			"value": "localhost:4000"
+		},
+		{
+			"key": "STAGE_HTTP_API",
+			"value": "local"
+		}
+	]
+}
