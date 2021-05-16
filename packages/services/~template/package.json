@@ -16,7 +16,7 @@
     "sls": "serverless",
     "serverless": "serverless",
     "offline": "node --inspect=0.0.0.0:9229 $INIT_CWD/../../../node_modules/.bin/sls offline start",
-    "test": "echo disabled: jest"
+    "test": "jest"
   },
   "scriptsDescriptions": {
     "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm) -> TODO: check the necessity to migrate over to yarn workspaces(or lerna) to manage inter package dependency(like services pakcages dependency on serverless lib package)",    
