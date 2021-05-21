@@ -1,0 +1,4 @@
+{
+    "extends": "../../sls/configurations/tsconfig.json",
+    "rootDir": "./src/"
+}
