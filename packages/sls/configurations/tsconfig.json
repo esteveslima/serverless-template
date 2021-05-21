@@ -1,0 +1,20 @@
+// default typescript config, must be extended on service's files
+
+{
+    "compilerOptions": {
+      // "rootDir": "./src/", // must be overriten
+      // "outDir": "./dist/", // not emitting out files
+      "module": "es6",
+      "target": "es5", // "esnext",
+      "lib": ["es2015"],
+      "moduleResolution": "node",
+      "allowJs": true,
+      "strict": true, // strict syntax
+      "sourceMap": true,
+      "noEmit": true, // do not generate js files
+      "noEmitOnError": true,
+      
+      // Ensure that Babel can safely transpile files in the TypeScript project
+      "isolatedModules": true
+    }
+}

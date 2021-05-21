@@ -8,6 +8,7 @@ module.exports = {
   },
   extends: [
     'airbnb-base',
+    'plugin:import/typescript',
   ],
   parser: '@babel/eslint-parser',
   parserOptions: {
@@ -18,16 +19,19 @@ module.exports = {
       configFile: path.resolve(__dirname, 'babel.config.js'), // Using configurations' package babel config file
     },
   },
-  // ESLINT PLUGINS NOT WORKING IN MONOREPO?
-  // plugins: [
-  //   '@babel/plugin-proposal-class-properties', ---> using directly from babel.config.js file
-  // ],
   // root: true,
+  // SOME ESLINT PLUGINS NOT WORKING IN MONOREPO?
+  plugins: [
+    // '@typescript-eslint',
+    // '@babel/plugin-proposal-class-properties', ---> using directly from babel.config.js file
+  ],
   rules: {
     'max-len': 'off',
     'no-unused-vars': 'off',
 
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }], // should prevent dependency versions incompatibility by prohibiting to use external dependencies(from another packages hoisted to root node_modules)
+
+    'import/extensions': ['error', 'ignorePackages', { js: 'never', ts: 'never' }], // fixing import errors with typescript
   },
   settings: {
     // // This setting should be avoided for the best use of the monorepo structure, requiring to add local packages as dependencies...

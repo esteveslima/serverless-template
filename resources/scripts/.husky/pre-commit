@@ -3,7 +3,7 @@
 
 # Runs on pre-commit hook(before commit)
 
-# check code linting and unit tests(lint-staged affects only staged files and packages)
+# check code linting and unit tests(lint-staged runs individually only on staged files packages)
 npm exec --workspaces -- lint-staged --verbose --concurrent 1
 
 # option for lint-staged using lerna...

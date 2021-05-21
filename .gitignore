@@ -8,7 +8,7 @@
 **/**.log
 
 # Distribution folders
-**/dist
+**/dist/
 
 # Draft projects folders
 **/~~*

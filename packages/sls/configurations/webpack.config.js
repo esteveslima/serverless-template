@@ -1,7 +1,8 @@
 const slsw = require('serverless-webpack');
-const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
+const nodeExternals = require('webpack-node-externals');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const path = require('path');
 
 // Using plugin to get sls variables
@@ -11,7 +12,7 @@ const { isLocal } = slsw.lib.webpack || { isLocal: true };
 module.exports = {
   entry: slsw.lib.entries,
   target: 'node',
-  devtool: 'source-map', // map bundle code for better debugging
+  devtool: isLocal ? 'cheap-source-map' : 'source-map', // map bundle code for better debugging(cheap-source-map for local development build time)
   mode: isLocal ? 'none' : 'production', // production mode colapses and optimizes bundled code, 'none' does the minimum bundle for better visualization
 
   externals: [
@@ -26,12 +27,13 @@ module.exports = {
     rules: [
       // transcompile code to a compatible version using babel(allow new js features)
       {
-        test: /\.m?js$/,
+        test: /\.(m?j|t)s$/,
         exclude: /node_modules/,
+        include: `${serviceDir}/src`, // TODO: check if this optimize build time (maybe use fork-ts-checker-webpack-plugin npm package)
         use: {
           loader: 'babel-loader',
           options: {
-            configFile: path.resolve(__dirname, 'babel.config.js'), // Using configurations' package babel config file
+            configFile: path.resolve(__dirname, 'babel.config.js'), // Using configurations' package unique babel config file
           },
         },
       },
@@ -44,9 +46,9 @@ module.exports = {
         },
       },
       // remove files from bundle
-      /* {
-        exclude: /^.*\.(test).(js)$/,
-      }, */
+      {
+        exclude: /^.*\.(test|mock).(j|t)s$/,
+      },
     ],
   },
 
@@ -77,7 +79,7 @@ module.exports = {
 
     ]),
     // General plugins
-
+    new ForkTsCheckerWebpackPlugin(), // runs typescript type checking in a separate process("enabling" type checking with babel-loader)
   ],
 
   // Project/File won't be properly tree shaken unless explicitelly marked as side-effect free in package.json
@@ -91,6 +93,8 @@ module.exports = {
   optimization: {
     usedExports: true, // for initial unused code detection
     sideEffects: true, // enables webpack to search for sideEffects definitions(if this brings problems to the bundle code, disable package sideEffects by returning it's value to "true")
+
+    emitOnErrors: false, // prevent generating files with errors(useful for typescript type checking)
   },
 
 };
