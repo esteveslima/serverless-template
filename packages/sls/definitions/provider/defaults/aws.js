@@ -40,9 +40,11 @@ module.exports = {
     // restApiId: ,
     // restApiRootResourceId: ,
     // websocketApiId: ,
-    binaryMediaTypes: [
-      '*/*',
-    ],
+    // binaryMediaTypes: [
+    //   // enabling this may cause base64 encoded requests
+    //   'application/json', // add mime types for base64 encoded binary responses(may require 'Content-type' or 'Accept' headers)
+    //   // '*/*',
+    // ],
     shouldStartNameWithService: true, // DEPRECATION_RESOLUTION - new naming pattern upcomming in next version
   },
 
