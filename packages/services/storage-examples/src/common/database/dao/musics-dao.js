@@ -6,6 +6,8 @@
 
 import Musics from '../models/Musics';
 
+// TODO: separate into multiple files with index export file
+
 // Composite keys templates
 const musicKey = 'music_{key}';
 const listGenres = 'list_genres';

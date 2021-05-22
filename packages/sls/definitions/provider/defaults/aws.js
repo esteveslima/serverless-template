@@ -5,7 +5,7 @@
 module.exports = {
   // Main config
   name: 'aws',
-  runtime: 'nodejs12.x',
+  runtime: 'nodejs14.x',
   profile: 'aws-cloud', // profile with production keys in the credentials file
   stage: "${opt:stage, 'local'}",
   region: "${opt:region, 'us-east-1'}",

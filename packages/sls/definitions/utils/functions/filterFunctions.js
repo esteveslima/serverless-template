@@ -7,5 +7,7 @@ module.exports = (functions) => {
     return acc;
   }, {});
 
+  if (Object.keys(functionsObject).length <= 0) throw new Error('No functions available!');
+
   return functionsObject;
 };

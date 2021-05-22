@@ -7,7 +7,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
   const stage = await resolveConfigurationProperty(['provider', 'stage']);
 
   return functions({
-    someFunction: {
+    someFunction: stage === 'local' && {
       handler: './src/controllers/someController/handler.default',
       events: [
         {

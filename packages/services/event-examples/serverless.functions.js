@@ -34,9 +34,9 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
               {
                 prefix: 'uploads/',
               },
-              {
-                // suffix: '.txt',  // limit file types
-              },
+              // {
+              //   suffix: '.txt',  // limit file types
+              // },
             ],
           },
         },

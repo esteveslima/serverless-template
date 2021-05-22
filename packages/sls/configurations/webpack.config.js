@@ -63,7 +63,7 @@ module.exports = {
   },
 
   output: {
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'commonjs2', // TODO: change to the latest output version possible(node14.x)
     path: `${serviceDir}/.temp/.webpack`, // Set output bundle to the service folder(.temp)
     filename: '[name].js',
 
