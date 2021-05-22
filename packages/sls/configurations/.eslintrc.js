@@ -32,6 +32,7 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }], // should prevent dependency versions incompatibility by prohibiting to use external dependencies(from another packages hoisted to root node_modules)
 
     'import/extensions': ['error', 'ignorePackages', { js: 'never', ts: 'never' }], // fixing import errors with typescript
+    'import/no-unresolved': ['error', { ignore: ['^aws-lambda$'] }], // TODO: check the error this rule causes with @types/aws-lambda
   },
   settings: {
     // // This setting should be avoided for the best use of the monorepo structure, requiring to add local packages as dependencies...
