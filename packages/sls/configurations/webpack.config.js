@@ -4,10 +4,16 @@ const nodeExternals = require('webpack-node-externals');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const path = require('path');
+const fs = require('fs');
 
 // Using plugin to get sls variables
 const { serviceDir } = slsw.lib.serverless || { serviceDir: '' }; // requires the result fallback due eslint conflicting with this file
 const { isLocal } = slsw.lib.webpack || { isLocal: true };
+const isTsProject = (() => {
+  try {
+    return fs.readdirSync(serviceDir).includes('tsconfig.json'); // testing only if has tsconfig file to consider it as a ts project
+  } catch (err) { return false; }
+})();
 
 module.exports = {
   entry: slsw.lib.entries,
@@ -69,17 +75,25 @@ module.exports = {
   plugins: [
     ...(isLocal ? [
       // Only local plugins
+
+      // generates html report in bundle folder
       new BundleAnalyzerPlugin({
-        analyzerMode: 'static', // generates html report in bundle folder
+        analyzerMode: 'static',
         openAnalyzer: false,
       }),
 
     ] : [
-      // Only non-local plugins
+      // Only non local plugins
 
     ]),
     // General plugins
-    new ForkTsCheckerWebpackPlugin(), // runs typescript type checking in a separate process("enabling" type checking with babel-loader)
+
+    // Runs typescript type checking in a separate process("enabling" type checking with babel-loader)
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: isTsProject ? 'tsconfig.json' : path.resolve(__dirname, 'tsconfig.json'), // Using configurations' tsconfig file if service doesn't have its own
+      },
+    }),
   ],
 
   // Project/File won't be properly tree shaken unless explicitelly marked as side-effect free in package.json
@@ -94,7 +108,7 @@ module.exports = {
     usedExports: true, // for initial unused code detection
     sideEffects: true, // enables webpack to search for sideEffects definitions(if this brings problems to the bundle code, disable package sideEffects by returning it's value to "true")
 
-    emitOnErrors: false, // prevent generating files with errors(useful for typescript type checking)
+    emitOnErrors: false, // prevent generating files with errors(useful for typescript type checking, PS: offline server may still start)
   },
 
 };

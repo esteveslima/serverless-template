@@ -22,6 +22,9 @@
     "**.{js,ts}": [
       "npx eslint --max-warnings 0 --fix",
       "npm run test -- --findRelatedTests --bail"
+    ],
+    "**.ts": [
+      "bash -c tsc --noEmit"
     ]
   },
   "commitlint": {
