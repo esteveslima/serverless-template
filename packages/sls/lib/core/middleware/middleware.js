@@ -53,14 +53,14 @@ export default (function middleware() {
     // Resolve function between middlewares
     async resolve(func, args) {
       try {
-        await run.before(args);
+        await run.before(...args);
         const functionResult = await func.apply(this, args);
-        await run.after(functionResult, args);
+        await run.after(functionResult, ...args);
 
         return functionResult;
       } catch (error) {
         const handledError = errorHandler(error);
-        await run.error(handledError.errorObject, args);
+        await run.error(handledError.errorObject, ...args);
         return handledError.response;
       }
     },

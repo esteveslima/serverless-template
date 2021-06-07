@@ -4,6 +4,9 @@
   "description": "",
   "main": "utils.js",
   "sideEffects": [],
+  "devDependencies": {
+    "@sls/configurations": "file:../../sls/configurations"
+  },
   "scripts": {
     "test": "echo disabled: jest"
   },
