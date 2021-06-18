@@ -1,9 +1,7 @@
-import { lambda, logger, middleware } from '@sls/lib';
+import { lambda, logger } from '@sls/lib';
 import registerMusic from './utils/register-music';
 import updateIndexes from './utils/update-indexes';
 import bundleData from './utils/bundle-data';
-
-middleware.before((event) => { logger.log('insertDataDynamoDB'); });
 
 // TODO: readme
 // NoSQL document orientaded with transactions not ACID atomic/isolated.

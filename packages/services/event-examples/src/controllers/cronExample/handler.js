@@ -1,6 +1,4 @@
-import { lambda, logger, middleware } from '@sls/lib';
-
-middleware.before((event) => { logger.log('cronExample'); });
+import { lambda, logger } from '@sls/lib';
 
 export default lambda(async (event) => {
   const message = 'This lambda function was triggered by a cloudwatch event';

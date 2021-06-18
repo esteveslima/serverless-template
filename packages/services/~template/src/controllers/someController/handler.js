@@ -1,6 +1,4 @@
-import { lambda, logger, middleware } from '@sls/lib';
-
-middleware.before((event) => { logger.log('middleware usage example'); });
+import { lambda, logger } from '@sls/lib';
 
 export default lambda(async (event) => {
   const { params } = event.body;

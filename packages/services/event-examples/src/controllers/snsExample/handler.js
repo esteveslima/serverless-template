@@ -1,8 +1,5 @@
-import {
-  ErrorResponse, lambda, logger, middleware,
-} from '@sls/lib';
+import { ErrorResponse, lambda, logger } from '@sls/lib';
 
-middleware.before((event) => { logger.log('snsExample'); });
 // TODO: test examples with actions plugged at sns topic(aws console)
 export default lambda(async (event) => {
   const snsMessages = event.Records.map((record) => JSON.parse(record.Sns.Message));

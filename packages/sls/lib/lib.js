@@ -5,7 +5,6 @@
 // Export frequently used core resources
 export {
   logger,
-  middleware,
   WarningResponse,
   ErrorResponse,
   ErrorObjects,

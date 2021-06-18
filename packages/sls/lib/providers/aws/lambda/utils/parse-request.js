@@ -6,9 +6,9 @@ export default (requestArgs) => {
   try {
     const jsonRequest = JSON.parse(args[0].body);
     args[0].body = jsonRequest;
+    return args;
   } catch (err) {
     // not a json body
+    return args;
   }
-
-  return args;
 };

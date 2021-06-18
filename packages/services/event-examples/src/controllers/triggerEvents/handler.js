@@ -1,9 +1,7 @@
-import { lambda, logger, middleware } from '@sls/lib';
+import { lambda, logger } from '@sls/lib';
 import triggerSns from './utils/triggerSns';
 import triggerSqs from './utils/triggerSqs';
 import triggerS3 from './utils/triggerS3';
-
-middleware.before((event) => { logger.log('triggerEventsExample'); });
 
 export default lambda(async (event) => {
   const { IS_OFFLINE } = process.env;

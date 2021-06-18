@@ -1,6 +1,6 @@
 /* eslint-disable prefer-rest-params */
 import 'source-map-support/register'; // enable source-map registering at the entry point, to map webpack error logs
-import { logger, middleware } from '../../../core/core';
+import { logger, resolver } from '../../../core/core';
 import parseRequest from './utils/parse-request';
 import parseResponse from './utils/parse-response';
 
@@ -8,17 +8,13 @@ import parseResponse from './utils/parse-response';
 export default (func) => async function lambda() {
   const { IS_OFFLINE } = process.env;
 
-  // Register default middlewares
-  middleware.before((args) => { if (!IS_OFFLINE) logger.info(args); }); // TODO: enhance logs to beautify view on cloudwatch
-  middleware.after((args, result) => { if (!IS_OFFLINE) logger.info(result); });
-  middleware.error((args, errorObject) => { if (!IS_OFFLINE) logger.error('Custom middleware for errors'); });
+  const args = parseRequest(arguments); // Parse lambda requests
 
-  // Parse lambda requests
-  const args = parseRequest(arguments);
+  if (!IS_OFFLINE) logger.info(args); // TODO: enhance logs to beautify view on cloudwatch
 
-  // Run function(between middlewares)
-  const result = await middleware.resolve(func, args);
+  const result = await resolver(func, args); // Run function
 
-  // Parse response for api-gateway
-  return parseResponse(result);
+  if (!IS_OFFLINE) logger.info(result);
+
+  return parseResponse(result); // Parse response for api-gateway
 };
