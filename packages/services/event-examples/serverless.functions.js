@@ -9,7 +9,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
   return functions({ // TODO: documentation per function definition(native or by plugin)
     // offline-scheduler plugin may conflict with vscode debugger
     cronExample: stage !== 'local' && {
-      handler: './src/controllers/cronExample/handler.default',
+      handler: './src/functions/cronExample/handler.default',
       timeout: 60,
       events: [
         {
@@ -22,7 +22,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
       ],
     },
     s3Example: {
-      handler: './src/controllers/s3Example/handler.default',
+      handler: './src/functions/s3Example/handler.default',
       timeout: 60,
       events: [
         {
@@ -43,7 +43,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
       ],
     },
     snsExample: {
-      handler: './src/controllers/snsExample/handler.default',
+      handler: './src/functions/snsExample/handler.default',
       timeout: 60,
       events: [
         {
@@ -59,7 +59,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
       ],
     },
     sqsExample: stage !== 'local' && {
-      handler: './src/controllers/sqsExample/handler.default',
+      handler: './src/functions/sqsExample/handler.default',
       timeout: 30, // limited to queue timeout
       events: [
         {
@@ -73,7 +73,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
       ],
     },
     triggerEvents: {
-      handler: './src/controllers/triggerEvents/handler.default',
+      handler: './src/functions/triggerEvents/handler.default',
       timeout: 28,
       events: [
         {

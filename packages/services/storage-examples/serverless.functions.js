@@ -8,7 +8,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
 
   return functions({
     insertDataDynamoDB: {
-      handler: './src/controllers/insertDataDynamoDB/handler.default',
+      handler: './src/functions/insertDataDynamoDB/handler.default',
       timeout: 30,
       events: [
         {
@@ -17,7 +17,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
             path: '/insertDataDynamoDB',
             // request: {
             //   schemas: { // TODO: set schema path automatically(maybe only base path)
-            //     'application/json': '${file(./controllers/insertDataDynamoDB/assets/schema.json)}',
+            //     'application/json': '${file(./functions/insertDataDynamoDB/assets/schema.json)}',
             //   },
             // },
           },

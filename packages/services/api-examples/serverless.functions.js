@@ -9,7 +9,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
   // TODO: option to get a mocked api version
   return functions({
     asyncExample: stage !== 'local' && {
-      handler: './src/controllers/asyncExample/handler.default',
+      handler: './src/functions/asyncExample/handler.default',
       timeout: 900,
       // destinations: { onSuccess: 'someOtherFunction', onFailure: 'arn:...'}, // TODO: destinations example for async invocations
       events: [
@@ -23,7 +23,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
       ],
     },
     getExample: { // TODO: test request parameters requirements for path/query/header
-      handler: './src/controllers/getExample/handler.default',
+      handler: './src/functions/getExample/handler.default',
       events: [
         {
           http: {
@@ -47,7 +47,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
       ],
     },
     httpApiExample: { // TODO: examples with authorizers for http and httapi and private for http events
-      handler: './src/controllers/httpApiExample/handler.default',
+      handler: './src/functions/httpApiExample/handler.default',
       timeout: 28,
       events: [
         {
@@ -59,7 +59,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
       ],
     },
     postExample: {
-      handler: './src/controllers/postExample/handler.default',
+      handler: './src/functions/postExample/handler.default',
       events: [
         {
           http: {
@@ -67,7 +67,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
             path: '/postExample', // todo: use joi
             // request: { // TODO: find a way to convert npm package schema(as joi) to jsonschema, having both validations to http events https://www.npmjs.com/package/joi-to-json-schema/v/3.0.0
             //   schemas: { // TODO: set schema path automatically(maybe only base path)
-            //     'application/json': '${file(./src/controllers/postExample/assets/schema.json)}',
+            //     'application/json': '${file(./src/functions/postExample/assets/schema.json)}',
             //   },
             // },
           },
