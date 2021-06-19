@@ -3,7 +3,7 @@ import logger from '../../../../core/logger/logger';
 // Parse results from functions(accepts statusCode and headers in result object) to lambda responses
 export default (functionResult) => {
   try {
-    if (typeof functionResult === 'object') {
+    if (functionResult && typeof functionResult === 'object') {
       const {
         statusCode = 200,
         headers = { 'Content-type': 'application/json' },
@@ -19,7 +19,7 @@ export default (functionResult) => {
       };
     }
 
-    return { statusCode: 200, headers: { 'Content-type': 'application/json' }, body: functionResult.toString() };
+    return { statusCode: 200, headers: { 'Content-type': 'application/json' }, body: functionResult?.toString() };
   } catch (err) {
     logger.error(err);
     return { statusCode: 500, body: 'Error on parse response' };

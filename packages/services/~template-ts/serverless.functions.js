@@ -8,7 +8,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
 
   return functions({
     someFunction: stage === 'local' && {
-      handler: './src/controllers/someController/handler.default',
+      handler: './src/functions/someFunction/handler.default',
       events: [
         {
           http: {

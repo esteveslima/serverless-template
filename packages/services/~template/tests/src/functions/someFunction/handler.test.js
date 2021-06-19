@@ -7,10 +7,10 @@
 // jest.mock(...)
 
 // Import mocks
-import * as mocks from '../../../mocks/src/controllers/someController/handler.mock';
+import * as mocks from '../../../mocks/src/functions/someFunction/handler.mock';
 
 // Import sut
-import sut from '../../../../src/controllers/someController/handler';
+import sut from '../../../../src/functions/someFunction/handler';
 
 describe('(@services/~template): someController', () => {
   beforeAll(() => { });
@@ -19,14 +19,4 @@ describe('(@services/~template): someController', () => {
   afterAll(() => { jest.restoreAllMocks(); });
 
   it('expect [test scope] to [test goal] if [scenario conditions]   <-   Test description template', () => { expect(true).toBeTruthy(); });
-
-  it('expect [example template] to [return event body parameters] if [everything went right]', async () => {
-    const event = mocks.sut.PARAMETERS.OK;
-
-    const sutResult = await sut(event);
-
-    expect(sutResult).toEqual(expect.objectContaining({
-      result: event.body.params,
-    }));
-  });
 });

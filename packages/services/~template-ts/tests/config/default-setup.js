@@ -2,27 +2,17 @@
 
 // Default setup that runs before every test
 
-// mock lib package
-jest.mock('@sls/lib', () => {
-  const originalModule = jest.requireActual('@sls/lib');
-  // const mockedModule = Object.keys(jest.requireActual('@sls/lib')).reduce((acc, curr) => {
-  //   acc[curr] = jest.fn();
-  //   return acc;
-  // }, {});
-  return {
-    __esModule: true, // required for esModules
+// // mock lib package
+// jest.mock('@sls/lib', () => {
+//   const originalModule = jest.requireActual('@sls/lib');
 
-    // keep original module, besides below
-    ...originalModule,
+//   return {
+//     __esModule: true, // required for esModules
 
-    // mock "middleware" utils
-    middleware: {
-      before: jest.fn().mockImplementation(() => {}),
-      after: jest.fn().mockImplementation(() => {}),
-      error: jest.fn().mockImplementation(() => {}),
-    },
+//     // keep original module, besides below
+//     ...originalModule,
 
-    // mock "lambda" wrapper, removing it's implementation to behave as the original function
-    lambda: jest.fn().mockImplementation((func) => async function mockWrapper() { return func.apply(this, arguments); }),
-  };
-});
+//     // mock "lambda" wrapper, removing it's implementation to behave as the original function
+//     lambda: jest.fn().mockImplementation((func) => async function mockWrapper() { return func.apply(this, arguments); }),
+//   };
+// });
