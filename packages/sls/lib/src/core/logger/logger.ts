@@ -2,19 +2,19 @@
 const { IS_OFFLINE } = process.env;
 
 export default {
-  log: (...data) => {
+  log: (...data : any) => {
     // if (IS_OFFLINE) return;
     console.log(...data);
   },
-  info: (...data) => {
+  info: (...data : any) => {
     // if (IS_OFFLINE) return;
     console.info(...data);
   },
-  warn: (...data) => {
+  warn: (...data : any) => {
     // if (IS_OFFLINE) return;
     console.warn(...data);
   },
-  error: (...data) => {
+  error: (...data : any) => {
     // if (IS_OFFLINE) return;
     console.error(...data);
   },

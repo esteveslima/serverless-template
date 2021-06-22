@@ -2,7 +2,7 @@
   "name": "@sls/lib",
   "version": "1.0.1",
   "description": "",
-  "main": "lib.js",
+  "main": "dist/lib.js",
   "sideEffects": [],
   "dependencies": {
     "aws-sdk": "^2.892.0",
@@ -12,6 +12,7 @@
     "@sls/configurations": "file:../configurations"
   },
   "scripts": {
+    "build": "tsc",
     "test": "echo disabled: jest"
   },
   "scriptsDescriptions": {

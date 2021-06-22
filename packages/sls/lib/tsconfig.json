@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+      "rootDir": "./src/",
+      "outDir": "./dist/",
+      // "module": "CommonJS", // "es6",
+      "target": "ES2020", // "esnext",
+      "lib": ["es2015"],
+      "moduleResolution": "node",
+      "allowJs": true,
+      "strict": true, // strict syntax
+      "sourceMap": true,
+      "declaration": true,
+      "noEmit": false,
+      "noEmitOnError": true,          
+      "isolatedModules": true,
+      "downlevelIteration": true,
+      "removeComments": true
+    }
+}

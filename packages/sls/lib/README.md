@@ -1,0 +1,1 @@
+this is a lib package in Typescript, every change to this lib must be transpiled to .js to the /dist folder(main entrypoint must be the .js). 

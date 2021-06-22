@@ -1,3 +1,12 @@
+// // disabling interface to keep intelisense
+// export interface IErrorObjects {
+//   [errorName: string] : {
+//     errorCode: number,
+//     httpCode: number,
+//     message: string
+//   }
+// }
+
 // List of default errors for proper responses
 export default {
   INTERNAL_SERVER_ERROR: { errorCode: 1000, httpCode: 500, message: 'Internal server error, please try again later or contact the support' },

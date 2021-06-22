@@ -1,4 +1,6 @@
 {
     "extends": "../../sls/configurations/tsconfig.json",
-    "rootDir": "./src/"
+    // "compilerOptions": {
+    //     "rootDir": "./src/"
+    // }
 }

@@ -3,10 +3,8 @@
 const { provider: { aws }, plugins: { allPlugins, pluginsCustoms } } = require('@sls/definitions');
 
 const serviceName = __dirname.split('/').slice(-1)[0]; // Using project folder name as service name
-// TODO: clean architecture(most possible, ensure testability and isolation)/
 // TODO: enhance examples
 // TODO: fix tests & setup
-// TODO: sls lib types & remove ts ignore
 module.exports = {
   service: serviceName,
 

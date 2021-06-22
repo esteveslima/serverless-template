@@ -5,7 +5,7 @@ import parseRequest from './utils/parse-request';
 import parseResponse from './utils/parse-response';
 
 // Wrapper for lambda functions
-export default (func) => async function lambda() {
+export default (func : Function) => async function lambda() {
   const { IS_OFFLINE } = process.env;
 
   const args = parseRequest(arguments); // Parse lambda requests
