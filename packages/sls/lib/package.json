@@ -17,6 +17,7 @@
   },
   "scriptsDescriptions": {
     "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm) -> TODO: check the necessity to migrate over to yarn workspaces(or lerna) to manage inter package dependency(like services pakcages dependency on serverless lib package)",
+    "build": "transpile .ts files to .js to allow usage in another packages, every modification in this package requires a rebuild",
     "test": "test command"
   },
   "author": "",

@@ -3,8 +3,9 @@
 
 # Runs on pre-commit hook(before commit)
 
-# check code lint, type check and unit tests(lint-staged runs individually per staged files packages)
-npm exec --workspaces -- lint-staged --verbose --concurrent 1
-
-# option for lint-staged using lerna...
-# npx lerna exec --concurrency 1 --stream lint-staged --since HEAD --exclude-dependents 
+## check code lint, type check and unit tests(lint-staged runs individually per staged files packages)
+npm exec --workspaces -- lint-staged --verbose --concurrent 1     # old simpler script
+# npx --workspaces -c '\
+#     echo -n ${PWD##*/} \\t\\t\\t && \
+#     lint-staged --verbose --concurrent 1 \
+# '

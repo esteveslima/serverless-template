@@ -43,9 +43,10 @@
   },
   "scripts": {
     "prepare": "husky install resources/scripts/.husky",
+    "postinstall": "npm run -w @sls/lib build",
     "wsp": "npm run --if-present --workspaces",
     "services": "npm run -if-present -w @services/api-examples -w @services/event-examples -w @services/storage-examples",
-    "clear": "npx -y rimraf ./**/node_modules/ ./packages/**/.serverless/ ./packages/**/.temp/",
+    "clear": "npx -y rimraf ./**/node_modules/ ./packages/**/.serverless/ ./packages/**/.temp/ ./packages/**/dist/",
     "update-dependencies:from": "npx -y npm-check-updates -u --cwd ",
     "lerna-add": "npm install --package-lock-only --no-package-lock --prefix",
     "postlerna-add": "npm install",
@@ -65,6 +66,7 @@
   "scriptsDescriptions": {
     "EXPLANATION": "dummy object only used to comment built scripts(will be ignored by npm) -> TODO",
     "prepare": "required script for husky(saving to resources scripts folder)",
+    "postinstall": "automatically builds required .ts packages(maybe push /dist folders into git in the future?)",
     "wsp": "alias for npm workspaces command",
     "services": "script for designated workspaces TODO: way to run with regex @pkg/*",
     "clear": "script to clear all packages(modules and temp files)",
