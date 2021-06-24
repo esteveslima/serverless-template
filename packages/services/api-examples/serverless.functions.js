@@ -2,12 +2,12 @@
 // Functions configuration resolved as .js variable with extra custom logic
 
 const { utils: { functions } } = require('@sls/definitions');
-// TODO: create base variables for repetitive parameters like handler
+
 module.exports = async ({ options, resolveConfigurationProperty }) => {
   const stage = await resolveConfigurationProperty(['provider', 'stage']);
 
-  // TODO: option to get a mocked api version
   return functions({
+    // disabling in local stage(async not working with sls offline)
     asyncExample: stage !== 'local' && {
       handler: './src/functions/asyncExample/handler.default',
       timeout: 900,
@@ -17,43 +17,25 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
           http: {
             method: 'POST',
             path: '/asyncExample/{parameter}',
-            async: true,
+            async: true, // instantly returns 200, but keeps running lambda in the background
+            private: true, // limited by usage plan with api-key.
           },
         },
       ],
     },
-    getExample: { // TODO: test request parameters requirements for path/query/header
+    getExample: {
       handler: './src/functions/getExample/handler.default',
       events: [
         {
           http: {
             method: 'GET',
             path: '/getExample/{someRequiredPathParameter}',
-            request: { // TODO: not working
-              parameters: {
-                paths: {
-                  someRequiredPathParameter: true,
-                },
-                querystrings: {
-                  someRequiredQueryParameter: true,
-                },
-                headers: {
-                  someRequiredHeaderParameter: true,
-                },
-              },
+            // request: {}, // probably doesn't work without ParameterRequestValidator resource
+            // Custom throtling for function(plugin)  // TODO: test
+            throttling: {
+              maxRequestsPerSecond: 1,
+              maxConcurrentRequests: 1,
             },
-          },
-        },
-      ],
-    },
-    httpApiExample: { // TODO: examples with authorizers for http and httapi and private for http events
-      handler: './src/functions/httpApiExample/handler.default',
-      timeout: 28,
-      events: [
-        {
-          httpApi: {
-            method: 'GET',
-            path: '/httpApiExample/{someParameter}',
           },
         },
       ],
@@ -64,12 +46,20 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
         {
           http: {
             method: 'POST',
-            path: '/postExample', // todo: use joi
-            // request: { // TODO: find a way to convert npm package schema(as joi) to jsonschema, having both validations to http events https://www.npmjs.com/package/joi-to-json-schema/v/3.0.0
-            //   schemas: { // TODO: set schema path automatically(maybe only base path)
-            //     'application/json': '${file(./src/functions/postExample/assets/schema.json)}',
-            //   },
-            // },
+            path: '/postExample',
+            // request: { schemas: { 'application/json': '${file(./src/functions/postExample/assets/schema.json)}' } }, // Disabled draft-04 schema
+          },
+        },
+      ],
+    },
+    httpApiExample: { // TODO: examples with authorizers: lambdas, cognito, ... (api-key not available in httpapi)
+      handler: './src/functions/httpApiExample/handler.default',
+      timeout: 28,
+      events: [
+        {
+          httpApi: {
+            method: 'GET',
+            path: '/httpApiExample/{someParameter}',
           },
         },
       ],

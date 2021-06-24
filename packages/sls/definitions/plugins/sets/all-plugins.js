@@ -88,14 +88,35 @@ module.exports = {
       httpsProtocol: `${pluginsAssets}/local-ssl-tls`,
       host: '0.0.0.0', // binding to special address to make "offline" server reachable from outside docker network
       httpPort: '4000',
+      apiKey: 'someApiKey1234567890', // mocked api-key(for private functions)
+      allowCache: true,
     },
   },
+
+  // enables providing extra permissions for each lambda function individually
+  'serverless-iam-roles-per-function': {}, // TODO: check due this is creating unecessary roles for another functions without plugin config
+
+  // enables throttling configuration per function(also a solution for region's rate-limit exhaustion)
+  'serverless-api-gateway-throttling': {
+    // General throttling, applied to all functions(configured to account default, required to make per function works)
+    apiGatewayThrottling: {
+      maxRequestsPerSecond: 10000,
+      maxConcurrentRequests: 5000,
+    },
+  },
+
+  // // enables cache for functions throught api gateway(not free tier)
+  // 'serverless-api-gateway-caching': {
+  //   apiGatewayCaching: {
+  //     enabled: false, // disabled: not free tier // true, // Enable cache to use the plugin(still requires definition per function)
+  //     ttlInSeconds: 30,
+  //   },
+  // },
 
   // run scripts with serverless commands/hooks(TODO: fix -> not working when running sls offline directly from node_modules for vscode debugger)
   'serverless-plugin-scripts': {
     scripts: {
       commands: {
-        teste: `. ${monorepoRoot}/resources/scripts/update-aws-keys-prod.sh`,
         checkdeploystage: `${pluginsAssets}/scripts/check-deploy-stage.sh`,
       },
       hooks: { // See some serverless hooks: export SLS_DEBUG=* or https://gist.github.com/HyperBrain/50d38027a8f57778d5b0f135d80ea406 and https://gist.github.com/MikeSouza/b9d2c89aec768a8871c8778f530cf4ab
@@ -112,21 +133,13 @@ module.exports = {
     },
   },
 
-  // enables providing extra permissions for each lambda function individually
-  'serverless-iam-roles-per-function': {}, // TODO: check due this is creating unecessary roles for another functions without plugin config
-
   // TODO...
   // 'serverless-offline-dynamodb-streams': {},
   // 'serverless-domain-manager':{},
-  // 'serverless-localstack':{},
-  // 'serverless-plugin-conditional-functions':{},
-  // 'serverless-plugin-ifelse':{},
-  // 'serverless-pseudo-parameters':{},
   // 'serverless-plugin-aws-alerts':{},
   // 'serverless-prune-plugin':{},
   // 'serverless-plugin-lambda-dead-letter':{},
 
   // 'serverless-aws-documentation':{},
   // 'serverless-reqvalidator-plugin':{},
-  // 'serverless-api-gateway-throttling': {},
 };

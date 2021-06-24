@@ -104,7 +104,13 @@
 					"name": "Async example",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "someApiKey1234567890",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"randomProp\": 3.1415\n}",

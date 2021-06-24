@@ -4,8 +4,5 @@
 # Runs on pre-commit hook(before commit)
 
 ## check code lint, type check and unit tests(lint-staged runs individually per staged files packages)
-# npm exec --workspaces -- lint-staged --verbose --concurrent 1     # old simpler script
-npx --workspaces -c '\
-    echo -n ${PWD##*/} \\t\\t\\t && \
-    lint-staged --verbose --concurrent 1 \
-'
+npm exec --workspaces -- lint-staged --verbose --concurrent 1     # old simpler script
+# npx --workspaces -c 'echo -n ${PWD##*/} \\t\\t\\t && lint-staged --verbose --concurrent 1'    # attempt to print folder/package under test
