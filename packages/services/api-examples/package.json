@@ -6,6 +6,7 @@
   "dependencies": {
     "@shared/utils": "file:../../shared/utils",
     "@sls/lib": "file:../../sls/lib",
+    "ajv": "^8.6.0",
     "aws-sdk": "^2.892.0"
   },
   "devDependencies": {

@@ -89,7 +89,7 @@ module.exports = {
       host: '0.0.0.0', // binding to special address to make "offline" server reachable from outside docker network
       httpPort: '4000',
       apiKey: 'someApiKey1234567890', // mocked api-key(for private functions)
-      allowCache: true,
+      // allowCache: true,  // cache lambda responses or local code?
     },
   },
 
