@@ -4,8 +4,8 @@ import logger from '../logger/logger';
 
 interface IErrorHandler {
   statusCode: number,
-  Error: number,
-  Message: string
+  error: number,
+  message: string
 }
 
 // const { IS_OFFLINE } = process.env;
@@ -23,8 +23,8 @@ export default (err : Error) : IErrorHandler => {
 
   return {
     statusCode: errorResponse.errorObject?.httpCode ?? errorObjects.INTERNAL_SERVER_ERROR.httpCode,
-    Error: errorResponse.errorObject?.errorCode ?? errorObjects.INTERNAL_SERVER_ERROR.errorCode,
-    Message: errorResponse.errorObject?.message ?? errorObjects.INTERNAL_SERVER_ERROR.message,
+    error: errorResponse.errorObject?.errorCode ?? errorObjects.INTERNAL_SERVER_ERROR.errorCode,
+    message: errorResponse.errorObject?.message ?? errorObjects.INTERNAL_SERVER_ERROR.message,
     // headers, //TODO: return useful data?
   };
 };

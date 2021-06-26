@@ -6,7 +6,23 @@ const { utils: { functions } } = require('@sls/definitions');
 module.exports = async ({ options, resolveConfigurationProperty }) => {
   const stage = await resolveConfigurationProperty(['provider', 'stage']);
 
-  return functions({ // TODO: documentation per function definition(native or by plugin)
+  /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Get the the previously created services' CloudFormation references, before the creating the functions definitions
+  const serviceName = __dirname.split('/').slice(-1)[0]; // Using project folder name as service name
+  const infraServiceName = `${serviceName}-infra`;
+  const cfReference = (cfOutputKey) => `\${cf:${infraServiceName}-\${self:provider.stage}.${cfOutputKey}}`; // Generate the string reference to cloudformation output
+
+  // Mock references for development with plugins(considering 'local' stage to be the development environment)
+  const isLocal = stage === 'local';
+  const S3_BUCKET_EXAMPLE = !isLocal ? cfReference('exampleS3BUCKET') : 'exampleS3';
+  const S3_ARN_EXAMPLE = !isLocal ? cfReference('exampleS3ARN') : 'arn:aws:s3:::exampleS3';
+  const SNS_ARN_EXAMPLE = !isLocal ? cfReference('exampleSNSARN') : 'arn:aws:sns:us-east-1:809635126572:exampleSNS';
+  const SQS_URL_EXAMPLE = !isLocal ? cfReference('exampleSQSURL') : 'https://sqs.us-east-1.amazonaws.com/809635126572/exampleSQS';
+  const SQS_ARN_EXAMPLE = !isLocal ? cfReference('exampleSQSARN') : 'arn:aws:sqs:us-east-1:809635126572:exampleSQS';
+  /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  // Resources for these functions were createded independently from this stack, preventing potential syncing and data loss problems
+  return functions({
     // offline-scheduler plugin may conflict with vscode debugger
     cronExample: stage !== 'local' && {
       handler: './src/functions/cronExample/handler.default',
@@ -27,8 +43,8 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
       events: [
         {
           s3: {
-            bucket: '${env:S3_BUCKET_EXAMPLE}',
-            existing: true, // Prefer to create resources independently from this stack, preventing syncing and data loss problems
+            existing: true,
+            bucket: S3_BUCKET_EXAMPLE,
             event: 's3:ObjectCreated:*', // event do not trigger if the object is updated(not created)
             rules: [
               {
@@ -48,7 +64,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
       events: [
         {
           sns: {
-            arn: '${env:SNS_ARN_EXAMPLE}', // Prefer to create resources independently from this stack, preventing syncing and data loss problems
+            arn: SNS_ARN_EXAMPLE,
             filterPolicy: {
               example: [
                 'test',
@@ -64,7 +80,7 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
       events: [
         {
           sqs: {
-            arn: '${env:SQS_ARN_EXAMPLE}', // Prefer to create resources independently from this stack, preventing syncing and data loss problems
+            arn: SQS_ARN_EXAMPLE,
             enabled: true,
             batchSize: 1,
             maximumBatchingWindow: 10,
@@ -84,26 +100,26 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
         },
       ],
       environment: {
-        S3_BUCKET_EXAMPLE: '${env:S3_BUCKET_EXAMPLE}',
-        SNS_ARN_EXAMPLE: '${env:SNS_ARN_EXAMPLE}',
-        SQS_URL_EXAMPLE: '${env:SQS_URL_EXAMPLE}',
+        S3_BUCKET_EXAMPLE,
+        SNS_ARN_EXAMPLE,
+        SQS_URL_EXAMPLE,
       },
       // extra permissions for function
       iamRoleStatements: [
         {
           Effect: 'Allow',
           Action: ['s3:PutObject'],
-          Resource: '${env:S3_ARN_EXAMPLE}/*',
+          Resource: `${S3_ARN_EXAMPLE}/*`,
         },
         {
           Effect: 'Allow',
           Action: ['sns:Publish'],
-          Resource: '${env:SNS_ARN_EXAMPLE}',
+          Resource: SNS_ARN_EXAMPLE,
         },
         {
           Effect: 'Allow',
           Action: ['sqs:SendMessage'],
-          Resource: '${env:SQS_ARN_EXAMPLE}',
+          Resource: SQS_ARN_EXAMPLE,
         },
       ],
     },

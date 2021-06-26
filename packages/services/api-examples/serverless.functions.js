@@ -6,6 +6,9 @@ const { utils: { functions } } = require('@sls/definitions');
 module.exports = async ({ options, resolveConfigurationProperty }) => {
   const stage = await resolveConfigurationProperty(['provider', 'stage']);
 
+  // TODO: auth-example(move every auth there, use jwt, cognito, api keys, etc)
+  // TODO: cf reference for storage examples and auth example
+
   return functions({
     // disabling in local stage(async not working with sls offline)
     asyncExample: stage !== 'local' && {
