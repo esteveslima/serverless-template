@@ -3,23 +3,43 @@
 
 const { utils: { functions } } = require('@sls/definitions');
 
+/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const servicesReferences = (stage) => {
+  const serviceName = __dirname.split('/').slice(-1)[0]; // Using project folder name as service name
+  const infraServiceName = `${serviceName}-infra`;
+
+  // Using 'local' stage as development environment(mocking services references for usage with plugins, the mocks must be in the right format)
+  if (stage === 'local') {
+    return {
+      S3_BUCKET_EXAMPLE: 'exampleS3',
+      S3_ARN_EXAMPLE: 'arn:aws:s3:::exampleS3',
+      SNS_ARN_EXAMPLE: 'arn:aws:sns:us-east-1:000000000000:exampleSNS',
+      SQS_URL_EXAMPLE: 'https://sqs.us-east-1.amazonaws.com/000000000000/exampleSQS',
+      SQS_ARN_EXAMPLE: 'arn:aws:sqs:us-east-1:000000000000:exampleSQS',
+    };
+  }
+
+  // Services' CloudFormation outputs references, from the infrastructure created beforehand
+  return {
+    S3_BUCKET_EXAMPLE: `\${cf:${infraServiceName}-\${self:provider.stage}.exampleS3BUCKET}`,
+    S3_ARN_EXAMPLE: `\${cf:${infraServiceName}-\${self:provider.stage}.exampleS3ARN}`,
+    SNS_ARN_EXAMPLE: `\${cf:${infraServiceName}-\${self:provider.stage}.exampleSNSARN}`,
+    SQS_URL_EXAMPLE: `\${cf:${infraServiceName}-\${self:provider.stage}.exampleSQSURL}`,
+    SQS_ARN_EXAMPLE: `\${cf:${infraServiceName}-\${self:provider.stage}.exampleSQSARN}`,
+  };
+};
+/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 module.exports = async ({ options, resolveConfigurationProperty }) => {
   const stage = await resolveConfigurationProperty(['provider', 'stage']);
 
-  /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // Get the the previously created services' CloudFormation references, before the creating the functions definitions
-  const serviceName = __dirname.split('/').slice(-1)[0]; // Using project folder name as service name
-  const infraServiceName = `${serviceName}-infra`;
-  const cfReference = (cfOutputKey) => `\${cf:${infraServiceName}-\${self:provider.stage}.${cfOutputKey}}`; // Generate the string reference to cloudformation output
-
-  // Mock references for development with plugins(considering 'local' stage to be the development environment)
-  const isLocal = stage === 'local';
-  const S3_BUCKET_EXAMPLE = !isLocal ? cfReference('exampleS3BUCKET') : 'exampleS3';
-  const S3_ARN_EXAMPLE = !isLocal ? cfReference('exampleS3ARN') : 'arn:aws:s3:::exampleS3';
-  const SNS_ARN_EXAMPLE = !isLocal ? cfReference('exampleSNSARN') : 'arn:aws:sns:us-east-1:809635126572:exampleSNS';
-  const SQS_URL_EXAMPLE = !isLocal ? cfReference('exampleSQSURL') : 'https://sqs.us-east-1.amazonaws.com/809635126572/exampleSQS';
-  const SQS_ARN_EXAMPLE = !isLocal ? cfReference('exampleSQSARN') : 'arn:aws:sqs:us-east-1:809635126572:exampleSQS';
-  /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const {
+    S3_BUCKET_EXAMPLE,
+    S3_ARN_EXAMPLE,
+    SNS_ARN_EXAMPLE,
+    SQS_URL_EXAMPLE,
+    SQS_ARN_EXAMPLE,
+  } = servicesReferences(stage);
 
   // Resources for these functions were createded independently from this stack, preventing potential syncing and data loss problems
   return functions({
