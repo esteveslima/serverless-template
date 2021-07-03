@@ -1,6 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 const path = require('path');
-
+// TODO: create one file per plugin definition for easy import
 const pluginsAssets = path.resolve(`${__dirname}/../assets`); // absolute path to definitions package plugin assets
 const monorepoRoot = '../../'; // relative monorepo root path
 const serviceTempDir = '.temp/'; // relative path to temporary folder used for each service --> TODO: move .serverless to .temp in each service(?)
@@ -82,6 +82,32 @@ module.exports = {
   //   },
   // },
 
+  //  local dynamoDB server, using only for migrations because there is already the local dynamodb-container
+  'serverless-dynamodb-local': {
+    dynamodb: {
+      stages: ['local'],
+      start: {
+        host: 'dynamodb-container',
+        port: 8000,
+        noStart: true, // no need for start a new instance, using dynamodb in a docker container
+        migrate: true,
+      },
+    },
+  },
+
+  // plugin for triggering dynamoDB streams(using docker-compose container, requires the table to be created or the startup will fail)
+  'serverless-offline-dynamodb-streams': {
+    'serverless-offline-dynamodb-streams': {
+      apiVersion: '2013-12-02',
+      endpoint: 'http://dynamodb-container:8000',
+      region: 'us-east-1',
+      accessKeyId: 'root',
+      secretAccessKey: 'root',
+      skipCacheInvalidation: false,
+      readInterval: 500,
+    },
+  },
+
   // local api gateway debug server(dependant plugins must come before)
   'serverless-offline': {
     'serverless-offline': {
@@ -89,12 +115,18 @@ module.exports = {
       host: '0.0.0.0', // binding to special address to make "offline" server reachable from outside docker network
       httpPort: '4000',
       apiKey: 'someApiKey1234567890', // mocked api-key(for private functions)
-      // allowCache: true,  // cache lambda responses or local code?
     },
   },
 
   // enables providing extra permissions for each lambda function individually
   'serverless-iam-roles-per-function': {}, // TODO: check due this is creating unecessary roles for another functions without plugin config
+
+  // enables stack termination protection for extra security
+  'serverless-stack-termination-protection': {
+    serverlessTerminationProtection: {
+      stages: ['prod'],
+    },
+  },
 
   // enables throttling configuration per function(also a solution for region's rate-limit exhaustion)
   'serverless-api-gateway-throttling': {
@@ -105,16 +137,16 @@ module.exports = {
     },
   },
 
-  // // enables cache for functions throught api gateway(not free tier)
+  // // enables cache for functions throught api gateway(disabled: not free tier)
   // 'serverless-api-gateway-caching': {
   //   apiGatewayCaching: {
-  //     enabled: false, // disabled: not free tier // true, // Enable cache to use the plugin(still requires definition per function)
+  //     enabled: true, // Enable cache to use the plugin(still requires definition per function)
   //     ttlInSeconds: 30,
   //   },
   // },
 
   // run scripts with serverless commands/hooks(TODO: fix -> not working when running sls offline directly from node_modules for vscode debugger)
-  'serverless-plugin-scripts': {
+  'serverless-plugin-scripts': { // TODO: migrate to serverless-scriptable-plugin (?)
     scripts: {
       commands: {
         checkdeploystage: `${pluginsAssets}/scripts/check-deploy-stage.sh`,
@@ -134,12 +166,12 @@ module.exports = {
   },
 
   // TODO...
-  // 'serverless-offline-dynamodb-streams': {},
-  // 'serverless-domain-manager':{},
   // 'serverless-plugin-aws-alerts':{},
   // 'serverless-prune-plugin':{},
-  // 'serverless-plugin-lambda-dead-letter':{},
+  // 'serverless-domain-manager':{},
 
+  // 'serverless-plugin-lambda-dead-letter':{},
+  // 'serverless-split-stacks': {},
   // 'serverless-aws-documentation':{},
   // 'serverless-reqvalidator-plugin':{},
 };

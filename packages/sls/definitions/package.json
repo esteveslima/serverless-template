@@ -6,18 +6,21 @@
   "devDependencies": {
     "@sls/configurations": "file:../configurations",
     "serverless": "^2.48.0",
+    "serverless-api-gateway-caching": "^1.7.3",
+    "serverless-api-gateway-throttling": "^1.1.1",
+    "serverless-dynamodb-local": "^0.2.40",
     "serverless-iam-roles-per-function": "^3.2.0",
     "serverless-localstack": "^0.4.32",
     "serverless-offline": "^6.9.0",
+    "serverless-offline-dynamodb-streams": "^4.2.0",
     "serverless-offline-scheduler": "^0.5.0",
     "serverless-offline-sns": "^0.68.0",
     "serverless-offline-sqs": "^4.1.1",
     "serverless-plugin-scripts": "^1.0.2",
     "serverless-plugin-typescript": "^1.1.9",
     "serverless-s3-local": "^0.6.18",
-    "serverless-webpack": "^5.5.1",
-    "serverless-api-gateway-caching": "^1.7.3",
-    "serverless-api-gateway-throttling": "^1.1.1"
+    "serverless-stack-termination-protection": "^1.0.4",
+    "serverless-webpack": "^5.5.1"
   },
   "scripts": {
     "test": "echo \"No need for tests in this package\""

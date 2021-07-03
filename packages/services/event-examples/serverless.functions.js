@@ -1,57 +1,49 @@
 /* eslint-disable no-template-curly-in-string */
-// Functions configuration resolved as .js variable with extra custom logic
 
 const { utils: { functions } } = require('@sls/definitions');
 
-/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-const servicesReferences = (stage) => {
-  const serviceName = __dirname.split('/').slice(-1)[0]; // Using project folder name as service name
-  const infraServiceName = `${serviceName}-infra`;
+// Functions configuration resolved as .js variable with extra custom logic
+module.exports = async ({ options, resolveConfigurationProperty, resolveVariable }) => {
+  const stage = await resolveVariable('self:provider.stage');
+  const isLocal = stage === 'local'; // custom (js) condition to enable/disable definitions based on stage
 
-  // Using 'local' stage as development environment(mocking services references for usage with plugins, the mocks must be in the right format)
-  if (stage === 'local') {
-    return {
-      S3_BUCKET_EXAMPLE: 'exampleS3',
-      S3_ARN_EXAMPLE: 'arn:aws:s3:::exampleS3',
-      SNS_ARN_EXAMPLE: 'arn:aws:sns:us-east-1:000000000000:exampleSNS',
-      SQS_URL_EXAMPLE: 'https://sqs.us-east-1.amazonaws.com/000000000000/exampleSQS',
-      SQS_ARN_EXAMPLE: 'arn:aws:sqs:us-east-1:000000000000:exampleSQS',
-    };
+  // CloudFormation references for created resources(at serverless.resources.js)
+  let S3_BUCKET_EXAMPLE = { Ref: 'exampleS3' };
+  let S3_IAM_PERMISSION_EXAMPLE = { 'Fn::Join': ['/', [{ 'Fn::GetAtt': ['exampleS3', 'Arn'] }, '*']] };
+  let SNS_ARN_EXAMPLE = { Ref: 'exampleSNS' };
+  let SNS_TOPIC_NAME_EXAMPLE = '${self:resources.Resources.exampleSNS.Properties.TopicName}';
+  let SQS_URL_EXAMPLE = { Ref: 'exampleSQS' };
+  let SQS_ARN_EXAMPLE = { 'Fn::GetAtt': ['exampleSQS', 'Arn'] };
+  let DDB_STREAM_ARN_EXAMPLE = { 'Fn::GetAtt': ['exampleDDBStreamTable', 'StreamArn'] };
+  let DDB_ARN_EXAMPLE = { 'Fn::GetAtt': ['exampleDDBStreamTable', 'Arn'] };
+
+  // Mock references for 'local' development stage, for usage with plugins(must match the right format and names)
+  if (isLocal) {
+    S3_BUCKET_EXAMPLE = '${self:resources.Resources.exampleS3.Properties.BucketName}';
+    S3_IAM_PERMISSION_EXAMPLE = 'arn:aws:s3:::${self:resources.Resources.exampleS3.Properties.BucketName}/*';
+    SNS_ARN_EXAMPLE = 'arn:aws:sns:us-east-1:000000000000:${self:resources.Resources.exampleSNS.Properties.TopicName}';
+    SNS_TOPIC_NAME_EXAMPLE = '${self:resources.Resources.exampleSNS.Properties.TopicName}';
+    SQS_URL_EXAMPLE = 'https://sqs.us-east-1.amazonaws.com/000000000000/${self:resources.Resources.exampleSQS.Properties.QueueName}';
+    SQS_ARN_EXAMPLE = 'arn:aws:sqs:us-east-1:000000000000:${self:resources.Resources.exampleSQS.Properties.QueueName}';
+    DDB_STREAM_ARN_EXAMPLE = 'arn:aws:dynamodb:ddblocal:000000000000:table/${self:resources.Resources.exampleDDBStreamTable.Properties.TableName}/stream/2000-01-01T00:00:00.000';
+    DDB_ARN_EXAMPLE = 'arn:aws:dynamodb:ddblocal:000000000000:table/${self:resources.Resources.exampleDDBStreamTable.Properties.TableName}';
   }
 
-  // Services' CloudFormation outputs references, from the infrastructure created beforehand
-  return {
-    S3_BUCKET_EXAMPLE: `\${cf:${infraServiceName}-\${self:provider.stage}.exampleS3BUCKET}`,
-    S3_ARN_EXAMPLE: `\${cf:${infraServiceName}-\${self:provider.stage}.exampleS3ARN}`,
-    SNS_ARN_EXAMPLE: `\${cf:${infraServiceName}-\${self:provider.stage}.exampleSNSARN}`,
-    SQS_URL_EXAMPLE: `\${cf:${infraServiceName}-\${self:provider.stage}.exampleSQSURL}`,
-    SQS_ARN_EXAMPLE: `\${cf:${infraServiceName}-\${self:provider.stage}.exampleSQSARN}`,
-  };
-};
-/// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-module.exports = async ({ options, resolveConfigurationProperty }) => {
-  const stage = await resolveConfigurationProperty(['provider', 'stage']);
-
-  const {
-    S3_BUCKET_EXAMPLE,
-    S3_ARN_EXAMPLE,
-    SNS_ARN_EXAMPLE,
-    SQS_URL_EXAMPLE,
-    SQS_ARN_EXAMPLE,
-  } = servicesReferences(stage);
-
-  // Resources for these functions were createded independently from this stack, preventing potential syncing and data loss problems
   return functions({
-    // offline-scheduler plugin may conflict with vscode debugger
-    cronExample: stage !== 'local' && {
+
+    // TODO: add destination lambda example and also sns/sqs, testing if it works with plugins
+
+    // offline-scheduler plugin may be malfunctioning or conflicting with vscode debugger
+    cronExample: !isLocal && {
       handler: './src/functions/cronExample/handler.default',
       timeout: 60,
       events: [
         {
           schedule: {
             enabled: true,
-            rate: stage === 'local' ? 'rate(1 minute)' : 'cron(0 0 * * ? *)',
+            rate: isLocal ? 'rate(1 minute)' : 'cron(0 0 * * ? *)',
             // input: {}  // may be useful to differ between multiple crons
           },
         },
@@ -67,12 +59,8 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
             bucket: S3_BUCKET_EXAMPLE,
             event: 's3:ObjectCreated:*', // event do not trigger if the object is updated(not created)
             rules: [
-              {
-                prefix: 'uploads/',
-              },
-              // {
-              //   suffix: '.txt',  // limit file types
-              // },
+              { prefix: 'uploads/' },
+              // { suffix: '.txt' },  // limit file types
             ],
           },
         },
@@ -85,16 +73,15 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
         {
           sns: {
             arn: SNS_ARN_EXAMPLE,
+            topicName: SNS_TOPIC_NAME_EXAMPLE, // required if the topic wasn't previously created
             filterPolicy: {
-              example: [
-                'test',
-              ],
+              example: ['test'],
             },
           },
         },
       ],
     },
-    sqsExample: stage !== 'local' && {
+    sqsExample: !isLocal && {
       handler: './src/functions/sqsExample/handler.default',
       timeout: 30, // limited to queue timeout
       events: [
@@ -102,8 +89,23 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
           sqs: {
             arn: SQS_ARN_EXAMPLE,
             enabled: true,
-            batchSize: 1,
+            batchSize: 10, // expected number of incoming events per lambda
             maximumBatchingWindow: 10,
+          },
+        },
+      ],
+    },
+    streamDDBExample: {
+      handler: './src/functions/streamDDBExample/handler.default',
+      timeout: 60,
+      events: [
+        {
+          stream: {
+            enabled: true,
+            arn: DDB_STREAM_ARN_EXAMPLE,
+            type: 'dynamodb',
+            batchSize: 10, // expected number of incoming events per lambda
+            startingPosition: 'LATEST', // to receive only the latest updated records
           },
         },
       ],
@@ -123,13 +125,14 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
         S3_BUCKET_EXAMPLE,
         SNS_ARN_EXAMPLE,
         SQS_URL_EXAMPLE,
+        DDB_ARN_EXAMPLE,
       },
       // extra permissions for function
       iamRoleStatements: [
         {
           Effect: 'Allow',
           Action: ['s3:PutObject'],
-          Resource: `${S3_ARN_EXAMPLE}/*`,
+          Resource: S3_IAM_PERMISSION_EXAMPLE,
         },
         {
           Effect: 'Allow',
@@ -140,6 +143,11 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
           Effect: 'Allow',
           Action: ['sqs:SendMessage'],
           Resource: SQS_ARN_EXAMPLE,
+        },
+        {
+          Effect: 'Allow',
+          Action: ['dynamodb:PutItem'],
+          Resource: DDB_ARN_EXAMPLE,
         },
       ],
     },

@@ -54,12 +54,13 @@ module.exports = {
   // Security configs
   // iamRoleStatements: [], // service wide permissions - plugin
   // vpc: {}, // TODO: rate-limiting, firewall and others security configurations
+  // stackPolicy: {},
 
   // Default non-sensitive environment variables
   // AWS provides a set of default environment variables, check: https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html, https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/pseudo-parameter-reference.html#cfn-pseudo-param-partition
   environment: {
-    STAGE: '${sls:stage}',
-    ACCOUNT_ID: { Ref: 'AWS::AccountId' },
+    // STAGE: '${sls:stage}',
+    // ACCOUNT_ID: { Ref: 'AWS::AccountId' },
     // API_ID: { Ref: 'ApiGatewayRestApi' }, // requires a function with "http" event in the stack
     // HTTP_API_ID: { Ref: 'HttpApi' }, // requires a function with "httpApi" event in the stack
     // URL_SUFFIX: { Ref: 'AWS::URLSuffix' },

@@ -1,4 +1,4 @@
-import { s3, ErrorResponse, ErrorObjects } from '@sls/lib';
+import { s3, ErrorResponse, ErrorObjects } from '@sls/lib'; // TODO: return mocked version of aws-sdk but keep options to change default config on code
 import multipartParser from 'lambda-multipart-parser';
 
 const { S3_BUCKET_EXAMPLE } = process.env;
