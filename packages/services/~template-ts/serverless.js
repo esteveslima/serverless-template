@@ -1,6 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 
-const { provider: { aws }, plugins: { allPlugins, pluginsCustoms } } = require('@sls/definitions');
+const { provider: { aws }, plugins: { sets: { allPlugins }, pluginsList, pluginsCustoms } } = require('@sls/definitions');
 
 const serviceName = __dirname.split('/').slice(-1)[0]; // Using project folder name as service name
 // TODO: enhance examples
@@ -16,7 +16,7 @@ module.exports = {
   // Default configurations can be customized and overrided
   provider: { ...aws },
   package: { individually: true },
-  plugins: [...allPlugins],
+  plugins: [...pluginsList(allPlugins)],
   custom: { ...pluginsCustoms(allPlugins) },
   resources: { /* Resources: {} */ },
 

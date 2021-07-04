@@ -5,7 +5,7 @@
 // Dedicated stack used exclusevelly for infrastructure deployment, this approach grants safier environments on updating CloudFormation resources
 // The outputs from this stack can be recovered as variables in other stacks
 
-const { provider: { aws }, plugins: { allPlugins, pluginsCustoms } } = require('@sls/definitions');
+const { provider: { aws }, plugins: { sets: { allPlugins }, pluginsList, pluginsCustoms } } = require('@sls/definitions');
 
 const serviceName = __dirname.split('/').slice(-1)[0]; // Using project folder name as service name
 const infraServiceName = `${serviceName}-infra`; // suffixing with 'infra'(final name becomes: {serviceName}-infra-{stage})

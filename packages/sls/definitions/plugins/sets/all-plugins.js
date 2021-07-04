@@ -1,12 +1,11 @@
 /* eslint-disable no-template-curly-in-string */
 const path = require('path');
-// TODO: create one file per plugin definition for easy import
+
 const pluginsAssets = path.resolve(`${__dirname}/../assets`); // absolute path to definitions package plugin assets
-const monorepoRoot = '../../'; // relative monorepo root path
-const serviceTempDir = '.temp/'; // relative path to temporary folder used for each service --> TODO: move .serverless to .temp in each service(?)
+const serviceTempDir = '.temp/'; // relative path to custom temp files folder used in each service
 
 // The paths references in properties are from the project folder scope(not the monorepo root folder), because this file will be imported and used as boilerplate
-// List of every plugin with its custom configuration(the items order may be relevant)
+// List of every plugin with its custom configuration(CAUTION: the order is relevant)
 module.exports = {
 
   // // EXPERIMENTAL: aws local services
