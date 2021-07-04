@@ -18,7 +18,7 @@ module.exports = {
   package: { individually: true },
   plugins: [...pluginsList(allPlugins)],
   custom: { ...pluginsCustoms(allPlugins) },
-  resources: { /* Resources: {} */ },
 
   functions: '${file(serverless.functions.js)}',
+  resources: '${file(serverless.resources.js)}',
 };

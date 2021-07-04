@@ -3,8 +3,8 @@
 
 const { utils: { functions } } = require('@sls/definitions');
 
-module.exports = async ({ options, resolveConfigurationProperty }) => {
-  const stage = await resolveConfigurationProperty(['provider', 'stage']);
+module.exports = async ({ options, resolveConfigurationProperty, resolveVariable }) => {
+  const stage = await resolveVariable('self:provider.stage');
 
   return functions({
     someFunction: stage === 'local' && {

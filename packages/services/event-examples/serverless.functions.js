@@ -127,7 +127,7 @@ module.exports = async ({ options, resolveConfigurationProperty, resolveVariable
         SQS_URL_EXAMPLE,
         DDB_ARN_EXAMPLE,
       },
-      // extra permissions for function
+      // extra permissions for function(References: https://gist.github.com/slmingol/d1eff788d1417d7ac160eda57131c7d0)
       iamRoleStatements: [
         {
           Effect: 'Allow',
