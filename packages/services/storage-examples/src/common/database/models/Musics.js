@@ -4,6 +4,8 @@ import setupDynamoose from '../setup/dynamoose';
 
 setupDynamoose(); // setting up dynamoose before entrypoint
 
+const { DDB_TABLE_NAME } = process.env;
+
 // Using a single table, which could be splitted in different ones.
 // Definitions between {} are variables
 // PK/SK schema: {type}_{key} / {sk}
@@ -68,6 +70,6 @@ const musicsSchema = new dynamoose.Schema({
   timestamps: true, // enable timestamps for document
 });
 
-const Musics = dynamoose.model('Musics', musicsSchema, schemaOptions); // create model instance
+const Musics = dynamoose.model(DDB_TABLE_NAME, musicsSchema, schemaOptions); // create model instance
 
 export default Musics;

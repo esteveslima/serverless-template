@@ -1,14 +1,11 @@
 const { IS_OFFLINE } = process.env;
 
-// Beware of options, risk of high costs and/or throttling
+// DO NOT USE ODM TO MODIFY TABLE(INFRASTRUCTURE) SETTINGS, DISABEL EVERYTHING
+// The infrastructure should be done apart from running code(for this example it is being created using CloudFormation)
 export default {
-  create: !!IS_OFFLINE, // this option attempt to create the table(recommended to be false on production, with the table created beforehand, activating only on local environment)
+  create: false,
+  update: false,
   waitForActive: {
-    enabled: !!IS_OFFLINE, // wait for the table to be active(recommended to be false on production, activating only on local environment)
-    // check: {timeout: 180000, frequency: 1000,}
+    enabled: false,
   },
-  // Below properties change table config, do not use it(use aws console to config table)
-  // expires: { ttl: 8640000, items: { returnExpired: true } },       // set table ttl
-  // throughput: { read: 1, write: 1 }, // throughput: 'ON_DEMAND',   // set table throughput
-  // update: ['ttl', 'throughput'],                                   // enable update table capacities to the model config
 };

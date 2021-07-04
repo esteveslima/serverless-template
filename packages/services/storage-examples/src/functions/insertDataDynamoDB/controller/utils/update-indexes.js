@@ -1,5 +1,5 @@
 //
-// Below code could be implemented with stream events on Image table
+// This code could and should be implemented with stream events on the table, reducing latency from the multiple operations that update the indexes
 //
 
 import * as musicsDao from '../../../../common/database/dao/musics-dao';

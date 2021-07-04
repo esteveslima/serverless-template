@@ -85,7 +85,7 @@ export const getRegionInfo = async (region) => {
 
 export const initRegionInfo = async (region, music) => {
   const key = infoRegion.replace('{region}', region);
-  const releaseKey = releaseTimestamp.replace('{timestamp}', music.data.release);
+  const releaseKey = releaseTimestamp.replace('{timestamp}', `${music.data.release}`.padStart(15, '0'));
 
   const regionFound = await Musics.get({ type_key: key, sk: key });
 

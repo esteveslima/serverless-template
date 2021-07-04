@@ -3,8 +3,19 @@
 
 const { utils: { functions } } = require('@sls/definitions');
 
-module.exports = async ({ options, resolveConfigurationProperty }) => {
-  const stage = await resolveConfigurationProperty(['provider', 'stage']);
+module.exports = async ({ options, resolveConfigurationProperty, resolveVariable }) => {
+  const stage = await resolveVariable('self:provider.stage');
+  const isLocal = stage === 'local'; // custom (js) condition to enable/disable definitions based on stage
+
+  // CloudFormation reference for created resource(at serverless.resources.js)
+  let DDB_TABLE_NAME = { Ref: 'musicsDDBTable' };
+  let DDB_ARN = { 'Fn::GetAtt': ['musicsDDBTable', 'Arn'] };
+
+  // Mock reference for 'local' development stage, for usage with plugins(must match the right format and names)
+  if (isLocal) {
+    DDB_TABLE_NAME = '${self:resources.Resources.musicsDDBTable.Properties.TableName}';
+    DDB_ARN = 'arn:aws:dynamodb:ddblocal:000000000000:table/${self:resources.Resources.musicsDDBTable.Properties.TableName}';
+  }
 
   return functions({
     insertDataDynamoDB: {
@@ -15,24 +26,26 @@ module.exports = async ({ options, resolveConfigurationProperty }) => {
           http: {
             method: 'POST',
             path: '/insertDataDynamoDB',
-            // request: {
-            //   schemas: { // TODO: set schema path automatically(maybe only base path)
-            //     'application/json': '${file(./functions/insertDataDynamoDB/assets/schema.json)}',
-            //   },
-            // },
           },
         },
       ],
-      // extra permissions for function
+      environment: {
+        DDB_TABLE_NAME,
+      },
+      // extra permissions for function(References: https://gist.github.com/slmingol/d1eff788d1417d7ac160eda57131c7d0)
       iamRoleStatements: [
         {
           Effect: 'Allow',
-          Action: ['dynamodb:*'], // It's not recommended to use '*' for permissions(should be listed one by one in real projects) //TODO: list every dynamodb permissions used
-          Resource: '${env:DDB_ARN_EXAMPLE}',
+          // It's not recommended to use wildcards('*') for permissions, listing one by one
+          Action: [
+            'dynamodb:PutItem',
+            'dynamodb:GetItem',
+            'dynamodb:UpdateItem',
+            'dynamodb:Query',
+          ],
+          Resource: DDB_ARN,
         },
       ],
     },
-    // TODO: stream example
-    // TODO: files only for infraestructure
   });
 };
