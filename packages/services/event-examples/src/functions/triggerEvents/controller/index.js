@@ -16,7 +16,9 @@ export default async (eventData) => {
 
   // Triggering sqs event
   if (!IS_OFFLINE) triggersInfo.sqs = await triggerSqs();
-  else logger.info('Not triggering sqs with sls offline environment by default, check sqs plugin definition for more details');
+  else logger.info('\n SQS offline trigger disabled(sqs plugin is malfunctioning) \n Create the local queue manually to be able to test sqs. For this example: "npm run aws:sqs create-queue -- --queue-name exampleSQS-local" \n');
+  // SQS offline plugin not working, sqs events won't be triggered locally
+  // To use sqs locally it is required to create the queue manually(npm run aws:sqs create-queue -- --queue-name <name>) before enabling this trigger
 
   // Triggering dynamoDB stream event
   triggersInfo.streamDDB = await triggerStreamDDB();

@@ -21,7 +21,7 @@ services:
             # - mongo-container
             - dynamodb-container
             # - redis-container
-            # - queue-container
+            - queue-container
             # - localstack-container
         expose:
             - "4000-4010"
@@ -69,7 +69,7 @@ services:
         expose:
             - '8000'
         ports:
-            - '8000:8000'                                                # shell available at http://localhost:8000/shell/  
+            - '8000:8000'                                                # shell interface available at http://localhost:8000/shell/  
             
     # redis-container:                                                  # Setting up ElastiCache local testing environment with redis
     #     image: redis
@@ -83,13 +83,14 @@ services:
     #     # ports:
     #     #    - '6379:6379'         
 
-    # queue-container:                                                  # Setting up SQS local testing environment with elasticMQ
-    #     image: softwaremill/elasticmq
-    #     restart: always
-    #     expose:
-    #         - '9324'
-    #     ports:
-    #         - '9324:9324'
+    queue-container:                                                    # Setting up SQS local testing environment with elasticMQ
+        image: softwaremill/elasticmq-native
+        restart: always
+        expose:
+            - '9324-9325'
+        ports:
+            - '9324:9324'
+            - '9325:9325'                                               # interface available at http://localhost:9325
     
     # localstack-container:                                              # EXPERIMENTAL(limited and with lots of bugs)
     #     image: localstack/localstack

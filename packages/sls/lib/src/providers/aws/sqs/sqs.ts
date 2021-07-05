@@ -18,7 +18,7 @@ const sqsConfig : ISqsConfig = {
 };
 
 if (IS_OFFLINE) { // for local testing purposes
-  sqsConfig.endpoint = 'http://localhost:9324'; // 'http://queue-container:9324'
+  sqsConfig.endpoint = 'http://queue-container:9324'; // 'http://localhost:9324';
 }
 
 const sqs = new SQS(sqsConfig);
