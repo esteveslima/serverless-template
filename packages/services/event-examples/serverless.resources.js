@@ -44,7 +44,7 @@ module.exports = async ({ options, resolveConfigurationProperty, resolveVariable
         UpdateReplacePolicy: isProd ? 'Retain' : 'Delete', // save data on update stack resource, in case of a replacement(only production)
         Type: 'AWS::S3::Bucket',
         Properties: {
-          BucketName: 'example-s3-${self:provider.stage}',
+          BucketName: 'examples3-${self:provider.stage}',
         },
       },
       // DDB(Stream): https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html#aws-resource-dynamodb-table-syntax

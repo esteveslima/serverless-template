@@ -5,16 +5,17 @@ const { utils: { functions } } = require('@sls/definitions');
 
 module.exports = async ({ options, resolveConfigurationProperty, resolveVariable }) => {
   const stage = await resolveVariable('self:provider.stage');
+  const isLocal = stage === 'local'; // custom (js) condition to enable/disable definitions based on stage
 
   // TODO: auth-example(move every auth there, use jwt, cognito, api keys, etc)
   // TODO: cf reference for storage examples and auth example
 
   return functions({
     // disabling in local stage(async not working with sls offline)
-    asyncExample: stage !== 'local' && {
+    asyncExample: !isLocal && {
       handler: './src/functions/asyncExample/handler.default',
       timeout: 900,
-      // destinations: { onSuccess: 'someOtherFunction', onFailure: 'arn:...'}, // TODO: destinations example for async invocations
+      // destinations: { onSuccess: 'someOtherFunction', onFailure: 'arn:...'},   // With async invokation it's possible to trigger other resources/functions
       events: [
         {
           http: {
@@ -34,8 +35,8 @@ module.exports = async ({ options, resolveConfigurationProperty, resolveVariable
             method: 'GET',
             path: '/getExample/{someRequiredPathParameter}',
             // request: {}, // probably doesn't work without ParameterRequestValidator resource
-            // Custom throtling for function(plugin)  // TODO: test
-            throttling: {
+            // Custom throtling for function(plugin)
+            throttling: { // TODO: test
               maxRequestsPerSecond: 1,
               maxConcurrentRequests: 1,
             },

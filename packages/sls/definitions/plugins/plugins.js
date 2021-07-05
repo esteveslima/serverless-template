@@ -33,7 +33,7 @@ const allPlugins = { // This is the order reference
   ...serverlessOfflineScheduler,
   ...serverlessS3Local,
   ...serverlessOfflineSns,
-  // serverlessOfflineSqs,  // disabled
+  // ...serverlessOfflineSqs, // disabled
   ...serverlessDynamodbLocal,
   ...serverlessOfflineDynamodbStreams,
   ...serverlessOffline,
@@ -43,7 +43,7 @@ const allPlugins = { // This is the order reference
   ...serverlessApiGatewayThrottling,
   ...serverlessApiGatewayCaching,
 
-  // serverlessLocalstack,  // disabled
+  // ...serverlessLocalstack,  // disabled
   ...serverlessPluginScripts,
 };
 const securityPlugins = {

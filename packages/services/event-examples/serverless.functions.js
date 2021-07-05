@@ -32,10 +32,7 @@ module.exports = async ({ options, resolveConfigurationProperty, resolveVariable
   // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
   return functions({
-
-    // TODO: add destination lambda example and also sns/sqs, testing if it works with plugins
-
-    // offline-scheduler plugin may be malfunctioning or conflicting with vscode debugger
+    // disabling in local stage(offline-scheduler plugin may be malfunctioning or conflicting with vscode debugger)
     cronExample: !isLocal && {
       handler: './src/functions/cronExample/handler.default',
       timeout: 60,
@@ -81,6 +78,7 @@ module.exports = async ({ options, resolveConfigurationProperty, resolveVariable
         },
       ],
     },
+    // disabling in local stage(sqs offline plugin malfunctioning)
     sqsExample: !isLocal && {
       handler: './src/functions/sqsExample/handler.default',
       timeout: 30, // limited to queue timeout
@@ -110,6 +108,7 @@ module.exports = async ({ options, resolveConfigurationProperty, resolveVariable
         },
       ],
     },
+    // trigger events for demonstration
     triggerEvents: {
       handler: './src/functions/triggerEvents/handler.default',
       timeout: 28,
