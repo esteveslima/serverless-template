@@ -18,9 +18,9 @@ TODO: reference to files in each topic
 The power of a provider agnostic framework to manage deployment and infrastructure.
 
 Worked providers
-- aws
-- <s>azure</s>
-- <s>gcloud</s>
+- AWS
+- <s>Azure</s>
+- <s>Google Cloud</s>
 
 
 
@@ -124,17 +124,53 @@ Set of containers providing access to services for local development. *Check the
 ---
 
 # Development environment
-### serverless plugins & vscode vscode debugger
+### serverless plugins & vscode debugger
 ### docker containers -> development & local services(localstack?)
 ### configs
 ---
-# packages
-### services
-### shared
-### sls
----
-# miscelaneous
-### vscode plugins
-TODO: instructions to run es2015 code with extension coderunner: npx babel-node --presets=@babel/preset-env $fullFileName
----
+# General Folders Structure and Project Configuration
+```
+.
+├── .vscode                       > Configurations for VS Code(recommended IDE)
+├── node_modules                  > Hoisted node_modules folder, centralizing npm packages for the monorepo
+├── packages
+│   ├── services                  > Packages group containing real applications, making use of configurations and functionalities from the common packages
+│   │   ├── ~template                 > Base template for javascript projects, may be used as boilerplate for new projects
+│   │   ├── ~template-ts              > Base template for typescript projects, may be used as boilerplate for new projects
+│   │   ├── api-examples              > Project containing examples of common API features and configurations
+│   │   ├── event-examples            > Project containing examples of event triggered functions
+│   │   ├── storage-examples          > Project containing examples of interactions with data storage services
+|   |   └── ...
+│   ├── shared                    > Packages group with the intent to contain customized common functionalities, improving general development experience
+│   │   ├── utils
+│   │   │   └── src
+|   |   └── ...
+│   └── sls                       > Packages group containing base common functionalities for configuring Serverless Framework, Projects and Js/Ts Code
+│       ├── configurations            > Package for common project/code configurations, which can be easly imported and incremented/modified with js
+│       ├── definitions               > Package for common definitions, encapsulating functionalities concerning Serverless Framework configurations
+│       │   ├── plugins                   > Defining all plugins' configurations and functionalities for easly importing them in projects
+│       │   ├── provider                  > Defining base configurations for cloud providers
+│       │   ├── utils                     > Extra functions to ease Serverless Framework configurations with js
+|       |   └── ...
+│       └── lib                       > Package as common library, encapsulating useful code functionalities for development experience and external services
+│           ├── dist                      > Because it is a local project, must be transpiled on every modification
+│           └── src
+├── resources                         > Folder containing configurations and assets concerning all projects or repository
+|   └── ...
+├── docker-compose.yml            > Docker environment configuration, which is used to setup the development environment with it's aditional services
+├── Dockerfile                    > Serverless container environment configuration, dispensing the installation of any service on host machine besides docker
+├── lerna.json                    > Simple configuration for lerna to enable it's usage
+├── Makefile                      > File containing common commands to setup the development environment
+├── package.json                  > Base npm config file for common configuration such as workspaces, hooks, base scripts and installing base development packages
+└── ...
+```
+# Package/Project Specific Structure and Configurations
 
+- packages
+  - [services](packages/services/README.md)
+  - [shared](packages/shared/README.md)
+  - [sls](packages/sls/README.md)
+- resources
+  - [config](resources/config/README.md)
+  - [scripts](resources/scripts/README.md)
+---

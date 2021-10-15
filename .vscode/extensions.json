@@ -4,7 +4,7 @@
 
 	// List of extensions which should be recommended for users of this workspace.
 	"recommendations": [
-		"formulahendry.code-runner",
+		"formulahendry.code-runner",					// Configure the "Run by Language" to work with babel: "npx babel-node --presets=@babel/preset-env $fullFileName"
 		"dbaeumer.vscode-eslint",
 		"firsttris.vscode-jest-runner",
 		"redhat.vscode-yaml",
